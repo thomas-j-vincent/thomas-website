@@ -16,14 +16,9 @@ function updateBasketMessage() {
         document.getElementById("checkout").style.display = "block";
     }
 }
-
-<<<<<<< HEAD
 function formatPrice(amount) {
     return `£ ${amount.toFixed(2)}`;
 }
-
-=======
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
 // Function to add an item to the basket (numerical)
 function addToBasket(item) {
     basketProducts.push({item: item});
@@ -44,7 +39,6 @@ removeProduct(item2);
 });
 // Function to put a product in the basket (with the table structure)
 function addProduct(item) {
-<<<<<<< HEAD
     const index = basketProducts.findIndex (obj => 
         obj.item.name === item.name &&
         obj.item.colour === item.colour &&
@@ -52,35 +46,17 @@ function addProduct(item) {
     );
 
     if (index > -1) {
-        // Already in basket — just update quantity
-=======
-    const index = basketProducts.findIndex(obj => obj.item === item);
-
-    if (index > -1) {
-        // ✅ Already in basket — just update quantity
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
         const container = document.querySelectorAll('.product-container')[index];
         const qtyCell = container.querySelector('.qty-cell');
         const priceCell = container.querySelector('.itemPrice');
 
         let quantity = parseInt(qtyCell.textContent, 10) + 1;
         qtyCell.textContent = quantity;
-<<<<<<< HEAD
         priceCell.textContent = formatPrice(item.price * quantity);
-=======
-        priceCell.textContent = (item.price * quantity).toFixed(2);
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
-
         itemsInBasket++;
         updateBasketMessage();
         return;
     }
-
-<<<<<<< HEAD
-    // New product — create basket entry
-=======
-    // ✅ New product — create basket entry
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
     let quantity = 1;
     let totalPrice = item.price;
 
@@ -110,11 +86,7 @@ function addProduct(item) {
 
     // Row 3: Price
     tbody.insertRow().innerHTML = `
-<<<<<<< HEAD
         <td colspan="6" style="width:150px; border-bottom: 1px solid #ddd;" class="itemPrice"> ${formatPrice(totalPrice)} </td>
-=======
-        <td colspan="6" style="width:150px; border-bottom: 1px solid #ddd;" class="itemPrice"> ${totalPrice.toFixed(2)} </td>
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
     `;
 
     // Row 4: Empty
@@ -146,11 +118,7 @@ newDiv.querySelector(".plus-btn").addEventListener("click", () => {
     itemsInBasket++;
     let totalPrice = item.price * quantity;
     qtyCell.textContent = quantity;
-<<<<<<< HEAD
     newDiv.querySelector(".itemPrice").textContent = formatPrice(totalPrice)
-=======
-    newDiv.querySelector(".itemPrice").textContent = totalPrice.toFixed(2);
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
     updateBasketMessage();
 });
 
@@ -163,11 +131,7 @@ newDiv.querySelector(".minus-btn").addEventListener("click", () => {
         itemsInBasket--;
         let totalPrice = item.price * quantity;
         qtyCell.textContent = quantity;
-<<<<<<< HEAD
         newDiv.querySelector(".itemPrice").textContent = formatPrice(totalPrice)
-=======
-        newDiv.querySelector(".itemPrice").textContent = totalPrice.toFixed(2);
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
         updateBasketMessage();
     }
 });
@@ -180,7 +144,6 @@ newDiv.querySelector(".minus-btn").addEventListener("click", () => {
 
 //Function to remove a product from the basket by name
 function removeProduct(item) {
-<<<<<<< HEAD
     // Remove all from basket array
     basketProducts = basketProducts.filter(obj => 
         !(obj.item.name === item.name &&
@@ -208,25 +171,3 @@ function removeProduct(item) {
     console.log(`Removed all ${item.name} from basket`);
     console.log(basketProducts);
 }
-=======
-    // Find the item in basketProducts
-    const index = basketProducts.findIndex(obj => obj.item === item);
-    if (index > -1) {
-        const removed = basketProducts.splice(index, 1)[0];
-        const containers = document.querySelectorAll('.product-container');
-        containers.forEach(container => {
-            const nameCell = container.querySelector('.itemName');
-            if (nameCell && nameCell.textContent === item.name) {
-                container.remove();
-            }
-        });
-        itemsInBasket--;
-        updateBasketMessage();
-        console.log(`Removed ${item.name} from basket`);
-    } else {
-        console.log(`${item.name} is not in the basket`);
-    }
-    console.log(basketProducts);
-            updateBasketMessage();
-  }
->>>>>>> 51aaf408a37a15eaa7ec723f9752a9bcaa735fae
