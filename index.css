@@ -13,6 +13,7 @@
 .flex-container>div {
   background-color: #003366;
   width: 100px;
+  border: 2px, solid, black;
   text-align: center;
   line-height: 75px;
   font-size: 10px;
