@@ -6,14 +6,13 @@
 .flex-container {
   display: flex;
   margin: 10;
-  background-color: grey;
+  background-color: #003366;
   justify-content: center;
   align-items: flex-end;
 }
 .flex-container>div {
   background-color: #003366;
   width: 100px;
-  border: 2px, solid, black;
   text-align: center;
   line-height: 75px;
   font-size: 10px;
@@ -87,4 +86,98 @@ a:active {
 }
 .product-container {
   border:1px solid black;
+}
+.container2 {
+  position: relative;
+  width: 70%;
+  cursor: pointer;
+  overflow: visible; /* allow icon to float outside */
+}
+
+/* The expanding search box */
+.search-box {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-195%);
+  border: 2px solid rgba(136,139,141,0);
+  border-radius: 10px;
+  width: 25px; /* initial width */
+  height: 25px;
+  background: rgba(209,203,193,0);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: width 0.5s ease, background 0.5s ease, border-color 0.5s ease;
+}
+
+/* Search input */
+.search-box input[type="search"] {
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  width: 0;
+  transition: width 0.5s ease;
+  background: transparent;
+  font-size: 16px;
+  color: black;
+
+  /* Remove the browser's default clear (x) */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Floating icon */
+.icon2 {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(-50%, -225%);
+  font-size: 20px;
+  color:#F5F1DE;
+  z-index: 2;
+  transition: right 0.5s ease, transform 0.5s ease;
+}
+
+/* Hover triggers box expansion and input appears */
+.container2:hover .search-box {  
+  width: 90px;
+  background: rgba(209,203,193,1);
+  border-color: rgba(136,139,141,1);
+}
+
+.container2:hover .search-box input[type="search"] {
+  width: 240px; /* expand input to fill box */
+}
+
+.container2:hover .icon2 {
+  right: 90px; /* icon slides with box */
+  transform: translate(-50%, -225%);
+}
+@media (max-width: 600px) {
+  /* Keep the search box a fixed width */
+  .container2:hover .search-box {
+    width: 150px; /* adjust to fit mobile design */
+    background: rgba(209,203,193,1);
+    border-color: rgba(136,139,141,1);
+  }
+
+  /* Keep input always visible instead of expanding */
+  .search-box input[type="search"] {
+    width: 120px !important;
+  }
+
+  /* Prevent icon from sliding away */
+  .container2:hover .icon2 {
+    right: 0;
+    transform: translate(-50%, -200%);
+  }
+
+  /* Remove transitions for instant display */
+  .search-box,
+  .search-box input[type="search"],
+  .icon2 {
+    transition: none !important;
+  }
 }
