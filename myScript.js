@@ -49,7 +49,12 @@ searchInput.addEventListener('keydown', (event) => {
     if (query !== "") {
   console.log("Matching products:", results);
         window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+document.querySelectorAll(".searchResult").forEach(div => {
+    div.innerHTML = searchInput.value;
+});
     }
+      }
+});
   // optional: display results on the page
   const resultsContainer = document.getElementById("results");
   resultsContainer.innerHTML = ""; // clear old
@@ -59,8 +64,7 @@ searchInput.addEventListener('keydown', (event) => {
     resultsContainer.appendChild(div);
   });
 
-  }
-});
+
 });
 
 
