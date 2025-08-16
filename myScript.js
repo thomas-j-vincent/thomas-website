@@ -28,7 +28,31 @@ myDiv.addEventListener('mouseleave', () => {
     console.log('mouseleaved?');
 });
 
+const searchInput = document.querySelector('.search-box input');
 
+// listen for typing
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase(); // get typed text
+  console.log("User typed:", query);
+
+  // filter products (assuming products[] is already loaded with JSON)
+  const results = products.filter(product => 
+    product.name.toLowerCase().includes(query) ||
+    product.productType.toLowerCase().includes(query) ||
+    product.colour.some(c => c.toLowerCase().includes(query)) // check colours too
+  );
+
+  console.log("Matching products:", results);
+
+  // optional: display results on the page
+  const resultsContainer = document.getElementById("results");
+  resultsContainer.innerHTML = ""; // clear old
+  results.forEach(product => {
+    const div = document.createElement("div");
+    div.textContent = `${product.name} - £${product.price}`;
+    resultsContainer.appendChild(div);
+  });
+});
   let item1 = products[0];
   console.log(item1.name);
 
