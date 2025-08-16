@@ -1,4 +1,5 @@
-"item1"[
+{
+    "item1":[
 {"productType" : "nft",
 "name" :"Elle mugshot",
 "image" :"./images/Elle.JPEG",
@@ -8,7 +9,9 @@
 "size" : "one size",
 "selectedSize": "one size",}
 ]
-"item2"[
+}
+{
+    "item2":[
 {"productType" : "nft",
 "name":"Monil mugshot",
 "image" :"./images/Monil.JPEG",
@@ -18,3 +21,4 @@
 "size":"one size",
 "selectedSize": "one size",}
 ]
+}
