@@ -41,7 +41,12 @@ searchInput.addEventListener('input', () => {
     product.productType.toLowerCase().includes(query) ||
     product.colour.some(c => c.toLowerCase().includes(query)) // check colours too
   );
+searchInput.addEventListener('keydown', (event) => {
+  if (event.key === "Enter") {   // check if Enter was pressed
+    event.preventDefault();      // stop default form submission (optional)
 
+    const query = searchInput.value.trim();
+    if (query !== "") {
   console.log("Matching products:", results);
 
   // optional: display results on the page
@@ -52,7 +57,13 @@ searchInput.addEventListener('input', () => {
     div.textContent = `${product.name} - £${product.price}`;
     resultsContainer.appendChild(div);
   });
+        window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+    }
+  }
 });
+});
+
+
   let item1 = products[0];
   console.log(item1.name);
 
