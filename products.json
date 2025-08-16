@@ -5,8 +5,8 @@
 "name" :"Elle mugshot",
 "image" :"./images/Elle.JPEG",
 "price":7.00,
-"colour" : ["one colo", "red", "yellow"],
-"selectedColour":"one colo",
+"colour" : ["one colour", "red", "yellow"],
+"selectedColour":"one colour",
 "size" : ["one size", "large", "medium", "small"],
 "selectedSize": "one size"
 },
