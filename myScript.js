@@ -48,6 +48,7 @@ searchInput.addEventListener('keydown', (event) => {
     const query = searchInput.value.trim();
     if (query !== "") {
   console.log("Matching products:", results);
+  document.getElementById("searchInputDisplay").innerHTML=query;
         window.location.href = `search.html?q=${encodeURIComponent(query)}`;
 document.getElementById("searchInputDisplay").innerHTML=query;
     }
