@@ -48,7 +48,8 @@ searchInput.addEventListener('keydown', (event) => {
     const query = searchInput.value.trim();
     if (query !== "") {
   console.log("Matching products:", results);
-
+        window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+    }
   // optional: display results on the page
   const resultsContainer = document.getElementById("results");
   resultsContainer.innerHTML = ""; // clear old
@@ -57,8 +58,7 @@ searchInput.addEventListener('keydown', (event) => {
     div.textContent = `${product.name} - £${product.price}`;
     resultsContainer.appendChild(div);
   });
-        window.location.href = `search.html?q=${encodeURIComponent(query)}`;
-    }
+
   }
 });
 });
