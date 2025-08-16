@@ -14,6 +14,20 @@ console.log(basketProducts);
 
     products = data;
 
+const myDiv = document.getElementsByClass('search-box');
+
+myDiv.addEventListener('click', () => {
+    console.log('Div was clicked!');
+});
+
+myDiv.addEventListener('mouseenter', () => {
+    console.log('search was entered');
+});
+
+myDiv.addEventListener('mouseleave', () => {
+    console.log('mouseleaved?');
+});
+
 
   let item1 = products[0];
   console.log(item1.name);
