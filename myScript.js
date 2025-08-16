@@ -49,7 +49,7 @@ searchInput.addEventListener('keydown', (event) => {
     if (query !== "") {
   console.log("Matching products:", results);
         window.location.href = `search.html?q=${encodeURIComponent(query)}`;
-document.getElementById("searchInput").innerHTML="searchInput.value";
+document.getElementById("searchInputDisplay").innerHTML=query;
     }
       }
 });
