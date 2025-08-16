@@ -14,7 +14,7 @@ console.log(basketProducts);
 
     products = data;
 
-const myDiv = document.getElementsByClassName('search-box')[0];
+/*const myDiv = document.getElementsByClassName('search-box')[0];
 
 myDiv.addEventListener('click', () => {
     console.log('Div was clicked!');
@@ -27,7 +27,7 @@ myDiv.addEventListener('mouseenter', () => {
 myDiv.addEventListener('mouseleave', () => {
     console.log('mouseleaved?');
 });
-
+*/
 const searchInput = document.querySelector('.search-box input');
 
 // listen for typing
@@ -62,9 +62,8 @@ document.getElementById("searchInputDisplay").innerHTML=query;
     div.textContent = `${product.name} - £${product.price}`;
     resultsContainer.appendChild(div);
   });
-
-
 });
+
 
   let item1 = products[0];
   console.log(item1.name);
@@ -72,7 +71,7 @@ document.getElementById("searchInputDisplay").innerHTML=query;
   let item2 = products[1];
   console.log(item2.name);
 
-  
+
 // function to add 1 or remove 1 to the basket counter
 function updateBasketMessage() {
     if (itemsInBasket === 0) {
