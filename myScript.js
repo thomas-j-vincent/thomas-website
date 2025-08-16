@@ -14,7 +14,7 @@ console.log(basketProducts);
 
     products = data;
 
-const myDiv = document.getElementsByClass('search-box');
+const myDiv = document.getElementsByClassName('search-box')[0];
 
 myDiv.addEventListener('click', () => {
     console.log('Div was clicked!');
