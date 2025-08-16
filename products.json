@@ -1,7 +1,7 @@
+[
 {
-    "item1":[
-{
-    "productType" : "nft",
+"productType" : "nft",
+"productTag" : "item1",
 "name" :"Elle mugshot",
 "image" :"./images/Elle.JPEG",
 "price":7.00,
@@ -9,10 +9,10 @@
 "selectedColour":"one colour",
 "size" : ["one size", "large", "medium", "small"],
 "selectedSize": "one size"
-}],
-    "item2":[
+},
 {
-    "productType" : "nft",
+"productType" : "nft",
+"productTag" : "item2",
 "name":"Monil mugshot",
 "image" :"./images/Monil.JPEG",
 "price": 6.00,
@@ -20,5 +20,5 @@
 "selectedColour":"one colour",
 "size" : ["one size", "large", "medium", "small"],
 "selectedSize": "one size"
-}]
 }
+]

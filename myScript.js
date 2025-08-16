@@ -1,9 +1,26 @@
 let itemsInBasket = 0;
 let basketProducts = [];
-const item1 = {name:"Elle mugshot", image:"./images/Elle.JPEG", price:7.00, colour:"one colour", size:"one size"};
-const item2 = {name:"Monil mugshot", image:"./images/Monil.JPEG", price: 6.00, colour:"one colour", size:"one size"};
+let products = {};
+
+//const item1 = {name:"Elle mugshot", image:"./images/Elle.JPEG", price:7.00, colour:"one colour", size:"one size"};
+//const item2 = {name:"Monil mugshot", image:"./images/Monil.JPEG", price: 6.00, colour:"one colour", size:"one size"};
+
 updateBasketMessage();
 console.log(basketProducts);
+
+fetch('products.json')
+  .then(response => response.json())
+  .then(data => {
+    products = data;
+    initializeProductButtons();
+  })
+  .catch(error => console.error('Error loading JSON:', error));
+
+  let item1 = products[0];
+  console.log(item1.name);
+
+  let item2 = products[1];
+  console.log(item2.name);
 // function to add 1 or remove 1 to the basket counter
 function updateBasketMessage() {
     if (itemsInBasket === 0) {
@@ -41,8 +58,8 @@ removeProduct(item2);
 function addProduct(item) {
     const index = basketProducts.findIndex (obj => 
         obj.item.name === item.name &&
-        obj.item.colour === item.colour &&
-        obj.item.size === item.size
+        obj.item.colour === item.selectedColour &&
+        obj.item.size === item.selectedSize
     );
 
     if (index > -1) {
@@ -98,9 +115,9 @@ function addProduct(item) {
         <td style="width:25px; border: 1px solid; text-align: center;" class="plus-btn"><i class="fa-solid fa-plus"></i></td>
         <td style="width:50px; text-align: center;" colspan="2" class="qty-cell">${quantity}</td>
         <td style="width:25px; border: 1px solid; text-align: center;" class="minus-btn"><i class="fa-solid fa-minus"></i></td>
-        <td style="width:75px; border-bottom: 1px solid #ddd;" colspan="3" class="itemSize">${item.size}</td>
+        <td style="width:75px; border-bottom: 1px solid #ddd;" colspan="3" class="itemSize">${item.selectedSize}</td>
         <td style="width:25px; text-align: center;"><i class="fa-solid fa-grip-lines-vertical"></i></td>
-        <td style="width:50px; border-bottom: 1px solid #ddd;" colspan="2" class="itemColour">${item.colour}</td>
+        <td style="width:50px; border-bottom: 1px solid #ddd;" colspan="2" class="itemColour">${item.selectedColour}</td>
     `;
 
     table.appendChild(tbody);
@@ -147,8 +164,8 @@ function removeProduct(item) {
     // Remove all from basket array
     basketProducts = basketProducts.filter(obj => 
         !(obj.item.name === item.name &&
-          obj.item.colour === item.colour &&
-          obj.item.size === item.size)
+          obj.item.colour === item.selectedColour &&
+          obj.item.size === item.selectedSize)
     );
 
     // Remove all matching DOM containers
