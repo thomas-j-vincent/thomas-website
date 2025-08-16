@@ -32,7 +32,7 @@ a:link {
 }
 
 a:visited {
-  color:black;
+  color:black !important;
 }
 
 a:hover {
