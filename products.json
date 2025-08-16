@@ -4,7 +4,7 @@
 "productTag" : "item1",
 "name" :"Elle mugshot",
 "image" :"./images/Elle.JPEG",
-"price":7.00,
+"price": 7.00,
 "colour" : ["one colour", "red", "yellow"],
 "selectedColour":"one colour",
 "size" : ["one size", "large", "medium", "small"],

@@ -10,12 +10,13 @@
 <body>
 <div class="flex-container">
   <div style="flex-grow: 50"><a href="home.asp">Brand Name</a></li></div>
-  <div style="flex-grow: 50">
+<div style="flex-grow: 50">
  <div class="container2">
-    <form class="search-box" action="/action_page.php" method="get">
-      <input type="search" name="gsearch" placeholder="Search...">
-  </form>
-  <i class="fas fa-magnifying-glass icon2"></i></div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search...">
+        <button onclick="doSearch()"><i class="fas fa-magnifying-glass icon2"></i></button>
+  </div>
+  </div>
   </div>
   <div class="dropdown" style="flex-basis: 100px"><i class="fas fa-shopping-basket icon"></i>
   <div class="dropdown-content basket">

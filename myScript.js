@@ -32,6 +32,20 @@ function updateBasketMessage() {
         document.getElementById("checkout").style.display = "block";
     }
 }
+
+function doSearch() {
+  const query = document.getElementById("searchInput").value.trim();
+  if (query) {
+    // Example: show results locally
+    document.getElementById("result").innerText = "You searched for: " + query;
+
+    // Or redirect to Google search:
+    // window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
+  } else {
+    document.getElementById("result").innerText = "Please enter something.";
+  }
+}
+
 function formatPrice(amount) {
     return `£ ${amount.toFixed(2)}`;
 }
