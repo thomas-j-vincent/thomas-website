@@ -66,12 +66,13 @@ document.getElementById("searchInputDisplay").innerHTML=query;
 
 });
 
-
   let item1 = products[0];
   console.log(item1.name);
 
   let item2 = products[1];
   console.log(item2.name);
+
+  
 // function to add 1 or remove 1 to the basket counter
 function updateBasketMessage() {
     if (itemsInBasket === 0) {
@@ -83,19 +84,6 @@ function updateBasketMessage() {
         //document.getElementById("warning").innerHTML = "You have " + itemsInBasket+" item"+(itemsInBasket>1?"s":"")+" in your basket.";
         document.getElementById("checkout").style.display = "block";
     }
-}
-
-function doSearch() {
-  const query = document.getElementById("searchInput").value.trim();
-  if (query) {
-    // Example: show results locally
-    document.getElementById("result").innerText = "You searched for: " + query;
-
-    // Or redirect to Google search:
-    // window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
-  } else {
-    document.getElementById("result").innerText = "Please enter something.";
-  }
 }
 
 function formatPrice(amount) {
