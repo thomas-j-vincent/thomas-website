@@ -2,19 +2,18 @@ let itemsInBasket = 0;
 let basketProducts = [];
 let products = {};
 
+fetch('products.json')
+  .then(response => response.json())
+  .then(data => {
+
 //const item1 = {name:"Elle mugshot", image:"./images/Elle.JPEG", price:7.00, colour:"one colour", size:"one size"};
 //const item2 = {name:"Monil mugshot", image:"./images/Monil.JPEG", price: 6.00, colour:"one colour", size:"one size"};
 
 updateBasketMessage();
 console.log(basketProducts);
 
-fetch('products.json')
-  .then(response => response.json())
-  .then(data => {
     products = data;
-    initializeProductButtons();
-  })
-  .catch(error => console.error('Error loading JSON:', error));
+
 
   let item1 = products[0];
   console.log(item1.name);
@@ -188,3 +187,5 @@ function removeProduct(item) {
     console.log(`Removed all ${item.name} from basket`);
     console.log(basketProducts);
 }
+});
+//.catch(error => console.error('Error loading JSON:', error));
