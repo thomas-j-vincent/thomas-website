@@ -42,6 +42,7 @@ a:hover {
 
 a:active {
   text-decoration: underline;
+    color:black;
 }
 .colour {
   color: #F5F1DE;
