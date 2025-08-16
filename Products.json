@@ -6,7 +6,7 @@
 "image" :"./images/Elle.JPEG",
 "price":7.00,
 "colour" : ["one colour", "red", "yellow"],
-"selectedColour":"one colour",
+"selectedColour":"one ayo",
 "size" : ["one size", "large", "medium", "small"],
 "selectedSize": "one size"
 }],
