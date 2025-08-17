@@ -11,6 +11,15 @@ if (query) {
   fetch("products.json")
     .then(res => res.json())
     .then(products => {
+
+const { addProduct } = require('./myScript.js');
+
+  let item1 = products[0];
+  console.log(item1.name);
+
+  let item2 = products[1];
+  console.log(item2.name);
+
       // Filter by query
       const results = products.filter(product =>
         product.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -24,7 +33,7 @@ if (query) {
       if (results.length > 0) {
         results.forEach(product => {
           const div = document.createElement("div");
-          div.textContent = `${product.name} - £${product.price}`;
+          div.textContent = `${product(item)}`;
           resultsContainer.appendChild(div);
         });
       } else {
