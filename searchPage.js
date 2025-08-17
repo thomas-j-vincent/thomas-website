@@ -18,7 +18,7 @@ if (query) {
 
 function displayResults(item) {
       const newDiv = document.createElement("div");
-    newDiv.classList.add("searchResult");
+    newDiv.classList.add("product-container");
 
     const table = document.createElement("table");
     table.classList.add("basket-table");
@@ -62,52 +62,8 @@ function displayResults(item) {
 
     table.appendChild(tbody);
     newDiv.appendChild(table);
-    document.getElementById("container").appendChild(newDiv);
-
-    // Add to basket array
-    basketProducts.push({ item: item });
-
-    // Plus button
-newDiv.querySelector(".plus-btn").addEventListener("click", () => {
-    let qtyCell = newDiv.querySelector(".qty-cell");
-    let quantity = parseInt(qtyCell.textContent, 10); //  read from DOM
-    quantity++;
-    itemsInBasket++;
-    let totalPrice = item.price * quantity;
-    qtyCell.textContent = quantity;
-    newDiv.querySelector(".itemPrice").textContent = formatPrice(totalPrice)
+    document.getElementById("searchResult").appendChild(newDiv);
     updateBasketMessage();
-});
-
-// Minus button
-newDiv.querySelector(".minus-btn").addEventListener("click", () => {
-    let qtyCell = newDiv.querySelector(".qty-cell");
-    let quantity = parseInt(qtyCell.textContent, 10); //  read from DOM
-    if (quantity > 1) {
-        quantity--;
-        itemsInBasket--;
-        let totalPrice = item.price * quantity;
-        qtyCell.textContent = quantity;
-        newDiv.querySelector(".itemPrice").textContent = formatPrice(totalPrice)
-        updateBasketMessage();
-    }
-});
-
-
-    document.getElementById("container").appendChild(newDiv);
-
-    // ✅ Push with colour and size included
-    basketProducts.push({
-        item: item,
-    //    colour: item.selectedColour,
-    //    size: item.selectedSize,
-        element: newDiv
-    });
-
-    // Update count & message
-    itemsInBasket++;
-    updateBasketMessage();
-
 
 }
  
