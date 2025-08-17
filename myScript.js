@@ -6,8 +6,8 @@ fetch('products.json')
   .then(response => response.json())
   .then(data => {
   })
-//const item1 = {name:"Elle mugshot", image:"./images/Elle.JPEG", price:7.00, colour:"one colour", size:"one size"};
-//const item2 = {name:"Monil mugshot", image:"./images/Monil.JPEG", price: 6.00, colour:"one colour", size:"one size"};
+const item1 = {name:"Elle mugshot", image:"./images/Elle.JPEG", price:7.00, colour:"one colour", size:"one size"};
+const item2 = {name:"Monil mugshot", image:"./images/Monil.JPEG", price: 6.00, colour:"one colour", size:"one size"};
 
 updateBasketMessage();
 console.log(basketProducts);
@@ -65,12 +65,12 @@ document.getElementById("searchInputDisplay").innerHTML=query;
 });
 
 
-  let item1 = products[0];
+/*  let item1 = products[0];
   console.log(item1.name);
 
   let item2 = products[1];
   console.log(item2.name);
-
+*/
 
 // function to add 1 or remove 1 to the basket counter
 function updateBasketMessage() {
