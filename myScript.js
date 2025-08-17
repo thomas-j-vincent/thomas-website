@@ -149,7 +149,7 @@ function removeProduct(item) {
 
 fetch('products.json')
   .then(response => response.json())
-  .then(products => {
+  .then(data =>  {
 
       products = data;
 
