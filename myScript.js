@@ -39,29 +39,40 @@ searchInput.addEventListener('input', () => {
     product.name.toLowerCase().includes(query) ||
     product.productType.toLowerCase().includes(query) ||
     product.colour.some(c => c.toLowerCase().includes(query)) // check colours too
-  );
-searchInput.addEventListener('keydown', (event) => {
-  if (event.key === "Enter") {   // check if Enter was pressed
-    event.preventDefault();      // stop default form submission (optional)
-
-    const query = searchInput.value.trim();
-    if (query !== "") {
-  console.log("Matching products:", results);
-  document.getElementById("searchInputDisplay").innerHTML=query;
-        window.location.href = `search.html?q=${encodeURIComponent(query)}`;
-document.getElementById("searchInputDisplay").innerHTML=query;
-    }
-      }
-});
-  // optional: display results on the page
+  );  
+  // optional: display results live
   const resultsContainer = document.getElementById("results");
-  resultsContainer.innerHTML = ""; // clear old
-  results.forEach(product => {
-    const div = document.createElement("div");
-    div.textContent = `${product.name} - £${product.price}`;
-    resultsContainer.appendChild(div);
-  });
+  if (resultsContainer) {
+    resultsContainer.innerHTML = "";
+    results.forEach(product => {
+      const div = document.createElement("div");
+      div.textContent = `${product.name} - £${product.price}`;
+      resultsContainer.appendChild(div);
+    });
+  }
 });
+
+// Pressing Enter
+searchInput.addEventListener('keydown', (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const query = searchInput.value.trim();
+
+    if (query !== "") {
+      console.log("Redirecting with query:", query);
+      
+      // ✅ only update if element exists
+      const display = document.getElementById("searchInputDisplay");
+      if (display) {
+        display.innerHTML = query;
+      }
+
+      // redirect
+      window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+    }
+  }
+});
+
 
 
   let item1 = products[0];
@@ -114,7 +125,7 @@ function addProduct(item) {
     if (!item.selectedSize) {
         item.selectedSize = item.size[0];
     }
-    
+
     const index = basketProducts.findIndex (obj => 
         obj.item.name === item.name &&
         obj.item.selectedColour === item.selectedColour &&
