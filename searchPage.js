@@ -81,7 +81,7 @@ function displayResults(item) {
       if (results.length > 0) {
         results.forEach(product => {
           const div = document.createElement("div");
-          div.textContent = `${item.name}`;
+          div.textContent = `${item.name} - £${product.price}`;
           resultsContainer.appendChild(div);
         });
       } else {
