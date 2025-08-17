@@ -107,6 +107,14 @@ removeProduct(item2);
 });
 // Function to put a product in the basket (with the table structure)
 function addProduct(item) {
+
+        if (!item.selectedColour) {
+        item.selectedColour = item.colour[0];
+    }
+    if (!item.selectedSize) {
+        item.selectedSize = item.size[0];
+    }
+    
     const index = basketProducts.findIndex (obj => 
         obj.item.name === item.name &&
         obj.item.selectedColour === item.selectedColour &&
