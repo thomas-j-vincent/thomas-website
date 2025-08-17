@@ -12,7 +12,7 @@ const item2 = {name:"Monil mugshot", image:"./images/Monil.JPEG", price: 6.00, c
 updateBasketMessage();
 console.log(basketProducts);
 
-    products = data;
+//    products = data;
 
 /*const myDiv = document.getElementsByClassName('search-box')[0];
 
