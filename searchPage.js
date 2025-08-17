@@ -1,8 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 
-
-
 if (query) {
   console.log("Search page query:", query);
   document.getElementById("searchQuery").textContent = query;
