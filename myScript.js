@@ -268,7 +268,7 @@ function removeProduct(item) {
     console.log(`Removed all ${item.name} from basket`);
     console.log(basketProducts);
 }
-Module.exports = {addProduct };
+module.exports = {addProduct };
 });
 //.catch(error => console.error('Error loading JSON:', error))
 //;
