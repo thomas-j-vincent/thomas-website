@@ -115,7 +115,7 @@ document.getElementById("removeItem2Btn").addEventListener("click", function() {
 removeProduct(item2);
 });
 // Function to put a product in the basket (with the table structure)
- function addProduct(item) {
+export function addProduct(item) {
 
         if (!item.selectedColour) {
         item.selectedColour = item.colour[0];

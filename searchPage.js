@@ -1,5 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
+import { addProduct } from './myScript.js';
 
 
 
@@ -11,8 +12,6 @@ if (query) {
   fetch("products.json")
     .then(res => res.json())
     .then(products => {
-
-const { addProduct } = require('./myScript.js');
 
   let item1 = products[0];
   console.log(item1.name);
@@ -33,7 +32,7 @@ const { addProduct } = require('./myScript.js');
       if (results.length > 0) {
         results.forEach(product => {
           const div = document.createElement("div");
-          div.textContent = `${product(item)}`;
+          div.textContent = `${addProduct(item)}`;
           resultsContainer.appendChild(div);
         });
       } else {
