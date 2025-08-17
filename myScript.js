@@ -109,8 +109,8 @@ removeProduct(item2);
 function addProduct(item) {
     const index = basketProducts.findIndex (obj => 
         obj.item.name === item.name &&
-        obj.item.colour === item.selectedColour &&
-        obj.item.size === item.selectedSize
+        obj.item.selectedColour === item.selectedColour &&
+        obj.item.selectedSize === item.selectedSize
     );
 
     if (index > -1) {
@@ -210,8 +210,8 @@ newDiv.querySelector(".minus-btn").addEventListener("click", () => {
     // ✅ Push with colour and size included
     basketProducts.push({
         item: item,
-        colour: item.selectedColour,
-        size: item.selectedSize,
+    //    colour: item.selectedColour,
+    //    size: item.selectedSize,
         element: newDiv
     });
 
@@ -227,8 +227,8 @@ function removeProduct(item) {
     // Remove all from basket array
     basketProducts = basketProducts.filter(obj => 
         !(obj.item.name === item.name &&
-          obj.item.colour === item.selectedColour &&
-          obj.item.size === item.selectedSize)
+          obj.item.selectedColour === item.selectedColour &&
+          obj.item.selectedSize === item.selectedSize)
     );
 
     // Remove all matching DOM containers
