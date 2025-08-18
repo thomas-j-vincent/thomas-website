@@ -83,7 +83,7 @@ function displayResults(item) {
           const div = document.createElement("div");
           //div.textContent = `${product.name} - £${product.price}`;
           displayResults(item);
-
+console.log(displayResults);
           resultsContainer.appendChild(div);
         });
       } else {
