@@ -68,7 +68,9 @@ a:active {
   padding: 15px;
   margin: 10px;
 }
-
+.searchResult {
+  margin: 10px;
+}
 
 .dropdown-content a {
   color: black;
