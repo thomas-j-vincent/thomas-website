@@ -11,10 +11,10 @@ if (query) {
     .then(products => {
 
   let item1 = products[0];
-  console.log(item1.name);
+  console.log(item1);
 
   let item2 = products[1];
-  console.log(item2.name);
+  console.log(item2);
 
 function displayResults(item) {
       const newDiv = document.createElement("div");
