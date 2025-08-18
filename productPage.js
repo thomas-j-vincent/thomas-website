@@ -4,18 +4,19 @@
 const urlParams = new URLSearchParams(window.location.search);
     const item = urlParams.get("item");
 
-    // Example: show different info based on item
-    if (item) {
-      document.getElementById("productTitle").textContent = item;
+  let item1 = products[0];
+  console.log(item1);
 
-      if (item === "Sofa") {
-        document.getElementById("productInfo").textContent = "This is a comfy sofa with 3 seats.";
-      } else if (item === "Table") {
-        document.getElementById("productInfo").textContent = "A sturdy oak dining table.";
-      } else {
-        document.getElementById("productInfo").textContent = "No details available for this product.";
-      }
+  let item2 = products[1];
+  console.log(item2);
+
+function displayResults(item) {
+ const detailsDiv = document.querySelector(".productLayout");
+      detailsDiv.innerHTML = "hello";
+      console.log("hello");
     }
-        })
+
+displayResults(item1);
+})
 .catch(error => console.error('Error loading JSON:', error))
 ;
