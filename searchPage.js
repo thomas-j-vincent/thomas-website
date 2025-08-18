@@ -18,7 +18,12 @@ if (query) {
 
 function displayResults(item) {
   const newDiv = document.createElement("div");
-  newDiv.classList.add("product-container");
+  newDiv.classList.add("result-container");
+  newDiv.classList.add(item.name.replace(/\s+/g, '-').toLowerCase());
+  const productSlug = item.name.replace(/\s+/g, '-').toLowerCase();
+ newDiv.addEventListener("click", function() {
+      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
+ });
 
   const table = document.createElement("table");
   table.classList.add("basket-table");
@@ -26,29 +31,45 @@ function displayResults(item) {
   table.cellSpacing = "0";
   table.cellPadding = "5";
 
+const colours = item.colour || []; // make sure it’s an array
+const extraColours = Math.max(colours.length - 1, 0); // subtract the default first colour
+
+const additionalInfo = item.additionalInfo || "&nbsp;";
+
   const tbody = document.createElement("tbody");
 
   // Row 1: Image + Name
   let row1 = tbody.insertRow();
   row1.innerHTML = `
-      <td colspan="4" rowspan="4" class="itemImg">
+      <td class="itemImg">
           <img src="${item.image}" alt="${item.name}" width="128" height="128">
       </td>
-      <td rowspan="7" style="width:50px;">&nbsp;</td>
-      <td colspan="6" style="border-bottom: 1px solid #ddd;" class="itemName">${item.name}</td>
   `;
-
   // Simple price row for now
   tbody.insertRow().innerHTML = `
-      <td colspan="6" class="itemPrice">£${item.price}</td>
+       <td class="itemName">${item.name}</td>
   `;
+    // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td class="itemPrice">£${item.price}</td>
+  `;
+      // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td  style=" font-size: 10px;" class="itemAdditionalInfo">
+       ${additionalInfo}
+       </td>
+  `;
+      // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td  style=" font-size: 10px;" class="availableColours">Available colours: ${extraColours}</td>
+  `;
+
 
   table.appendChild(tbody);
   newDiv.appendChild(table);
 
   document.getElementById("searchResult").appendChild(newDiv);
 }
- 
 
       // Filter by query
       const results = products.filter(product =>
@@ -71,5 +92,5 @@ console.log(displayResults);
       } else {
         resultsContainer.textContent = "No results found.";
       }
-    });
+    }).catch(error => console.error('Error loading JSON:', error));
 }

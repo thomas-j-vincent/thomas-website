@@ -268,6 +268,6 @@ function removeProduct(item) {
     console.log(`Removed all ${item.name} from basket`);
     console.log(basketProducts);
 }
-});
-//.catch(error => console.error('Error loading JSON:', error))
-//;
+})
+.catch(error => console.error('Error loading JSON:', error))
+;
