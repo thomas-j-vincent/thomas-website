@@ -82,6 +82,8 @@ function displayResults(item) {
         results.forEach(product => {
           const div = document.createElement("div");
           div.textContent = `${product.name} - £${product.price}`;
+          div.textContent = `${displayResults.item}`;
+
           resultsContainer.appendChild(div);
         });
       } else {
