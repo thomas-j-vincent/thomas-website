@@ -105,8 +105,22 @@ a:active {
   box-sizing: border-box;
   margin-right: 50px;
 }
-
-
+.productName {
+  background-color: blue;;
+  padding: 10px;
+  width: 950px;
+  height: 100px;
+}
+.productPrice {
+  background-color: blue;
+  height: 50px;
+}
+.productColour {
+background-color: red;
+}
+.productPriceValue {
+  text-align: center;
+}
 .result-container {
   background: #fff;
   border: 1px solid #ddd;
