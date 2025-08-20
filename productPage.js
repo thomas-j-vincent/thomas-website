@@ -57,11 +57,11 @@ fetch("products.json")
       console.log(item.colour || []);
       let i = 0;
         if (item.colour.length > 1) {
-     // const colours = item.colour || []; // make sure it’s an array
       const extraColours = Math.max(item.colour.length - 1, 0); // subtract the default first colour
       console.log(extraColours);
       while (i < extraColours) {
-        i++;
+        //i++;
+       // const colourIndex = i + 1;
         const cellWidth = Math.max(100/item.colour.length);
         console.log("Cell width:", cellWidth);
         let colourCell = row2.insertCell();
