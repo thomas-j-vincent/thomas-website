@@ -59,7 +59,7 @@ searchInput.addEventListener('keydown', (event) => {
     if (query !== "") {
       console.log("Redirecting with query:", query);
       
-      // ✅ only update if element exists
+      //  only update if element exists
       const display = document.getElementById("searchInputDisplay");
       if (display) {
         display.innerHTML = query;

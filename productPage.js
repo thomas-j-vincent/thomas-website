@@ -1,91 +1,186 @@
-  console.log("searchPage.js loaded");
-  
-  fetch("products.json")
-    .then(res => res.json())
-    .then(products => {
-const urlParams = new URLSearchParams(window.location.search);
-    const item = urlParams.get("item");
+console.log("productPage.js loaded");
 
-  let item1 = products[0];
-  console.log(item1);
+fetch("products.json")
+  .then(res => res.json())
+  .then(products => {
+    // Get product name from URL (?item=...)
+    const itemName = new URLSearchParams(window.location.search).get("q");
+    console.log("URL itemName:", itemName);
 
-  let item2 = products[1];
-  console.log(item2);
+    // Find product in JSON
+    const selectedProduct = products.find(p => p.name === itemName);
 
-function displayResults(item) {
-  console.log("Item in displayResults:", item);
+    if (!selectedProduct) {
+      console.error("No product found with name:", itemName);
+      document.querySelector(".productDetails").textContent = "Product not found.";
+      return;
+    }
 
-  const newDiv = document.createElement("div");
-  newDiv.classList.add("product-container");
+    console.log("Selected product:", selectedProduct);
 
-  const table = document.createElement("table");
-  table.classList.add("basket-table");
-  table.border = "0";
-  table.cellSpacing = "0";
-  table.cellPadding = "5";
+    // Build table
+    function displayResults(item) {
+      console.log("Displaying item:", item);
 
-  const tbody = document.createElement("tbody");
+      const newDiv = document.createElement("div");
+      newDiv.classList.add("product-container");
 
-  // Row 1: Image + Name
-  let row1 = tbody.insertRow();
-  row1.innerHTML = `
-      <td colspan="9" style="border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productName">${item.name}</td>
-  `;
+      const table = document.createElement("table");
+      table.classList.add("basket-table");
+      table.border = "0";
+      table.cellSpacing = "0";
+      table.cellPadding = "5";
 
-  // Row 2: Empty
-  tbody.insertRow().innerHTML = `<td colspan="5">&nbsp;</td>`;
+      const tbody = document.createElement("tbody");
 
-// WORK ON THIS BIT \/
-  // Row 3: Price
-  tbody.insertRow().innerHTML = `
-      <td style="width:100px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productColour">Colour:</td>
-      <td colspan="1"style=" width:100px;">&nbsp;</td>
-      <td style="width:50px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productColour">colour 1</td>
-      <td style="width:50px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productColour">colour 2</td>
-      <td style="width:50px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productColour">colour 3</td>
-  `;
-// WORK ON THIS BIT /\
+      // Row 1: Product Name
+      let row1 = tbody.insertRow();
+      row1.innerHTML = `
+        <td colspan="9" style="border-bottom: 1px solid #ddd; border: 1px solid black;" class="productName">
+          ${item.name}
+        </td>
+      `;
 
-  // Row 4: Empty
-  tbody.insertRow().innerHTML = `<td colspan="5">&nbsp;</td>`;
+      // Spacer Row
+      tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
-  // Row 5: Quantity / Size / Colour controls
-  let row5 = tbody.insertRow();
-  row5.innerHTML = `
-      <td style="width:100px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productSize">Size:</td>
-      <td colspan="1"style=" width:100px;">&nbsp;</td>
-      <td style="width:50px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productSize">Size 1</td>
-      <td style="width:50px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productSize">Size 2</td>
-      <td style="width:50px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productSize">Size 3</td>
-  `;
+      // Row 2: Colours
+      let row2 = tbody.insertRow();
+      let colourLabel = row2.insertCell();
+      colourLabel.textContent = "Colour:";
+      colourLabel.style.width = "100px";
+      colourLabel.style.border = "1px solid black";
 
-  tbody.insertRow().innerHTML = `<td colspan="5"style="">&nbsp;</td>`;
+      let colourSpace = row2.insertCell();
+      colourSpace.textContent = ""
+      colourSpace.style.width = ((100/item.colour.length)-5) + "%";
+      console.log(item.colour || []);
+      let i = 0;
+        if (item.colour.length > 1) {
+     // const colours = item.colour || []; // make sure it’s an array
+      const extraColours = Math.max(item.colour.length - 1, 0); // subtract the default first colour
+      console.log(extraColours);
+      while (i < extraColours) {
+        i++;
+        const cellWidth = Math.max(100/item.colour.length);
+        console.log("Cell width:", cellWidth);
+        let colourCell = row2.insertCell();
+        colourCell.textContent = item.colour[i];
+        colourCell.classList.add("productColour");
+        colourCell.style.width = cellWidth + "%";
+        colourCell.style.border = "1px solid black";
+        
+        colourCell.addEventListener("click", () => {
+          console.log("User selected colour:", colour);
+          row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
+          colourCell.style.background = "lightblue";
+        });
+      };
+    }
+    else {  let colourCell = row2.insertCell();
+        colourCell.textContent = colour;
+        colourCell.classList.add("productColour");
+        colourCell.style.width = "80px";
+       colourCell.style.border = "1px solid black";
 
-  tbody.insertRow().innerHTML = `
-    <td style="width:100px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productPrice">Price: </td>
-    <td colspan="1"style=" width:100px;">&nbsp;</td>
-    <td colspan="3" style="width:50px; border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productPriceValue">£${item.price}</td>
-`;
+       colourCell.addEventListener("click", () => {
+         console.log("User selected colour:", colour);
+          row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
+         colourCell.style.background = "lightblue";
+       });
+      };
+      // Spacer Row
+      tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
-tbody.insertRow().innerHTML = `<td colspan="5">&nbsp;</td>`;
+      // Row 3: Sizes
+      let row3 = tbody.insertRow();
+      let sizeLabel = row3.insertCell();
+      sizeLabel.textContent = "Size:";
+      sizeLabel.style.width = "100px";
+      sizeLabel.style.border = "1px solid black";
 
-  let row8 = tbody.insertRow();
-  row8.innerHTML = `
-      <td colspan="9" style="border-bottom: 1px solid #ddd; border: 1px, solid, black;" class="productName">Add to basket</td>
-  `;
+      let sizeSpace = row3.insertCell();
+      sizeSpace.textContent = ""
+      sizeSpace.style.width = "100px";
+      
 
-  tbody.insertRow().innerHTML = `<td colspan="5">&nbsp;</td>`;
+      console.log(item.size || []);
+      let ii = 0;
+        if (item.size.length > 1) {
+     // const sizes = item.size || []; // make sure it’s an array
+      const extraSizes = Math.max(item.size.length - 1, 0); // subtract the default first colour
+      console.log(extraSizes);
+      while (ii < extraSizes) {
+        ii++;
+        const cellWidth = Math.max(100/item.colour.length);
+        console.log("Cell width:", item.size);
+        let sizeCell = row3.insertCell();
+        sizeCell.textContent = item.size[ii];
+        sizeCell.classList.add("productSize");
+        sizeCell.style.width = cellWidth + "%";
+        sizeCell.style.border = "1px solid black";
+        
+        sizeCell.addEventListener("click", () => {
+          console.log("User selected colour:", colour);
+          row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
+          SizeCell.style.background = "lightblue";
+        });
+      };
+    }
+    else {  let SizeCell = row2.insertCell();
+        sizeCell.textContent = colour;
+        sizeCell.classList.add("productSize");
+        sizeCell.style.width = "80px";
+       sizeCell.style.border = "1px solid black";
 
-    tbody.insertRow().innerHTML = `<td colspan="5"style=" border: 1px, solid, black;">Checkout</td>`;
+       sizeCell.addEventListener("click", () => {
+         console.log("User selected colour:", colour);
+          row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
+         sizeCell.style.background = "lightblue";
+       });
+      };
+      // Spacer Row
+      tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
-  table.appendChild(tbody);
-  newDiv.appendChild(table);
+      // Row 4: Price
+      tbody.insertRow().innerHTML = `
+        <td style="width:100px; border: 1px solid black;" class="productPrice">Price:</td>
+        <td colspan="8" style="border: 1px solid black;" class="productPriceValue">£${item.price}</td>
+      `;
 
-  // ⬇️ Append into product details instead of basket
-  document.querySelector(".productDetails").appendChild(newDiv);
-}
-    console.log("Item in displayResults:", item1);
-displayResults(item1);
-})
-.catch(error => console.error('Error loading JSON:', error))
-;
+      // Spacer Row
+      tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+
+      // Row 5: Add to Basket
+      let row5 = tbody.insertRow();
+      row5.innerHTML = `
+        <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" class="addToBasket">
+          Add to Basket
+        </td>
+      `;
+      row5.addEventListener("click", () => {
+        console.log("Added to basket:", item.name);
+      });
+
+      // Spacer Row
+      tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+
+      // Row 6: Checkout
+      tbody.insertRow().innerHTML = `
+        <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;">
+          Checkout
+        </td>
+      `;
+
+      table.appendChild(tbody);
+      newDiv.appendChild(table);
+
+      // Attach to productDetails
+      document.querySelector(".productDetails").appendChild(newDiv);
+    }
+
+    // Finally display
+    displayResults(selectedProduct);
+
+  })
+  .catch(error => console.error("Error loading JSON:", error));

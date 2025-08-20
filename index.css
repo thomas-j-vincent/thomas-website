@@ -110,6 +110,14 @@ a:active {
   padding: 10px;
   width: 950px;
   height: 100px;
+  text-align: center;
+}
+.addToBasket {
+  background-color: blue;;
+  padding: 10px;
+  width: 950px;
+  height: 100px;
+  text-align: center;
 }
 .productPrice {
   background-color: blue;
@@ -117,6 +125,9 @@ a:active {
 }
 .productColour {
 background-color: red;
+/* margin: 10px;
+  padding: 10px; */
+  
 }
 .productPriceValue {
   text-align: center;
