@@ -71,7 +71,7 @@ fetch("products.json")
         colourCell.style.border = "1px solid black";
         
         colourCell.addEventListener("click", () => {
-          console.log("User selected colour:", colour);
+          console.log("User selected colour:", item.colour[i]);
           row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
           colourCell.style.background = "lightblue";
         });
@@ -121,20 +121,20 @@ fetch("products.json")
         sizeCell.style.border = "1px solid black";
         
         sizeCell.addEventListener("click", () => {
-          console.log("User selected colour:", colour);
+          console.log("User selected colour:", item.size);
           row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
-          SizeCell.style.background = "lightblue";
+          sizeCell.style.background = "lightblue";
         });
       };
     }
     else {  let SizeCell = row2.insertCell();
-        sizeCell.textContent = colour;
+        sizeCell.textContent = size;
         sizeCell.classList.add("productSize");
         sizeCell.style.width = "80px";
        sizeCell.style.border = "1px solid black";
 
        sizeCell.addEventListener("click", () => {
-         console.log("User selected colour:", colour);
+         console.log("User selected size:", item.size);
           row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
          sizeCell.style.background = "lightblue";
        });
