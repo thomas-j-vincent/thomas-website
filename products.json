@@ -39,9 +39,9 @@
 "name":"Sam mugshot",
 "image" :"./images/Sam.JPG",
 "price": 6.00,
-"colour" : ["one colour", "red", "yellow"],
+"colour" : ["one colour"],
 "selectedColour":"one colour",
-"size" : ["one size", "large", "medium", "small"],
+"size" : ["one size"],
 "selectedSize": "one size"
 }
 ]

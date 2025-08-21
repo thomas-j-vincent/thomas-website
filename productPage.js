@@ -45,98 +45,113 @@ fetch("products.json")
       tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
       // Row 2: Colours
-      let row2 = tbody.insertRow();
-      let colourLabel = row2.insertCell();
-      colourLabel.textContent = "Colour:";
-      colourLabel.style.width = "100px";
-      colourLabel.style.border = "1px solid black";
+let row2 = tbody.insertRow();
 
+let colourLabel = row2.insertCell();
+colourLabel.textContent = "Colour:";
+colourLabel.style.width = "100px";
+colourLabel.style.border = "1px solid black";
+
+      let i = 0;
+    if (item.colour.length > 1) {
       let colourSpace = row2.insertCell();
       colourSpace.textContent = ""
-      colourSpace.style.width = ((100/item.colour.length)-5) + "%";
-      console.log(item.colour || []);
-      let i = 0;
-        if (item.colour.length > 1) {
-      const extraColours = Math.max(item.colour.length - 1, 0); // subtract the default first colour
-      console.log(extraColours);
-      while (i < extraColours) {
+      colourSpace.style.width = (100/item.colour.length)+ "%";
+
+      const extraColours = item.colour.length - 1; // subtract the default first colour
+      for (let i = 0; 1 < extraColours; i++) {
         //i++;
-       // const colourIndex = i + 1;
-        const cellWidth = Math.max(100/item.colour.length);
+        const colourIndex = i + 1;
+        const cellWidth = 100/item.colour.length;
         console.log("Cell width:", cellWidth);
         let colourCell = row2.insertCell();
-        colourCell.textContent = item.colour[i];
+        colourCell.textContent = item.colour[colourIndex];
         colourCell.classList.add("productColour");
         colourCell.style.width = cellWidth + "%";
         colourCell.style.border = "1px solid black";
-        
+
+        const thisColour = item.colour[colourIndex];
         colourCell.addEventListener("click", () => {
-          console.log("User selected colour:", item.colour[i]);
+          console.log("User selected colour:", thisColour);
           row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
           colourCell.style.background = "lightblue";
         });
+        i++;
       };
     }
-    else {  let colourCell = row2.insertCell();
-        colourCell.textContent = colour;
-        colourCell.classList.add("productColour");
-        colourCell.style.width = "80px";
-       colourCell.style.border = "1px solid black";
+    else {  
 
-       colourCell.addEventListener("click", () => {
-         console.log("User selected colour:", colour);
-          row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
-         colourCell.style.background = "lightblue";
+      let colourSpace = row2.insertCell();
+      colourSpace.textContent = ""
+      colourSpace.style.width = "50%";
+
+      let colourCell = row2.insertCell();
+      colourCell.textContent = item.colour[0]; // safer than item.colour
+      colourCell.classList.add("productColour");
+      colourCell.style.width = "120px"; // fixed width
+      colourCell.style.border = "1px solid black";
+
+      colourCell.addEventListener("click", () => {
+        console.log("User selected colour:", item.colour[0]);
+        row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
+        colourCell.style.background = "lightblue";
        });
       };
       // Spacer Row
       tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
       // Row 3: Sizes
-      let row3 = tbody.insertRow();
-      let sizeLabel = row3.insertCell();
-      sizeLabel.textContent = "Size:";
-      sizeLabel.style.width = "100px";
-      sizeLabel.style.border = "1px solid black";
+let row3 = tbody.insertRow();
 
+let sizeLabel = row3.insertCell();
+sizeLabel.textContent = "Colour:";
+sizeLabel.style.width = "100px";
+sizeLabel.style.border = "1px solid black";
+
+      let ii = 0;
+    if (item.size.length > 1) {
       let sizeSpace = row3.insertCell();
       sizeSpace.textContent = ""
-      sizeSpace.style.width = "100px";
-      
-
+      sizeSpace.style.width = (100/item.size.length) + "%";
       console.log(item.size || []);
-      let ii = 0;
-        if (item.size.length > 1) {
-     // const sizes = item.size || []; // make sure it’s an array
       const extraSizes = Math.max(item.size.length - 1, 0); // subtract the default first colour
       console.log(extraSizes);
       while (ii < extraSizes) {
-        ii++;
-        const cellWidth = Math.max(100/item.colour.length);
-        console.log("Cell width:", item.size);
+        //ii++;
+        const sizeIndex = ii + 1;
+        const cellWidth = Math.max(100/item.size.length);
+        console.log("Cell width:", cellWidth);
         let sizeCell = row3.insertCell();
-        sizeCell.textContent = item.size[ii];
+        sizeCell.textContent = item.size[sizeIndex];
         sizeCell.classList.add("productSize");
         sizeCell.style.width = cellWidth + "%";
         sizeCell.style.border = "1px solid black";
-        
+
+        const thisSize = item.size[sizeIndex];
         sizeCell.addEventListener("click", () => {
-          console.log("User selected colour:", item.size);
+          console.log("User selected colour:", thisSize);
           row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
           sizeCell.style.background = "lightblue";
         });
+        ii++;
       };
     }
-    else {  let SizeCell = row2.insertCell();
-        sizeCell.textContent = size;
-        sizeCell.classList.add("productSize");
-        sizeCell.style.width = "80px";
-       sizeCell.style.border = "1px solid black";
+    else {  
 
-       sizeCell.addEventListener("click", () => {
-         console.log("User selected size:", item.size);
-          row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
-         sizeCell.style.background = "lightblue";
+      let sizeSpace = row3.insertCell();
+      sizeSpace.textContent = ""
+      sizeSpace.style.width = "50%";
+
+      let sizeCell = row3.insertCell();
+      sizeCell.textContent = item.size[0]; // safer than item.size
+      sizeCell.classList.add("productSize");
+      sizeCell.style.width = "120px"; // fixed width
+      sizeCell.style.border = "1px solid black";
+
+      sizeCell.addEventListener("click", () => {
+        console.log("User selected colour:", item.size[0]);
+        row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
+        sizeCell.style.background = "lightblue";
        });
       };
       // Spacer Row
