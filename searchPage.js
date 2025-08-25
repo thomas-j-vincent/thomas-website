@@ -7,12 +7,6 @@ if (query) {
   console.log("Search page query:", query);
   document.getElementById("searchQuery").textContent = query;
 
-  // Fetch products again (same JSON file)
-//  fetch("products.json")
-//    .then(res => res.json())
-//    .then(products => {
-
-
 function displayResults(item) {
   const newDiv = document.createElement("div");
   newDiv.classList.add("result-container");
@@ -89,5 +83,4 @@ console.log(displayResults);
       } else {
         resultsContainer.textContent = "No results found.";
       }
-    }//).catch(error => console.error('Error loading JSON:', error));
-//}
+    }
