@@ -1,7 +1,9 @@
 import { products } from "./products.js";
-//import { get, set, displayResults2 } from "./functions.js";
+import { get, set, enableTouchHover } from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
+
+enableTouchHover();
 
 if (query) {
   console.log("Search page query:", query);

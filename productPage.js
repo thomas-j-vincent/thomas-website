@@ -1,8 +1,10 @@
 import { products } from "./products.js";
-import { get, set, displayResults2 } from "./functions.js";
+import { get, set, displayResults2, enableTouchHover } from "./functions.js";
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
+
+enableTouchHover();
 
     // Find product in JSON
     const selectedProduct = products.find(p => p.name === itemName);

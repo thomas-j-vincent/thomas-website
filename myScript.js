@@ -1,7 +1,8 @@
 import { products } from "./products.js";
-import { get, set, addToBasket, updateBasketMessage, removeProduct, addProduct, formatPrice} from "./functions.js";
+import { get, set, addToBasket, updateBasketMessage, removeProduct, addProduct, formatPrice, enableTouchHover } from "./functions.js";
 
 updateBasketMessage();
+enableTouchHover();
 
 const myDiv = document.getElementsByClassName('search-box')[0];
 const searchInput = document.querySelector('.search-box input');

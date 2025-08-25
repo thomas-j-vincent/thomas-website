@@ -400,3 +400,14 @@ sizeLabel.style.border = "1px solid black";
       // Attach to productDetails
       document.querySelector(".productDetails").appendChild(newDiv);
     }
+
+export function enableTouchHover(selector = ".hoverable") {
+  // Only run on touch-capable devices
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.querySelectorAll(selector).forEach(el => {
+      el.addEventListener("click", () => {
+        el.classList.toggle("active");
+      });
+    });
+  }
+}
