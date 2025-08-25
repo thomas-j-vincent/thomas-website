@@ -1,3 +1,5 @@
+import { products } from "./products.js";
+//import { get, set, displayResults2 } from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 
@@ -6,15 +8,10 @@ if (query) {
   document.getElementById("searchQuery").textContent = query;
 
   // Fetch products again (same JSON file)
-  fetch("products.json")
-    .then(res => res.json())
-    .then(products => {
+//  fetch("products.json")
+//    .then(res => res.json())
+//    .then(products => {
 
-  let item1 = products[0];
-  console.log(item1);
-
-  let item2 = products[1];
-  console.log(item2);
 
 function displayResults(item) {
   const newDiv = document.createElement("div");
@@ -92,5 +89,5 @@ console.log(displayResults);
       } else {
         resultsContainer.textContent = "No results found.";
       }
-    }).catch(error => console.error('Error loading JSON:', error));
-}
+    }//).catch(error => console.error('Error loading JSON:', error));
+//}

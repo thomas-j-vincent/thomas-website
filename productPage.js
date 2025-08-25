@@ -1,8 +1,9 @@
-console.log("productPage.js loaded");
-
-fetch("products.json")
-  .then(res => res.json())
-  .then(products => {
+import { products } from "./products.js";
+import { get, set, displayResults2 } from "./functions.js";
+//console.log("productPage.js loaded");
+//fetch("products.json")
+//  .then(res => res.json())
+//  .then(products => {
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
@@ -13,13 +14,13 @@ fetch("products.json")
     if (!selectedProduct) {
       console.error("No product found with name:", itemName);
       document.querySelector(".productDetails").textContent = "Product not found.";
-      return;
+    //  return;
     }
 
     console.log("Selected product:", selectedProduct);
 
     // Build table
-    function displayResults(item) {
+/*    function displayResults2(item) {
       console.log("Displaying item:", item);
 
       const newDiv = document.createElement("div");
@@ -193,9 +194,12 @@ sizeLabel.style.border = "1px solid black";
       // Attach to productDetails
       document.querySelector(".productDetails").appendChild(newDiv);
     }
-
+*/
     // Finally display
-    displayResults(selectedProduct);
+    displayResults2(selectedProduct);
 
-  })
-  .catch(error => console.error("Error loading JSON:", error));
+  //})
+  //.catch(error => console.error("Error loading JSON:", error));
+
+
+  

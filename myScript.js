@@ -1,15 +1,18 @@
-let itemsInBasket = 0;
-let basketProducts = [];
-let products = {};
+import { products } from "./products.js";
+import { get, set, addToBasket, updateBasketMessage, removeProduct, addProduct, formatPrice} from "./functions.js";
 
-fetch('products.json')
-  .then(response => response.json())
-  .then(products => {
+// let itemsInBasket = 0;
+//let basketProducts = [];
+//let products = {};
+
+//fetch('products.json')
+//  .then(response => response.json())
+//  .then(products => {
 // const item1 = {name:"Elle mugshot", image:"./images/Elle.JPEG", price:7.00, colour:"one colour", size:"one size"};
 //const item2 = {name:"Monil mugshot", image:"./images/Monil.JPEG", price: 6.00, colour:"one colour", size:"one size"};
 
 updateBasketMessage();
-console.log(basketProducts);
+//console.log(basketProducts);
 
 const myDiv = document.getElementsByClassName('search-box')[0];
 
@@ -74,14 +77,14 @@ searchInput.addEventListener('keydown', (event) => {
 
 
   let item1 = products[0];
-  console.log(item1.name);
+  console.log(products[0].name);
 
   let item2 = products[1];
   console.log(item2.name);
 
 
 // function to add 1 or remove 1 to the basket counter
-function updateBasketMessage() {
+/*function updateBasketMessage() {
     if (itemsInBasket === 0) {
         document.getElementById("warning").style.visibility = 'visible';
         document.getElementById("warning").innerHTML = "You have no items in your basket!";
@@ -91,17 +94,18 @@ function updateBasketMessage() {
         //document.getElementById("warning").innerHTML = "You have " + itemsInBasket+" item"+(itemsInBasket>1?"s":"")+" in your basket.";
         document.getElementById("checkout").style.display = "block";
     }
-}
+} 
+    */
 
-function formatPrice(amount) {
+/*function formatPrice(amount) {
     return `£ ${amount.toFixed(2)}`;
-}
+}*/
 // Function to add an item to the basket (numerical)
-function addToBasket(item) {
+/*function addToBasket(item) {
     basketProducts.push({item: item});
     console.log("Basket now contains:", basketProducts);
 }
-
+*/
 document.getElementById("addItem1Btn").addEventListener("click", function() {
 addProduct(item1);
 });
@@ -115,7 +119,7 @@ document.getElementById("removeItem2Btn").addEventListener("click", function() {
 removeProduct(item2);
 });
 // Function to put a product in the basket (with the table structure)
-function addProduct(item) {
+/*function addProduct(item) {
 
         if (!item.selectedColour) {
         item.selectedColour = item.colour[0];
@@ -138,7 +142,8 @@ function addProduct(item) {
         let quantity = parseInt(qtyCell.textContent, 10) + 1;
         qtyCell.textContent = quantity;
         priceCell.textContent = formatPrice(item.price * quantity);
-        itemsInBasket++;
+//        itemsInBasket++;
+        set("itemsInBasket", get("itemsInBasket") + 1);
         updateBasketMessage();
         return;
     }
@@ -200,7 +205,8 @@ newDiv.querySelector(".plus-btn").addEventListener("click", () => {
     let qtyCell = newDiv.querySelector(".qty-cell");
     let quantity = parseInt(qtyCell.textContent, 10); //  read from DOM
     quantity++;
-    itemsInBasket++;
+//    itemsInBasket++;
+    set("itemsInBasket", get("itemsInBasket") + 1);
     let totalPrice = item.price * quantity;
     qtyCell.textContent = quantity;
     newDiv.querySelector(".itemPrice").textContent = formatPrice(totalPrice)
@@ -213,7 +219,8 @@ newDiv.querySelector(".minus-btn").addEventListener("click", () => {
     let quantity = parseInt(qtyCell.textContent, 10); //  read from DOM
     if (quantity > 1) {
         quantity--;
-        itemsInBasket--;
+//        itemsInBasket--;
+        set("itemsInBasket", get("itemsInBasket") - 1);
         let totalPrice = item.price * quantity;
         qtyCell.textContent = quantity;
         newDiv.querySelector(".itemPrice").textContent = formatPrice(totalPrice)
@@ -233,13 +240,15 @@ newDiv.querySelector(".minus-btn").addEventListener("click", () => {
     });
 
     // Update count & message
-    itemsInBasket++;
+//itemsInBasket++;
+    set("itemsInBasket", get("itemsInBasket") + 1);
     updateBasketMessage();
 
 
 }
-
+*/
 //Function to remove a product from the basket by name
+/*
 function removeProduct(item) {
     // Remove all from basket array
     basketProducts = basketProducts.filter(obj => 
@@ -268,6 +277,7 @@ function removeProduct(item) {
     console.log(`Removed all ${item.name} from basket`);
     console.log(basketProducts);
 }
-})
-.catch(error => console.error('Error loading JSON:', error))
-;
+*/
+//})
+//.catch(error => console.error('Error loading JSON:', error))
+//;
