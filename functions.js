@@ -401,12 +401,33 @@ sizeLabel.style.border = "1px solid black";
       document.querySelector(".productDetails").appendChild(newDiv);
     }
 
-export function enableTouchHover(selector = ".hoverable") {
-  // Only run on touch-capable devices
+export function enableTouchInteractions(selector = ".hoverable", dropdownSelector = ".dropdown") {
   if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    // Simulate hover for generic elements
     document.querySelectorAll(selector).forEach(el => {
       el.addEventListener("click", () => {
         el.classList.toggle("active");
+      });
+    });
+
+    // Toggle dropdowns on tap
+    document.querySelectorAll(dropdownSelector).forEach(dropdown => {
+      const icon = dropdown.querySelector('.icon');
+      if (icon) {
+        icon.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const content = dropdown.querySelector('.dropdown-content');
+          if (content) {
+            content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+          }
+        });
+      }
+    });
+
+    // Close dropdowns when tapping elsewhere
+    document.body.addEventListener('click', function() {
+      document.querySelectorAll('.dropdown-content').forEach(content => {
+        content.style.display = 'none';
       });
     });
   }
