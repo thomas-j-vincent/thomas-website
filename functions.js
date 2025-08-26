@@ -266,7 +266,7 @@ colourLabel.style.border = "1px solid black";
       colourSpace.style.width = (100/item.colour.length)+ "%";
 
       const extraColours = item.colour.length - 1; // subtract the default first colour
-      for (let i = 0; 1 < extraColours; i++) {
+      for (let i = 0; i < extraColours; i++) {
         //i++;
         const colourIndex = i + 1;
         const cellWidth = 100/item.colour.length;

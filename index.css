@@ -166,7 +166,7 @@ background-color: red;
 }
 .basket-table{
     text-align: left;
-        padding: 2px 5px; /* smaller padding */
+    padding: 2px 5px; /* smaller padding */
     line-height: 2.5;
 }
 
@@ -247,9 +247,36 @@ background-color: red;
   transform: translate(-50%, -225%);
 }
 @media (hover: none) and (pointer: coarse) {
+.flex-container {
+  display: flex;
+  margin: 10;
+  background-color: #003366;
+  justify-content: center;
+  align-items: flex-end;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.flex-container>div {
+  background-color: #003366;
+  width: 100px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 10px;
+}
+
+.icon {
+  font-size: 40px;
+  color: #F5F1DE; 
+  position: relative;
+  top: 0.2em;
+}
+
 .icon:active {
   color:black;
 }
+
 a:link {
   text-decoration: none;
   color: #F5F1DE;
@@ -258,13 +285,16 @@ a:link {
 a:visited {
   color:black !important;
 }
+
 a:active {
   text-decoration: underline;
-    color:black;
+  color:black;
 }
+
 .colour {
   color: #F5F1DE;
 }
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -273,12 +303,15 @@ a:active {
   z-index: 1;
   right: 0;
 }
+
 .menu {
     width: 100%;
 }
+
 .basket {
    width: 40%;
 }
+
 .searchResults {
   text-align: center;
   border: 1px solid black; 
@@ -288,9 +321,11 @@ a:active {
   top: 75px;
   background-color: white;
 }
+
 .page-container {
   margin:5vw
 }
+
 #searchResult {
   display: grid;
   grid-template-columns: repeat(3, minmax(200px, 1fr)); /* exactly 3 columns */
@@ -320,6 +355,7 @@ a:active {
   box-sizing: border-box;
   margin-right: 50px;
 }
+
 .productName {
   background-color: blue;;
   padding: 10px;
@@ -327,6 +363,7 @@ a:active {
   height: 100px;
   text-align: center;
 }
+
 .addToBasket {
   background-color: blue;;
   padding: 10px;
@@ -334,16 +371,20 @@ a:active {
   height: 100px;
   text-align: center;
 }
+
 .productPrice {
   background-color: blue;
   height: 50px;
 }
+
 .productColour {
-background-color: red;  
+background-color: red;
 }
+
 .productPriceValue {
   text-align: center;
 }
+
 .result-container {
   background: #fff;
   border: 1px solid #ddd;
@@ -351,11 +392,13 @@ background-color: red;
   width: 100%;
   box-sizing: border-box; 
 }
+
 .result-container table {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
 }
+
 .result-container img {
   width: 100%;        /* fill the width of its cell */
   height: auto;       /* maintain aspect ratio */
@@ -371,11 +414,13 @@ background-color: red;
   display: block;
   text-align: center;
 }
+
 .menu-table, .menu-th, .menu-td {
   border:1px solid black;
-    border-collapse: collapse;
-    text-align: center;
+  border-collapse: collapse;
+  text-align: center;
 }
+
 .basket-table{
     text-align: left;
     padding: 2px 5px; /* smaller padding */
@@ -387,50 +432,56 @@ background-color: red;
 .dropdown:active .dropdown-content {
   display: block;
 }
+
 .product-container {
   border:1px solid black;
 }
+
 .container2 {
   position: relative;
-  width: 90px;
+  width: 70%;
   cursor: pointer;
   overflow: visible; /* allow icon to float outside */
+  right: 90px;
   background: rgba(209,203,193,1);
   border-color: rgba(136,139,141,1);
 }
 
-/* The expanding search box */
-.search-box {
-  position: re;
-  right: 1000;
+.search-box { /* The expanding search box */
+  position: absolute;
+  right: 0;
   top: 50%;
-  border: 2px solid rgba(136,139,141,0);
+  transform: translateY(-195%);
+  border: 2px solid rgba(136,139,141,1);
   border-radius: 10px;
   width: 90px; /* initial width */
   height: 25px;
-  background: rgba(209,203,193,0);
   display: flex;
   align-items: center;
   overflow: hidden;
-}
-.search-box input[type="search"] {
-  padding-left: 30px; /* make room for icon */
-  width: 100%; 
   background: rgba(209,203,193,1);
-  border: 2px solid rgba(136,139,141,1);
-  border-radius: 10px;
-  font-size: 16px;
-  color: black;
-  outline: none;        /* prevent default focus border */
 }
 
-.icon2 {
+.search-box input[type="search"] { /* Search input */
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  width: 240px;
+  background: transparent;
+  font-size: 16px;
+  color: black;
+  -webkit-appearance: none;   /* Remove the browser's default clear (x) */
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.icon2 { /* Floating icon */
   position: absolute;
-  left: 8px;            /* place inside the input */
+  right: 90px;
   top: 50%;
-/*  transform: translate(-80%, -230%); */   
+  transform: translate(-50%, -225%);
   font-size: 20px;
-  color: #F5F1DE;
-  pointer-events: none; /* icon doesn't block input clicks */
+  color:#F5F1DE;
+  z-index: 2;
 }
 }
