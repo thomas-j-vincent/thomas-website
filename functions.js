@@ -401,7 +401,7 @@ sizeLabel.style.border = "1px solid black";
       document.querySelector(".productDetails").appendChild(newDiv);
     }
 
-export function enableTouchInteractions(selector = ".hoverable", dropdownSelector = ".dropdown") {
+export function enableTouchHover(selector = ".hoverable", dropdownSelector = ".dropdown") {
   if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
     // Simulate hover for generic elements
     document.querySelectorAll(selector).forEach(el => {
