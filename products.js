@@ -1,3 +1,4 @@
+import { set, get } from "./functions.js";
 export const products = [
 {
 "productType" : "nft",
@@ -6,9 +7,7 @@ export const products = [
 "image" :"./images/Elle.JPEG",
 "price": 7.00,
 "colour" : ["one colour", "red", "yellow", "blue", "black"],
-"selectedColour":"one colour",
 "size" : ["one size", "large", "medium", "small"],
-"selectedSize": "one size",
 "additionalInfo": "Bestseller"
 },
 {
@@ -18,9 +17,7 @@ export const products = [
 "image" :"./images/Monil.JPEG",
 "price": 6.00,
 "colour" : ["one colour", "red", "yellow"],
-"selectedColour":"one colour",
 "size" : ["one size", "large", "medium", "small"],
-"selectedSize": "one size"
 },
 {
 "productType" : "nft",
@@ -29,9 +26,7 @@ export const products = [
 "image" :"./images/Erin.JPG",
 "price": 7.00,
 "colour" : ["one colour", "red", "yellow", "green"],
-"selectedColour":"one colour",
 "size" : ["one size", "large", "medium", "small"],
-"selectedSize": "one size"
 },
 {
 "productType" : "nft",
@@ -40,8 +35,6 @@ export const products = [
 "image" :"./images/Sam.JPG",
 "price": 6.00,
 "colour" : ["one colour"],
-"selectedColour":"one colour",
 "size" : ["one size"],
-"selectedSize": "one size"
 }
 ]

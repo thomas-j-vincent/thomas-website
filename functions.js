@@ -13,11 +13,11 @@ export function set(key, value) {
   variable[key] = value;
 }
 
-export function addToBasket(item) {
+/*export function addToBasket(item) {
     basketProducts.push({item: item});
     console.log("Basket now contains:", basketProducts);
 }
-
+*/
 export function formatPrice(amount) {
     return `£ ${amount.toFixed(2)}`;
 }
@@ -31,48 +31,29 @@ export function updateBasketMessage() {
         document.getElementById("warning").style.visibility = 'hidden';
         //document.getElementById("warning").innerHTML = "You have " + itemsInBasket+" item"+(itemsInBasket>1?"s":"")+" in your basket.";
         document.getElementById("checkout").style.display = "block";
+        document.getElementById("checkout").addEventListener("click", () => {
+        window.location.href="checkout.html";
+        })
     }
 }
 
-export function removeProduct(item) {
-let basket = get("basketProducts") || [];
-basket = basket.filter(obj => 
-    !(obj.item.name === item.name &&
-      obj.item.selectedColour === item.selectedColour &&
-      obj.item.selectedSize === item.selectedSize)
-);
-set("basketProducts", basket);
-
-    // Remove DOM containers as before
-    const containers = document.querySelectorAll('.product-container');
-    containers.forEach(container => {
-        const nameCell = container.querySelector('.itemName');
-        if (nameCell && nameCell.textContent.trim() === item.name) {
-            container.remove();
-        }
-    });
-
-    // Update basket count
-    let totalQty = 0;
-    document.querySelectorAll('.qty-cell').forEach(cell => {
-        totalQty += parseInt(cell.textContent, 10);
-    });
-    set("itemsInBasket", totalQty);
-
-    updateBasketMessage();
-    console.log(`Removed all ${item.name} from basket`);
-}
 export function addProduct(item) {
     // Default selections
     if (!item.selectedColour) item.selectedColour = item.colour[0];
     if (!item.selectedSize) item.selectedSize = item.size[0];
 
+    const basketItem = {
+      ...item,
+      selectedColour: item.selectedColour, 
+      selectedSize: item.selectedSize
+    };
+
     // Find index in basketProducts
     const basketProducts = get("basketProducts") || [];
     const index = basketProducts.findIndex(obj =>
-        obj.item.name === item.name &&
-        obj.item.selectedColour === item.selectedColour &&
-        obj.item.selectedSize === item.selectedSize
+        obj.item.name === basketItem.name &&
+        obj.item.selectedColour === basketItem.selectedColour &&
+        obj.item.selectedSize === basketItem.selectedSize
     );
 
     if (index > -1) {
@@ -82,7 +63,7 @@ export function addProduct(item) {
 
         let quantity = parseInt(qtyCell.textContent, 10) + 1;
         qtyCell.textContent = quantity;
-        priceCell.textContent = formatPrice(item.price * quantity);
+        priceCell.textContent = formatPrice(basketItem.price * quantity);
 
         set("itemsInBasket", get("itemsInBasket") + 1);
         updateBasketMessage();
@@ -139,7 +120,8 @@ export function addProduct(item) {
     document.getElementById("container").appendChild(newDiv);
 
     // Add to basketProducts via shared state
-    basketProducts.push({ item: item, element: newDiv });
+    basketProducts.push({ item: basketItem, element: newDiv });
+    set("basketProducts", basketProducts);
 
     // Plus button
     newDiv.querySelector(".plus-btn").addEventListener("click", () => {
@@ -153,19 +135,33 @@ export function addProduct(item) {
     });
 
     // Minus button
-    newDiv.querySelector(".minus-btn").addEventListener("click", () => {
-        let qtyCell = newDiv.querySelector(".qty-cell");
-        let quantity = parseInt(qtyCell.textContent, 10);
-        if (quantity > 1) {
-            quantity--;
-            qtyCell.textContent = quantity;
-            newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
+newDiv.querySelector(".minus-btn").addEventListener("click", () => {
+    let qtyCell = newDiv.querySelector(".qty-cell");
+    let quantity = parseInt(qtyCell.textContent, 10);
 
-            set("itemsInBasket", get("itemsInBasket") - 1);
-            updateBasketMessage();
-        }
-    });
+    if (quantity > 1) {
+        quantity--;
+        qtyCell.textContent = quantity;
+        newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
 
+        set("itemsInBasket", get("itemsInBasket") - 1);
+        updateBasketMessage();
+    } else {
+        // Remove THIS container only
+        newDiv.remove();
+
+        // Remove the matching basket entry
+        let basket = get("basketProducts") || [];
+        basket = basket.filter(obj => obj.element !== newDiv);
+        set("basketProducts", basket);
+
+        // Update basket count
+        set("itemsInBasket", get("itemsInBasket") - 1);
+        updateBasketMessage();
+
+        console.log(`Removed ${item.name} (${item.selectedColour}, ${item.selectedSize})`);
+    }
+});
     // Update basket count
     set("itemsInBasket", get("itemsInBasket") + 1);
     updateBasketMessage();
@@ -228,6 +224,8 @@ const additionalInfo = item.additionalInfo || "&nbsp;";
 
 export     function displayResults2(item) {
       console.log("Displaying item:", item);
+      document.getElementById("added").style.visibility = "hidden";
+      document.getElementById("unselected").style.visibility = "hidden";
 
       const newDiv = document.createElement("div");
       newDiv.classList.add("product-container");
@@ -279,7 +277,9 @@ colourLabel.style.border = "1px solid black";
 
         const thisColour = item.colour[colourIndex];
         colourCell.addEventListener("click", () => {
+          item.selectedColour = thisColour;
           console.log("User selected colour:", thisColour);
+          console.log(item.selectedColour);
           row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
           colourCell.style.background = "lightblue";
         });
@@ -299,6 +299,7 @@ colourLabel.style.border = "1px solid black";
       colourCell.style.border = "1px solid black";
 
       colourCell.addEventListener("click", () => {
+          item.selectedColour = item.colour[0];
         console.log("User selected colour:", item.colour[0]);
         row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
         colourCell.style.background = "lightblue";
@@ -311,7 +312,7 @@ colourLabel.style.border = "1px solid black";
 let row3 = tbody.insertRow();
 
 let sizeLabel = row3.insertCell();
-sizeLabel.textContent = "Colour:";
+sizeLabel.textContent = "Size:";
 sizeLabel.style.width = "100px";
 sizeLabel.style.border = "1px solid black";
 
@@ -336,7 +337,9 @@ sizeLabel.style.border = "1px solid black";
 
         const thisSize = item.size[sizeIndex];
         sizeCell.addEventListener("click", () => {
-          console.log("User selected colour:", thisSize);
+          console.log("User selected size:", thisSize);
+          item.selectedSize = thisSize;
+          console.log(item.selectedSize);
           row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
           sizeCell.style.background = "lightblue";
         });
@@ -356,7 +359,9 @@ sizeLabel.style.border = "1px solid black";
       sizeCell.style.border = "1px solid black";
 
       sizeCell.addEventListener("click", () => {
-        console.log("User selected colour:", item.size[0]);
+        console.log("User selected size:", item.size[0]);
+        item.selectedSize = item.size[0];
+        console.log(item.selectedSize);
         row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
         sizeCell.style.background = "lightblue";
        });
@@ -381,18 +386,35 @@ sizeLabel.style.border = "1px solid black";
         </td>
       `;
       row5.addEventListener("click", () => {
-        console.log("Added to basket:", item.name);
+
+      if (item.selectedColour === undefined || item.selectedSize === undefined) {
+      document.getElementById("added").style.visibility = "hidden";
+      document.getElementById("unselected").style.visibility = "visible";
+      document.getElementById("unselected").innerHTML = "You have not selected the required options";
+      console.log("item not added!");
+
+      } else {
+      addProduct(item) ;
+      console.log( item.selectedSize, item.selectedColour); 
+      document.getElementById("unselected").style.visibility = "hidden";
+      document.getElementById("added").style.visibility = "visible";
+      document.getElementById("added").innerHTML = "item added!";  
+      }
       });
 
       // Spacer Row
       tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
       // Row 6: Checkout
-      tbody.insertRow().innerHTML = `
-        <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;">
+      let row6 = tbody.insertRow()
+      row6.innerHTML = `
+        <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "checkout">
           Checkout
         </td>
       `;
+      row6.addEventListener("click", () => {
+        window.location.href="checkout.html";
+        });
 
       table.appendChild(tbody);
       newDiv.appendChild(table);
