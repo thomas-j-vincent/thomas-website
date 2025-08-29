@@ -5,12 +5,30 @@ itemsInBasket: 0,
 basketProducts: []
 }
 
+
+
+function saveToStorage() {
+  localStorage.setItem("basketState", JSON.stringify(variable));
+}
+
+export function loadFromStorage() {
+  const stored = localStorage.getItem("basketState");
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    Object.assign(variable, parsed); // copy saved values back into variable
+  }
+}
+
+loadFromStorage();
+
+
 export function get(key) {
 return variable[key];
 }
 
 export function set(key, value) {
   variable[key] = value;
+ saveToStorage();
 }
 
 /*export function addToBasket(item) {
@@ -37,15 +55,14 @@ export function updateBasketMessage() {
     }
 }
 
-export function addProduct(item) {
-    // Default selections
+export function addProduct(item, restoring = false) {
     if (!item.selectedColour) item.selectedColour = item.colour[0];
     if (!item.selectedSize) item.selectedSize = item.size[0];
 
     const basketItem = {
       ...item,
-      selectedColour: item.selectedColour, 
-      selectedSize: item.selectedSize
+    //  selectedColour: item.selectedColour, 
+    //  selectedSize: item.selectedSize
     };
 
     // Find index in basketProducts
@@ -54,6 +71,14 @@ export function addProduct(item) {
         obj.item.name === basketItem.name &&
         obj.item.selectedColour === basketItem.selectedColour &&
         obj.item.selectedSize === basketItem.selectedSize
+    );
+
+  if (!restoring) {
+    // Only check for duplicates when user adds normally
+    const index = basketProducts.findIndex(obj =>
+      obj.item.name === basketItem.name &&
+      obj.item.selectedColour === basketItem.selectedColour &&
+      obj.item.selectedSize === basketItem.selectedSize
     );
 
     if (index > -1) {
@@ -69,7 +94,7 @@ export function addProduct(item) {
         updateBasketMessage();
         return;
     }
-
+  }
     // Create new product container
     let quantity = 1;
     let totalPrice = item.price;
@@ -120,7 +145,7 @@ export function addProduct(item) {
     document.getElementById("container").appendChild(newDiv);
 
     // Add to basketProducts via shared state
-    basketProducts.push({ item: basketItem, element: newDiv });
+    basketProducts.push({ item: basketItem, quantity: 1 });
     set("basketProducts", basketProducts);
 
     // Plus button
@@ -129,14 +154,14 @@ export function addProduct(item) {
         let quantity = parseInt(qtyCell.textContent, 10) + 1;
         qtyCell.textContent = quantity;
         newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
-
+        basketProducts[index].quantity += 1;
         set("itemsInBasket", get("itemsInBasket") + 1);
         updateBasketMessage();
     });
 
     // Minus button
 newDiv.querySelector(".minus-btn").addEventListener("click", () => {
-    let qtyCell = newDiv.querySelector(".qty-cell");
+    const qtyCell = newDiv.querySelector(".qty-cell");
     let quantity = parseInt(qtyCell.textContent, 10);
 
     if (quantity > 1) {
@@ -144,24 +169,40 @@ newDiv.querySelector(".minus-btn").addEventListener("click", () => {
         qtyCell.textContent = quantity;
         newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
 
+        // Update storage quantity
+        const basket = get("basketProducts") || [];
+        const index = basket.findIndex(obj =>
+            obj.item.name === item.name &&
+            obj.item.selectedColour === item.selectedColour &&
+            obj.item.selectedSize === item.selectedSize
+        );
+        if (index > -1) {
+            basket[index].quantity = quantity;
+            set("basketProducts", basket);
+        }
+        
+    basket[index].quantity = quantity;
+    set("basketProducts", basket);
+    
         set("itemsInBasket", get("itemsInBasket") - 1);
         updateBasketMessage();
     } else {
-        // Remove THIS container only
         newDiv.remove();
+        const basket = get("basketProducts") || [];
+        const updated = basket.filter(obj =>
+            !(obj.item.name === item.name &&
+              obj.item.selectedColour === item.selectedColour &&
+              obj.item.selectedSize === item.selectedSize)
+        );
+        set("basketProducts", updated);
 
-        // Remove the matching basket entry
-        let basket = get("basketProducts") || [];
-        basket = basket.filter(obj => obj.element !== newDiv);
-        set("basketProducts", basket);
-
-        // Update basket count
         set("itemsInBasket", get("itemsInBasket") - 1);
         updateBasketMessage();
-
-        console.log(`Removed ${item.name} (${item.selectedColour}, ${item.selectedSize})`);
     }
 });
+
+//  basketProducts.push({ item: basketItem }); // element not needed
+//  set("basketProducts", basketProducts);
     // Update basket count
     set("itemsInBasket", get("itemsInBasket") + 1);
     updateBasketMessage();

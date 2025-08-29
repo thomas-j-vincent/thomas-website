@@ -1,9 +1,19 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover } from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage} from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 
 enableTouchHover();
+loadFromStorage();
+
+window.addEventListener("DOMContentLoaded", () => {
+  const basketProducts = get("basketProducts") || [];
+  basketProducts.forEach(({ item }) => {
+    // Rebuild DOM from item data
+    addProduct(item, true);
+  });
+  updateBasketMessage();
+});
 
 if (query) {
   console.log("Search page query:", query);

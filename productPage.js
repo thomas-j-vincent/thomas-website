@@ -1,10 +1,20 @@
 import { products } from "./products.js";
-import { get, set, displayResults2, enableTouchHover } from "./functions.js";
+import { get, set, displayResults2, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage} from "./functions.js";
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
 
 enableTouchHover();
+loadFromStorage();
+
+window.addEventListener("DOMContentLoaded", () => {
+  const basketProducts = get("basketProducts") || [];
+  basketProducts.forEach(({ item }) => {
+    // Rebuild DOM from item data
+    addProduct(item, true);
+  });
+  updateBasketMessage();
+});
 
     // Find product in JSON
     const selectedProduct = products.find(p => p.name === itemName);
