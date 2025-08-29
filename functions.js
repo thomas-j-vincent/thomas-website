@@ -226,6 +226,10 @@ export     function displayResults2(item) {
       console.log("Displaying item:", item);
       document.getElementById("added").style.visibility = "hidden";
       document.getElementById("unselected").style.visibility = "hidden";
+const imageDiv = document.querySelector(".imageDiv");
+if (imageDiv) {
+  imageDiv.innerHTML = `<img src="${item.image}" alt="${item.name}">`;
+}
 
       const newDiv = document.createElement("div");
       newDiv.classList.add("product-container");
