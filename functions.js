@@ -74,8 +74,8 @@ export function addProduct(item, restoring = false) {
 
     const basketItem = {
       ...item,
-    //  selectedColour: item.selectedColour, 
-    //  selectedSize: item.selectedSize
+      selectedColour: item.selectedColour, 
+      selectedSize: item.selectedSize
     };
 
     // Find index in basketProducts
@@ -88,11 +88,11 @@ export function addProduct(item, restoring = false) {
 
   if (!restoring) {
     // Only check for duplicates when user adds normally
-    //const index = basketProducts.findIndex(obj =>
-    //  obj.item.name === basketItem.name &&
-    //  obj.item.selectedColour === basketItem.selectedColour &&
-   //   obj.item.selectedSize === basketItem.selectedSize
-   // );
+    const index = basketProducts.findIndex(obj =>
+      obj.item.name === basketItem.name &&
+      obj.item.selectedColour === basketItem.selectedColour &&
+      obj.item.selectedSize === basketItem.selectedSize
+    );
 
     if (index > -1) {
         const container = document.querySelectorAll('.product-container')[index];
