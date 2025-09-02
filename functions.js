@@ -212,7 +212,7 @@ export function addProduct(item, restoring = false) {
     }
   });
 }
-document.addEventListener("DOMContentLoaded", () => {
+//document.addEventListener("DOMContentLoaded", () => {
 loadFromStorage();
-  variable.basketProducts.forEach(basketObj => addProduct(basketObj.item, true));
-});
+//  variable.basketProducts.forEach(basketObj => addProduct(basketObj.item, true));
+//});
