@@ -84,6 +84,7 @@ export function addProduct(item, restoring = false) {
 
   if (!restoring) {
     // Only check for duplicates when user adds normally
+    basketProducts.push({ item: basketItem, quantity: 1 });
     if (index > -1) {
       const container = document.querySelectorAll('.product-container')[index];
       const qtyCell = container.querySelector('.qty-cell');
@@ -211,5 +212,7 @@ export function addProduct(item, restoring = false) {
     }
   });
 }
-
+document.addEventListener("DOMContentLoaded", () => {
 loadFromStorage();
+  variable.basketProducts.forEach(basketObj => addProduct(basketObj.item, true));
+});
