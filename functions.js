@@ -19,6 +19,21 @@ export function loadFromStorage() {
   }
 }
 
+export function removeAllItems() {
+    // 1. Clear the DOM
+    const container = document.getElementById("container");
+    if (container) {
+        container.innerHTML = "";  // removes all product rows
+    }
+
+    // 2. Clear storage
+    set("basketProducts", []);     // empty product list
+    set("itemsInBasket", 0);       // reset counter
+
+    // 3. Update the basket message / UI
+    updateBasketMessage();
+}
+
 loadFromStorage();
 
 
