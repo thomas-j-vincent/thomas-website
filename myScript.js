@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, updateBasketMessage, addProduct, formatPrice, enableTouchHover, loadFromStorage} from "./functions.js";
+import { get, set, updateBasketMessage, addProduct, formatPrice, enableTouchHover, loadFromStorage, removeAllItems} from "./functions.js";
 
 updateBasketMessage();
 enableTouchHover();

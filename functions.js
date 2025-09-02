@@ -34,6 +34,8 @@ export function removeAllItems() {
     updateBasketMessage();
 }
 
+window.removeAllItems = removeAllItems;
+
 loadFromStorage();
 
 
