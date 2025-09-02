@@ -164,7 +164,8 @@ import { products } from "./products.js";
  let quantity = parseInt(qtyCell.textContent, 10) + 1;
  qtyCell.textContent = quantity;
  newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
- basketProducts[index].quantity += 1; set("itemsInBasket", get("itemsInBasket") + 1);
+ basketProducts[index].quantity += 1;
+set("itemsInBasket", get("itemsInBasket") + 1);
  updateBasketMessage();
  });
 
@@ -468,6 +469,7 @@ tbody.insertRow().innerHTML =
 
  // Attach to productDetails END
  document.querySelector(".productDetails").appendChild(newDiv);
+ console.log(get("basketProducts")); 
  }
 
  export function enableTouchHover(selector = ".hoverable", dropdownSelector = ".dropdown") {

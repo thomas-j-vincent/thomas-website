@@ -30,6 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Finally display
     displayResults2(selectedProduct);
+    
 
 
   
