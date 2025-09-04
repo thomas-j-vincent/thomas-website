@@ -18,8 +18,7 @@ import { products } from "./products.js";
 }
 
  export function removeAllItems() {
- // 1. Clear the DOM END
- const container = document.getElementById("container");
+ const container = document.getElementById("container");    // 1. Clear the DOM END
  if (container) {
  container.innerHTML = "";   // SAME LINE removes all product rows END
  }
@@ -191,8 +190,8 @@ set("itemsInBasket", get("itemsInBasket") + 1);
  set("basketProducts", basket);
  }
 
- basket[index].quantity = quantity;
- set("basketProducts", basket);
+// basket[index].quantity = quantity;
+// set("basketProducts", basket);
 
  set("itemsInBasket", get("itemsInBasket") - 1);
  updateBasketMessage();
