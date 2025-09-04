@@ -4,6 +4,7 @@ import { get, set, displayResults2, enableTouchHover, loadFromStorage, addProduc
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
 
+updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
