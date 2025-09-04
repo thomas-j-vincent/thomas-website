@@ -163,7 +163,7 @@ import { products } from "./products.js";
  let quantity = parseInt(qtyCell.textContent, 10) + 1;
  qtyCell.textContent = quantity;
  newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
- basketProducts[index].quantity += 1;
+ basketProducts[index].quantity += 1; // SAME LINE theres an issue here END
 set("itemsInBasket", get("itemsInBasket") + 1);
  updateBasketMessage();
  });
