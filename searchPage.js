@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems, addToBasket, removeFromBasket} from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 
