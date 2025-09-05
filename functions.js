@@ -116,7 +116,14 @@ const existing = basketProducts.findIndex(obj =>
 
 if (existing > -1) {
   console.log("found in basket");
-  addToBasket(item) // SAME LINE used to add one to quantity END
+//  addToBasket(item) // SAME LINE used to add one to quantity END
+  const existing = newBasket.findIndex (obj =>
+  obj.item.name === item.name &&
+  obj.item.selectedColour === item.selectedColour &&
+  obj.item.selectedSize === item.selectedSize
+  );
+  newBasket[existing].quantity ++;
+  set ("basketProducts", newBasket);
 } else {
 
  // Create new product container END
