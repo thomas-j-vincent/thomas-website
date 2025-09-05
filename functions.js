@@ -48,7 +48,7 @@ export function addToBasket(item) {
   obj.item.selectedSize === item.selectedSize
   );
   if (existing === -1) {
-  newBasket.push({ item: item, selectedColour: selectedColour, selectedSize: selectedSize, quantity: 1 });
+//  newBasket.push({ item: item, selectedColour: selectedColour, selectedSize: selectedSize, quantity: 1 });
   newItems ++;
   } else {
     newBasket[existing].quantity ++;
