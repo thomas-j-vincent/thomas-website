@@ -456,6 +456,7 @@ tbody.insertRow().innerHTML =
  // Attach to productDetails END
  document.querySelector(".productDetails").appendChild(newDiv);
  console.log(get("basketProducts")); 
+ console.log("hi");
  }
 
  export function enableTouchHover(selector = ".hoverable", dropdownSelector = ".dropdown") {
