@@ -50,7 +50,7 @@ import { products } from "./products.js";
  } 
   
 export function addToBasket(item) {
-  let newItems = get("itemsInBasket") || 0;
+  let newItems = get("itemsInBasket");
   const newBasket = get("basketProducts");
   const existing = newBasket.findIndex (obj =>
   obj.item.name === item.name &&
@@ -65,6 +65,7 @@ export function addToBasket(item) {
   });
   newItems++;
   addProduct(item);
+  set("itemsInBasket", 1);
   } else {
     newBasket[existing].quantity ++;
     newItems ++; 
