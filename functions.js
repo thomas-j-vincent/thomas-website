@@ -2,7 +2,8 @@ import { products } from "./products.js";
 
  const variable = {
  itemsInBasket: 0,
- basketProducts: []
+ basketProducts: [],
+ basketDisplay: []
  }
 
  function saveToStorage() {
@@ -18,17 +19,26 @@ import { products } from "./products.js";
 }
 
  export function removeAllItems() {
- const container = document.getElementById("container");    // 1. Clear the DOM END
+ const container = document.getElementById("container");    // SAME LINE 1. Clear the DOM END
  if (container) {
    container.innerHTML = "";   // SAME LINE removes all product rows END
  }
+ console.log("products removed!")
  set("basketProducts", []);  // SAME LINE empty product list END
+ set("basketDisplay", []);
  set("itemsInBasket", 0);    // SAME LINE reset counter END
  updateBasketMessage();      // SAME LINE 3. Update the basket message or UI END
+ checkBasket();
  }
  window.removeAllItems = removeAllItems;
 
  loadFromStorage();
+
+ export function checkBasket() {
+  console.log(("basket items are"), get("basketProducts"));
+  console.log(("display items:"), get("basketDisplay"));
+ }
+ window.checkBasket = checkBasket;
 
  export function get(key) {
  return variable[key];
@@ -41,21 +51,42 @@ import { products } from "./products.js";
   
 export function addToBasket(item) {
   let newItems = get("itemsInBasket") || 0;
-  const newBasket = get("basketProducts") || [];
+  const newBasket = get("basketProducts");
   const existing = newBasket.findIndex (obj =>
   obj.item.name === item.name &&
   obj.item.selectedColour === item.selectedColour &&
   obj.item.selectedSize === item.selectedSize
   );
   if (existing === -1) {
-//  newBasket.push({ item: item, selectedColour: selectedColour, selectedSize: selectedSize, quantity: 1 });
-  newItems ++;
+    const clonedItem = { ...item };  // shallow copy
+    newBasket.push({
+    item: clonedItem,
+    quantity: 1
+  });
+  newItems++;
+  addProduct(item);
   } else {
     newBasket[existing].quantity ++;
     newItems ++; 
+    const productContainer = Array.from(document.querySelectorAll(".product-container"))
+    .find(div => 
+      div.querySelector(".itemName").textContent === item.name &&
+      div.querySelector(".itemSize").textContent === item.selectedSize &&
+      div.querySelector(".itemColour").textContent === item.selectedColour
+    );
+    if (productContainer) {
+      const qtyCell = productContainer.querySelector(".qty-cell");
+      const totalPriceCell = productContainer.querySelector(".itemPrice");
+      qtyCell.textContent = newBasket[existing].quantity;
+      totalPriceCell.textContent = formatPrice(item.price * newBasket[existing].quantity);
+    }
   }
   set("ItemsInBasket", newItems);
   set ("basketProducts", newBasket);
+  console.log(get("basketProducts"));
+  updateBasketMessage();
+  saveToStorage();
+  
 } 
 
 export function removeFromBasket(item) {
@@ -98,37 +129,18 @@ export function removeFromBasket(item) {
  }
  }
 
- export function addProduct(item) {
-
- if (!item.selectedColour) {
-  console.log("missing information")
- }
- if (!item.selectedSize) {
-  console.log("missing information")
- }
-
+export function addProduct(item) {
+ // Create new product container END
 const basketProducts = get("basketProducts") || [];
-const existing = basketProducts.findIndex(obj =>
-  obj.item.name === item.name && 
+const basketItem = basketProducts.find(obj =>
+  obj.item.name === item.name &&
   obj.item.selectedColour === item.selectedColour &&
   obj.item.selectedSize === item.selectedSize
 );
 
-if (existing > -1) {
-  console.log("found in basket");
-//  addToBasket(item) // SAME LINE used to add one to quantity END
-//  const existing = newBasket.findIndex (obj =>
-//  obj.item.name === item.name &&
-//  obj.item.selectedColour === item.selectedColour &&
-//  obj.item.selectedSize === item.selectedSize
-//  );
-//  newBasket[existing].quantity ++;
-//  set ("basketProducts", newBasket);
-} else {
-
- // Create new product container END
- let quantity = 1;
- let totalPrice = item.price;
+// Use its saved quantity (or default to 1 if new)
+let quantity = basketItem ? basketItem.quantity : 1;
+let totalPrice = item.price * quantity;
  const newDiv = document.createElement("div");
  newDiv.classList.add("product-container");
  const table = document.createElement("table");
@@ -177,9 +189,24 @@ if (existing > -1) {
  let qtyCell = newDiv.querySelector(".qty-cell");
  let quantity = parseInt(qtyCell.textContent, 10) + 1;
  qtyCell.textContent = quantity;
+    const basket = get("basketProducts") || [];
+    const existingIndex = basket.findIndex(obj =>
+        obj.item.name === item.name &&
+        obj.item.selectedSize === item.selectedSize &&
+        obj.item.selectedColour === item.selectedColour
+    );
+
+    if (existingIndex !== -1) {
+        basket[existingIndex].quantity = quantity;
+        set("basketProducts", basket);
+
+        // Update total items in basket
+        const totalItems = basket.reduce((sum, obj) => sum + obj.quantity, 0);
+        set("itemsInBasket", totalItems);
+    }
+
  newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
-// addToBasket(item)
-// updateBasketMessage();
+ updateBasketMessage();
  });
 
  // Minus button
@@ -190,20 +217,55 @@ if (existing > -1) {
    quantity--;
    qtyCell.textContent = quantity;
    newDiv.querySelector(".itemPrice").textContent = formatPrice(item.price * quantity);
-  // removeFromBasket(item)
-  // updateBasketMessage();
+   removeFromBasket(item)
+   updateBasketMessage();
  } else {
    newDiv.remove();
-//   removeFromBasket(item)
-//   updateBasketMessage();
+   removeFromBasket(item)
+   updateBasketMessage();
  }
  });
 
-// addToBasket(item)
-// updateBasketMessage();
- };
+ updateBasketMessage();
+ saveToStorage();
+ const newDisplay = get("basketProducts");
+ set("basketDisplay", newDisplay);
+ console.log(get("basketDisplay"));
 }
 
+ export function enableTouchHover(selector = ".hoverable", dropdownSelector = ".dropdown") {
+ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+ // Simulate hover for generic elements END
+ document.querySelectorAll(selector).forEach(el => {
+ el.addEventListener("click", () => {
+ el.classList.toggle("active");
+ });
+ });
+
+ // Toggle dropdowns on tap END
+ document.querySelectorAll(dropdownSelector).forEach(dropdown => {
+ const icon = dropdown.querySelector('.icon');
+ if (icon) {
+ icon.addEventListener('click', function(e) {
+ e.stopPropagation();
+ const content = dropdown.querySelector('.dropdown-content');
+ if (content) {
+ content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+ }
+ });
+ }
+ });
+
+ // Close dropdowns when tapping elsewhere END
+ document.body.addEventListener('click', function() {
+ document.querySelectorAll('.dropdown-content').forEach(content => {
+ content.style.display = 'none';
+ });
+ });
+ }
+ }
+
+/*
  export function displayResults(item) {
  const newDiv = document.createElement("div");
  newDiv.classList.add("result-container");
@@ -257,236 +319,5 @@ tbody.insertRow().innerHTML =
 
  document.getElementById("searchResult").appendChild(newDiv);
  }
+*/
 
- export function displayResults2(item) {
- console.log("Displaying item:", item);
- document.getElementById("added").style.visibility = "hidden";
- document.getElementById("unselected").style.visibility = "hidden";
- const imageDiv = document.querySelector(".imageDiv");
- if (imageDiv) {
- imageDiv.innerHTML =` <img src="${item.image}" alt="${item.name}">;`
- }
-
- const newDiv = document.createElement("div");
- newDiv.classList.add("product-container");
-
- const table = document.createElement("table");
- table.classList.add("basket-table");
- table.border = "0";
- table.cellSpacing = "0";
- table.cellPadding = "5";
-
- const tbody = document.createElement("tbody");
- 
- // Row 1: Product Name END 
- let row1 = tbody.insertRow();
- row1.innerHTML =
- `<td colspan="9" style="border-bottom: 1px solid #ddd; border: 1px solid black;" class="productName"> ${item.name}
- </td>`
- ;
-
- // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
-
- // Row 2: Colours END
- let row2 = tbody.insertRow();
-
- let colourLabel = row2.insertCell();
- colourLabel.textContent = "Colour:";
- colourLabel.style.width = "100px";
- colourLabel.style.border = "1px solid black";
-
- let i = 0;
- if (item.colour.length > 1) {
- let colourSpace = row2.insertCell();
- colourSpace.textContent = ""
- colourSpace.style.width = (100/item.colour.length)+ "%";
- const extraColours = item.colour.length - 1; //SAME LINE subtract the default first colour END
- for (let i = 0; i < extraColours; i++) {
- //i++;
- const colourIndex = i + 1;
- const cellWidth = 100/item.colour.length;
- // console.log("Cell width:", cellWidth);
- let colourCell = row2.insertCell();
- colourCell.textContent = item.colour[colourIndex];
- colourCell.classList.add("productColour");
- colourCell.style.width = cellWidth + "%";
- colourCell.style.border = "1px solid black";
-
- const thisColour = item.colour[colourIndex];
- colourCell.addEventListener("click", () => {
- item.selectedColour = thisColour;
- console.log("User selected colour:", thisColour);
- console.log(item.selectedColour);
- row2.querySelectorAll(".productColour").forEach(c =>
- c.style.background = "");
- colourCell.style.background = "lightblue";
- });
- i++;
- };
- } else {
-
- let colourSpace = row2.insertCell();
- colourSpace.textContent = ""
- colourSpace.style.width = "50%";
- 
- let colourCell = row2.insertCell();
- colourCell.textContent = item.colour[0];   //SAME LINE safer than item.colour END
- colourCell.classList.add("productColour");
- colourCell.style.width = "120px"; //SAME LINE fixed width END
- colourCell.style.border = "1px solid black";
-
- colourCell.addEventListener("click", () => {
- item.selectedColour = item.colour[0];
- console.log("User selected colour:", item.colour[0]);
- row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
- colourCell.style.background = "lightblue";
- });
- };
- // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
-
- // Row 3: Sizes END
- let row3 = tbody.insertRow();
-
- let sizeLabel = row3.insertCell();
- sizeLabel.textContent = "Size:";
- sizeLabel.style.width = "100px";
- sizeLabel.style.border = "1px solid black";
-
- let ii = 0;
- if (item.size.length > 1) {
- let sizeSpace = row3.insertCell();
- sizeSpace.textContent = ""
- sizeSpace.style.width = (100/item.size.length) + "%";
- console.log(item.size || []);
- const extraSizes = Math.max(item.size.length - 1, 0); //SAME LINE subtract the default first colour END
- console.log(extraSizes);
- while (ii < extraSizes) {
- //ii++;
- const sizeIndex = ii + 1;
- const cellWidth = Math.max(100/item.size.length);
- console.log("Cell width:", cellWidth);
- let sizeCell = row3.insertCell();
- sizeCell.textContent = item.size[sizeIndex];
- sizeCell.classList.add("productSize");
- sizeCell.style.width = cellWidth + "%";
- sizeCell.style.border = "1px solid black";
-
- const thisSize = item.size[sizeIndex];
- sizeCell.addEventListener("click", () => {
- console.log("User selected size:", thisSize);
- item.selectedSize = thisSize;
- console.log(item.selectedSize);
- row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
- sizeCell.style.background = "lightblue";
- });
- ii++;
- };
- } else {
-
- let sizeSpace = row3.insertCell();
- sizeSpace.textContent = "";
-  sizeSpace.style.width = "50%";
-
- let sizeCell = row3.insertCell();
- sizeCell.textContent = item.size[0]; //SAME LINE safer than item.size END
- sizeCell.classList.add("productSize");
- sizeCell.style.width = "120px"; //SAME LINE fixed width END
- sizeCell.style.border = "1px solid black";
-
- sizeCell.addEventListener("click", () => {
- console.log("User selected size:", item.size[0]);
- item.selectedSize = item.size[0];
- console.log(item.selectedSize);
- row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
- sizeCell.style.background = "lightblue";
- });
- };
- // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
- 
- // Row 4: Price END
- tbody.insertRow().innerHTML = `<td style="width:100px; border: 1px solid black;" class="productPrice">Price:</td>
- <td colspan="8" style="border: 1px solid black;" class="productPriceValue">£${item.price}</td>`
- ;
- // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
-
- // Row 5: Add to Basket END
- let row5 = tbody.insertRow();
- row5.innerHTML = `<td colspan="9" style="border: 1px solid black;
-  text-align:center; cursor:pointer;" class="addToBasket">
- Add to Basket
- </td>`
- ;
- row5.addEventListener("click", () => {
-
- if (item.selectedColour === undefined || item.selectedSize === undefined) {
- document.getElementById("added").style.visibility = "hidden";
- document.getElementById("unselected").style.visibility = "visible";
- document.getElementById("unselected").innerHTML = "You have not selected the required options";
- console.log("item not added!");
- } else {
- addProduct(item);
- console.log( item.selectedSize, item.selectedColour);
- document.getElementById("unselected").style.visibility = "hidden";
- document.getElementById("added").style.visibility = "visible";
- document.getElementById("added").innerHTML = "item added!";
- }
- });
-
- // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
-
- // Row 6: Checkout
- let row6 = tbody.insertRow()
-  row6.innerHTML =
-` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "checkout">
- Checkout
- </td>`
- ;
- row6.addEventListener("click", () => {
- window.location.href="checkout.html";
- });
-
- table.appendChild(tbody);
- newDiv.appendChild(table);
-
- // Attach to productDetails END
- document.querySelector(".productDetails").appendChild(newDiv);
- console.log(get("basketProducts")); 
- console.log("hi");
- }
-
- export function enableTouchHover(selector = ".hoverable", dropdownSelector = ".dropdown") {
- if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
- // Simulate hover for generic elements END
- document.querySelectorAll(selector).forEach(el => {
- el.addEventListener("click", () => {
- el.classList.toggle("active");
- });
- });
-
- // Toggle dropdowns on tap END
- document.querySelectorAll(dropdownSelector).forEach(dropdown => {
- const icon = dropdown.querySelector('.icon');
- if (icon) {
- icon.addEventListener('click', function(e) {
- e.stopPropagation();
- const content = dropdown.querySelector('.dropdown-content');
- if (content) {
- content.style.display = (content.style.display === 'block') ? 'none' : 'block';
- }
- });
- }
- });
-
- // Close dropdowns when tapping elsewhere END
- document.body.addEventListener('click', function() {
- document.querySelectorAll('.dropdown-content').forEach(content => {
- content.style.display = 'none';
- });
- });
- }
- }

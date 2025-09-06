@@ -1,20 +1,11 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems, addToBasket, removeFromBasket} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, removeAllItems, addToBasket, removeFromBasket, addProduct} from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 
 updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
-
-window.addEventListener("DOMContentLoaded", () => {
-  const basketProducts = get("basketProducts") || [];
-  basketProducts.forEach(({ item }) => {
-    // Rebuild DOM from item data
-    addProduct(item, true);
-  });
-  updateBasketMessage();
-});
 
 if (query) {
   console.log("Search page query:", query);
@@ -25,8 +16,8 @@ function displayResults(item) {
   newDiv.classList.add("result-container");
   newDiv.classList.add(item.name.replace(/\s+/g, '-').toLowerCase());
   const productSlug = item.name.replace(/\s+/g, '-').toLowerCase();
- newDiv.addEventListener("click", function() {
-      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
+  newDiv.addEventListener("click", function() {
+    window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
  });
 
   const table = document.createElement("table");
@@ -90,7 +81,7 @@ const additionalInfo = item.additionalInfo || "&nbsp;";
           const div = document.createElement("div");
           //div.textContent = `${product.name} - £${product.price}`;
           displayResults(product);
-console.log(displayResults);
+          console.log(displayResults);
           resultsContainer.appendChild(div);
         });
       } else {

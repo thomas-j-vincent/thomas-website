@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const basketProducts = get("basketProducts") || [];
   basketProducts.forEach(({ item }) => {
     // Rebuild DOM from item data
-    addProduct(item, true);
+   addProduct(item);
   });
   updateBasketMessage();
 });
@@ -64,10 +64,8 @@ searchInput.addEventListener('keydown', (event) => {
 
 
   let item1 = products[0];
-  console.log(products[0].name);
 
   let item2 = products[1];
-  console.log(item2.name);
 
 document.getElementById("addItem1Btn").addEventListener("click", function() {
 addProduct(item1);
