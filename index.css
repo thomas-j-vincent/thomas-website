@@ -89,10 +89,10 @@ a:active {
 }
 
 .imageDiv img {
-  width: min(950px); /* max 200px or 20% of viewport width */
-  height: auto; 
+  width: 65vw; /* max 200px or 20% of viewport width */
+/*  height: auto; 
   float: left;           /* keep aspect ratio */
-  display: block;          /* removes inline spacing */
+/*  display: block;          /* removes inline spacing */
   margin: 0 auto;          /* centers image */
   border: 1px solid black;
   object-fit: contain;     /* ensures full image shows */

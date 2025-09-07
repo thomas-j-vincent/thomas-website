@@ -115,6 +115,53 @@ export function removeFromBasket(item) {
  return `£ ${amount.toFixed(2)}`;
  }
 
+ export function formatImage(item, selectedColour, value = 1) {
+  // fallback: use the item's selectedColour if no param is passed
+  const colour = selectedColour || item.selectedColour || "";
+
+  // normalise name and colour (remove spaces, make lowercase, etc.)
+  const safeName = String(item.name).replace(/\s+/g, "_");
+  const safeColour = String(colour).replace(/\s+/g, "_");
+  const safeNumber = String(value).replace(/\s+/g, "_");
+
+  // build full path with separator and extension
+
+ if (colour === undefined) {
+  const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
+ }
+
+  const path = `./images/${safeName}-${safeColour}-${safeNumber}.JPEG`;
+
+  console.log("image:", path);
+  return path;
+}
+let currentImageIndex = 1;
+export function showImage(item, selectedColour, index) {
+  const img = document.querySelector("imageDiv");
+  if (!img) return;
+  img.src = formatImage(item, colour, index);
+}
+
+export function nextImage (item) {
+  const maxImages = item.imageCount || 1;
+  currentImageIndex++;
+if (currentImageIndex > maxImages) {
+  currentImageIndex = 1;
+}
+  showImage(item, item,selectedColour, currentImageIndex);
+} 
+
+export function prevImage(item) {
+  const maxImages = item.imageCount || 1;
+  if (currentImageIndex > 1){
+    currentImageIndex--;
+  }
+    if (currentImageIndex < 1) {
+    currentImageIndex = maxImages; // wrap to last
+  }
+  showImage(item, item,selectedColour, currentImageIndex);
+}
+
  export function updateBasketMessage() {
  if (get("itemsInBasket") === 0) {
  document.getElementById("warning").style.visibility = 'visible';
@@ -130,7 +177,7 @@ export function removeFromBasket(item) {
  }
  }
 
-export function addProduct(item) {
+export function addProduct(item) {  //SAME LINE displays the items in the basket to the basket dropdown END
  // Create new product container END
 const basketProducts = get("basketProducts") || [];
 const basketItem = basketProducts.find(obj =>

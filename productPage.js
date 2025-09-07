@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems,checkBasket, addToBasket, removeFromBasket} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
@@ -8,13 +8,38 @@ updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
- export function displayResults2(item) {
+ function displayImages(item) {
+
+console.log(item.selectedColour);
+
+  const table = document.createElement("table");
+  table.classList.add("image-table");
+  table.border = "1";
+  table.cellPadding = "5";
+  table.cellSpacing = "0";
+
+  const tbody = document.createElement("tbody"); 
+  const colour = item.selectedColour || item.colour[1] || "";
+  let i= 0;
+
+  while (i < item.imageCount) {
+  let row1 = tbody.insertRow();
+  row1.innerHTML = `<td><img src="${formatImage(item, colour, i)}" alt="${(item.name)+(colour)}" style="max-width: 700px;"></td>`;
+  table.appendChild(tbody);
+  console.log("hi");
+  i++;
+  }
+    return table;
+ }
+
+ function displayResults2(item) {
  console.log("Displaying item:", item);
  document.getElementById("added").style.visibility = "hidden";
  document.getElementById("unselected").style.visibility = "hidden";
  const imageDiv = document.querySelector(".imageDiv");
  if (imageDiv) {
- imageDiv.innerHTML =` <img src="${item.image}" alt="${item.name}">;`
+  imageDiv.innerHTML = ""; // clear old stuff
+  imageDiv.appendChild(displayImages(item));
  }
 
  const newDiv = document.createElement("div");
@@ -67,9 +92,13 @@ loadFromStorage();
  colourCell.addEventListener("click", () => {
  item.selectedColour = thisColour;
  console.log("User selected colour:",item.selectedColour, thisColour);
+ console.log(item.selectedColour);
+ formatImage(item, item.selectedColour);
  row2.querySelectorAll(".productColour").forEach(c =>
  c.style.background = "");
  colourCell.style.background = "lightblue";
+ imageDiv.innerHTML = ""; // clear old stuff
+ imageDiv.appendChild(displayImages(item));
  });
  i++;
  };
@@ -90,6 +119,8 @@ loadFromStorage();
  console.log("User selected colour:", item.colour[0]);
  row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
  colourCell.style.background = "lightblue";
+ imageDiv.innerHTML = ""; // clear old stuff
+ imageDiv.appendChild(displayImages(item));
  });
  };
  // Spacer Row END
@@ -232,6 +263,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Finally display
    displayResults2(selectedProduct);
+
     
 
 
