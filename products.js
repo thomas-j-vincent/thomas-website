@@ -9,6 +9,10 @@ export const products = [
 "price": 7.00,
 "colour" : ["one colour", "red", "yellow", "blue", "black"],
 "size" : ["one size", "large", "medium", "small"],
+"description": `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
+ each moment captures a specific point in time. This specific selection features Elle and her friends the
+ first was taken at AUEA, the second at the Asian food court, the third back at AUEA on the final day of
+ school at the final photo was taken during a groupcall`,
 "additionalInfo": "Bestseller"
 },
 {
@@ -20,6 +24,8 @@ export const products = [
 "price": 6.00,
 "colour" : ["one colour", "red", "yellow"],
 "size" : ["one size", "large", "medium", "small"],
+"description" : `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
+ each moment captures a specific point in time`,
 },
 {
 "productType" : "nft",
@@ -30,6 +36,8 @@ export const products = [
 "price": 7.00,
 "colour" : ["one colour", "red", "yellow", "green"],
 "size" : ["one size", "large", "medium", "small"],
+"description" : `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
+ each moment captures a specific point in time`,
 },
 {
 "productType" : "nft",
@@ -40,5 +48,7 @@ export const products = [
 "price": 6.00,
 "colour" : ["one colour"],
 "size" : ["one size"],
+"description" : `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
+ each moment captures a specific point in time`,
 }
 ]

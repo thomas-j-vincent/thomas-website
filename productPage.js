@@ -227,6 +227,15 @@ tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselec
  window.location.href="checkout.html";
  });
 
+ tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+
+ let row7 = tbody.insertRow()
+ row7.innerHTML = 
+ ` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "description">${item.description}
+ </td>`
+ ;
+
+
  table.appendChild(tbody);
  newDiv.appendChild(table);
 
