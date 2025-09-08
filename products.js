@@ -13,6 +13,7 @@ export const products = [
  each moment captures a specific point in time. This specific selection features Elle and her friends the
  first was taken at AUEA, the second at the Asian food court, the third back at AUEA on the final day of
  school at the final photo was taken during a groupcall`,
+ "deliveryDetails": "get it when you want",
 "additionalInfo": "Bestseller"
 },
 {

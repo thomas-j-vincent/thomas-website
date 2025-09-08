@@ -231,10 +231,33 @@ tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselec
 
  let row7 = tbody.insertRow()
  row7.innerHTML = 
- ` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "description">${item.description}
+ ` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Product description">Product Description
  </td>`
  ;
 
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+
+ let row8 = tbody.insertRow()
+ row8.innerHTML = 
+ ` <td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">${item.description}
+ </td>`
+ ;
+
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+
+  let row9 = tbody.insertRow()
+ row9.innerHTML = 
+ ` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Delivery Details">Delivery Details
+ </td>`
+ ;
+
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+
+ let row10 = tbody.insertRow()
+ row10.innerHTML = 
+ ` <td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">${item.deliveryDetails}
+ </td>`
+ ;
 
  table.appendChild(tbody);
  newDiv.appendChild(table);
@@ -253,6 +276,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const basketProducts = get("basketProducts") || [];
  basketProducts.forEach(({ item }) => {
     // Rebuild DOM from item data
+    
    addProduct(item);
   });
   updateBasketMessage();
