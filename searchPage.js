@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, removeAllItems, addToBasket, removeFromBasket, addProduct} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, removeAllItems, addToBasket, removeFromBasket, addProduct, formatImage} from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 
@@ -37,7 +37,7 @@ const additionalInfo = item.additionalInfo || "&nbsp;";
   let row1 = tbody.insertRow();
   row1.innerHTML = `
       <td class="itemImg">
-          <img src="${item.image}" alt="${item.name}" width="128" height="128">
+          <img src="${formatImage(item,item.colour[1] || item.colour[0], 1)}" alt="${item.name}" width="128" height="128">
       </td>
   `;
   // Simple price row for now

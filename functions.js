@@ -130,7 +130,7 @@ export function removeFromBasket(item) {
   const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
  }
 
-  const path = `./images/${safeName}-${safeColour}-${safeNumber}.JPEG`;
+  const path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
 
   console.log("image:", path);
   return path;
@@ -201,7 +201,7 @@ let totalPrice = item.price * quantity;
  // Row 1: Image + Name
  tbody.insertRow().innerHTML =`
  <td colspan="4" rowspan="4" class="itemImg">
- <img src="${item.image}" alt="${item.name}" width="128" height="128">
+ <img src="${formatImage(item, item.selectedColour, 1)}" alt="${item.name}" width="128" height="128">
  </td>
  <td rowspan="7" style="width:50px;">&nbsp;</td>
  <td colspan="6" style="border-bottom: 1px solid #ddd;" class="itemName">${item.name}</td>`

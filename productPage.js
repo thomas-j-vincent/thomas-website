@@ -19,7 +19,7 @@ console.log(item.selectedColour);
   table.cellSpacing = "0";
 
   const tbody = document.createElement("tbody"); 
-  const colour = item.selectedColour || item.colour[1] || "";
+  const colour = item.selectedColour || item.colour[1] ||item.colour[0]  ||"";
   let i= 0;
 
   while (i < item.imageCount) {
@@ -35,7 +35,7 @@ console.log(item.selectedColour);
  function displayResults2(item) {
  console.log("Displaying item:", item);
  document.getElementById("added").style.visibility = "hidden";
- document.getElementById("unselected").style.visibility = "hidden";
+// document.getElementById("unselected").style.visibility = "hidden";
  const imageDiv = document.querySelector(".imageDiv");
  if (imageDiv) {
   imageDiv.innerHTML = ""; // clear old stuff
@@ -188,7 +188,7 @@ item.selectedSize = thisSize;
  <td colspan="8" style="border: 1px solid black;" class="productPriceValue">£${item.price}</td>`
  ;
  // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselected"></td>`;
 
  // Row 5: Add to Basket END
  let row5 = tbody.insertRow();
