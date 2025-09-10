@@ -124,8 +124,6 @@ export function removeFromBasket(item) {
   const safeColour = String(colour).replace(/\s+/g, "_");
   const safeNumber = String(value).replace(/\s+/g, "_");
 
-  // build full path with separator and extension
-
  if (colour === undefined) {
   const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
  }

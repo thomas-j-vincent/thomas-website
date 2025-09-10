@@ -82,29 +82,41 @@ a:active {
   gap: 40px;
 }
 
+.imageDiv img {
+  display: block;
+  max-width: 100%;   /* never let images overflow their container */
+  height: auto;
+  border: 1px solid black;
+  object-fit: contain;
+}
 .productLayout {
   display: flex;
+  align-items: flex-start; /* align at top */
   gap: 50px;
   width: 100%
 }
-
-.imageDiv img {
-  width: 65vw; /* max 200px or 20% of viewport width */
-/*  height: auto; 
-  float: left;           /* keep aspect ratio */
-/*  display: block;          /* removes inline spacing */
-  margin: 0 auto;          /* centers image */
-  border: 1px solid black;
-  object-fit: contain;     /* ensures full image shows */
+.image-table .stacked-image {
+  width: 70vw;
+  display: block;
 }
-
+.image-row {
+  display: flex;
+  align-items: flex-start;
+  width: 35vw;
+}
+.image-row .unstacked-image {
+  flex: 1 1 0;   /* grow/shrink equally */
+  width: auto;   /* let flexbox control size */
+  display: block; /* img must not be display:flex */
+}
 .productDetails {
   flex: 1;
-  float: right;
   border: 5px solid black;
   box-sizing: border-box;
   margin-right: 50px;
 }
+
+
 .productName {
   background-color: blue;;
   padding: 10px;

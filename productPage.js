@@ -12,24 +12,52 @@ loadFromStorage();
 
 console.log(item.selectedColour);
 
-  const table = document.createElement("table");
-  table.classList.add("image-table");
-  table.border = "1";
-  table.cellPadding = "5";
-  table.cellSpacing = "0";
+//  const table = document.createElement("table");
+let newDiv = document.createElement("div");
+//  table.classList.add("image-table");
+newDiv.className = "image-table";
+//  table.border = "1";
+newDiv.border = "1";
+//  table.cellPadding = "5";
+newDiv.cellPadding = "5";
+//  table.cellSpacing = "0";
+newDiv.cellSpacing = "0";
 
-  const tbody = document.createElement("tbody"); 
+//  const tbody = document.createElement("tbody"); 
   const colour = item.selectedColour || item.colour[1] ||item.colour[0]  ||"";
   let i= 0;
 
   while (i < item.imageCount) {
-  let row1 = tbody.insertRow();
-  row1.innerHTML = `<td><img src="${formatImage(item, colour, i)}" alt="${(item.name)+(colour)}" style="max-width: 700px;"></td>`;
-  table.appendChild(tbody);
-  console.log("hi");
-  i++;
+    if (i === 1) {
+      let rowDiv = document.createElement("div");
+      rowDiv.className = "image-row";
+
+      let img1 = document.createElement("img");
+      img1.src = `${formatImage(item, colour, i)}`;
+      img1.alt = `${item.name}${colour}`;
+      img1.className = "unstacked-image";
+      rowDiv.appendChild(img1);
+
+      if (i + 1 < item.imageCount) {
+        let img2 = document.createElement("img");
+        img2.src = `${formatImage(item, colour, i + 1)}`;
+        img2.alt = `${item.name}${colour}`;
+        img2.className = "unstacked-image";
+        rowDiv.appendChild(img2);
+        i++; // skip ahead one
+      }
+
+      newDiv.appendChild(rowDiv);
+    } else {
+      let img = document.createElement("img");
+      img.src = `${formatImage(item, colour, i)}`;
+      img.alt = `${item.name}${colour}`;
+      img.className = "stacked-image";
+      newDiv.appendChild(img);
+    }
+    i++;
   }
-    return table;
+return newDiv;
  }
 
  function displayResults2(item) {
