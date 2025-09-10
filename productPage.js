@@ -10,20 +10,14 @@ loadFromStorage();
 
  function displayImages(item) {
 
-console.log(item.selectedColour);
+  console.log(item.selectedColour);
 
-//  const table = document.createElement("table");
-let newDiv = document.createElement("div");
-//  table.classList.add("image-table");
-newDiv.className = "image-table";
-//  table.border = "1";
-newDiv.border = "1";
-//  table.cellPadding = "5";
-newDiv.cellPadding = "5";
-//  table.cellSpacing = "0";
-newDiv.cellSpacing = "0";
+  let newDiv = document.createElement("div");
+  newDiv.className = "image-table";
+  newDiv.border = "1";
+  newDiv.cellPadding = "5";
+  newDiv.cellSpacing = "0";
 
-//  const tbody = document.createElement("tbody"); 
   const colour = item.selectedColour || item.colour[1] ||item.colour[0]  ||"";
   let i= 0;
 
@@ -31,7 +25,6 @@ newDiv.cellSpacing = "0";
     if (i === 1) {
       let rowDiv = document.createElement("div");
       rowDiv.className = "image-row";
-
       let img1 = document.createElement("img");
       img1.src = `${formatImage(item, colour, i)}`;
       img1.alt = `${item.name}${colour}`;
@@ -44,7 +37,7 @@ newDiv.cellSpacing = "0";
         img2.alt = `${item.name}${colour}`;
         img2.className = "unstacked-image";
         rowDiv.appendChild(img2);
-        i++; // skip ahead one
+        i++;
       }
 
       newDiv.appendChild(rowDiv);
@@ -57,8 +50,8 @@ newDiv.cellSpacing = "0";
     }
     i++;
   }
-return newDiv;
- }
+  return newDiv;
+}
 
  function displayResults2(item) {
  console.log("Displaying item:", item);
@@ -293,6 +286,23 @@ tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselec
  // Attach to productDetails END
  document.querySelector(".productDetails").appendChild(newDiv);
  }
+
+ function completeLook() {
+  const query = item.productType;
+  let table = document.createElement("table");
+  table.className = "completeLook";
+  const myDiv = document.getElementsByClassName('search-box')[0];
+  const searchInput = document.querySelector('.search-box input');
+  const results = products.filter(product => 
+  product.productType.includes(query)
+  );  
+  results.slice (0-3);
+if (query = "clothing") {
+  console.log("item is clothing");
+  let table = document.createElement("table");
+  table.className = "completeLook";
+}
+ } 
 
 window.addEventListener("DOMContentLoaded", () => {
 
