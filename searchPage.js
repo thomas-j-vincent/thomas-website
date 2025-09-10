@@ -69,7 +69,7 @@ const additionalInfo = item.additionalInfo || "&nbsp;";
       // Filter by query
       const results = products.filter(product =>
         product.name.toLowerCase().includes(query.toLowerCase()) ||
-        product.productType.toLowerCase().includes(query.toLowerCase()) ||
+        product.productType.some(c => c.toLowerCase().includes(query.toLowerCase())) ||
         product.colour.some(c => c.toLowerCase().includes(query.toLowerCase()))
       );
 

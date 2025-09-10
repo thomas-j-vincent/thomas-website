@@ -25,7 +25,7 @@ searchInput.addEventListener('input', () => {
   // filter products (assuming products[] is already loaded with JSON)
    const results = products.filter(product => 
     product.name.toLowerCase().includes(query) ||
-    product.productType.toLowerCase().includes(query) ||
+    product.productType.some(c =>c.toLowerCase().includes(query)) ||
     product.colour.some(c => c.toLowerCase().includes(query)) // check colours too
   );  
   // optional: display results live
