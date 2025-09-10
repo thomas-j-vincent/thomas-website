@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, displayResults, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
@@ -280,6 +280,12 @@ tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselec
  </td>`
  ;
 
+// let row11 = tbody.insertRow()
+// row11.innerHTML = 
+// ` <td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">${completeLook()}
+ //</td>`
+// ;
+
  table.appendChild(tbody);
  newDiv.appendChild(table);
 
@@ -287,7 +293,7 @@ tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselec
  document.querySelector(".productDetails").appendChild(newDiv);
  }
 
- function completeLook() {
+/* function completeLook() {
   const query = item.productType;
   let table = document.createElement("table");
   table.className = "completeLook";
@@ -299,10 +305,10 @@ tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselec
   results.slice (0-3);
 if (query = "clothing") {
   console.log("item is clothing");
-  let table = document.createElement("table");
-  table.className = "completeLook";
 }
+  console.log("item is clothing");
  } 
+  */
 
 window.addEventListener("DOMContentLoaded", () => {
 

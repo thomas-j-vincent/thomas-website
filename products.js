@@ -1,7 +1,7 @@
 import { set, get } from "./functions.js";
 export const products = [
 {
-"productType" : ["nft", "non-clothing"],
+"productType" : ["nft", "non-clothing", "all"],
 "productTag" : "item1",
 "name" :"Elle mugshot",
 "image" :"./images/Elle.JPEG",
@@ -17,7 +17,7 @@ export const products = [
 "additionalInfo": "Bestseller"
 },
 {
-"productType" : ["nft", "non-clothing"],
+"productType" : ["nft", "non-clothing", "all"],
 "productTag" : "item2",
 "name":"Monil mugshot",
 "image" :"./images/Monil.JPEG",
@@ -29,7 +29,7 @@ export const products = [
  each moment captures a specific point in time`,
 },
 {
-"productType" : ["trousers", "clothing"],
+"productType" : ["trousers", "clothing", "all"],
 "productTag" : "item3",
 "name" :"Erin mugshot",
 "image" :"./images/Erin.JPG",
@@ -41,7 +41,7 @@ export const products = [
  each moment captures a specific point in time`,
 },
 {
-"productType" : ["shirt", "clothing"],
+"productType" : ["shirt", "clothing", "all"],
 "productTag" : "item4",
 "name":"Sam mugshot",
 "image" :"./images/Sam.JPG",
