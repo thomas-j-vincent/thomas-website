@@ -13,7 +13,7 @@ export const products = [
  each moment captures a specific point in time. This specific selection features Elle and her friends the
  first was taken at AUEA, the second at the Asian food court, the third back at AUEA on the final day of
  school at the final photo was taken during a groupcall`,
- "deliveryDetails": "get it when you want",
+"deliveryDetails": "get it when you want",
 "additionalInfo": "Bestseller"
 },
 {
@@ -27,6 +27,7 @@ export const products = [
 "size" : ["one size", "large", "medium", "small"],
 "description" : `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
  each moment captures a specific point in time`,
+"deliveryDetails": "get it when you want",
 },
 {
 "productType" : ["trousers", "clothing", "all"],
@@ -39,6 +40,7 @@ export const products = [
 "size" : ["one size", "large", "medium", "small"],
 "description" : `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
  each moment captures a specific point in time`,
+"deliveryDetails": "get it when you want",
 },
 {
 "productType" : ["shirt", "clothing", "all"],
@@ -51,5 +53,19 @@ export const products = [
 "size" : ["one size"],
 "description" : `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
  each moment captures a specific point in time`,
+"deliveryDetails": "get it when you want",
+},
+{
+"productType" : ["belt", "clothing", "all"],
+"productTag" : "item5",
+"name":"Zain mugshot",
+"image" :"./images/Sam.JPG",
+"imageCount" : 4,
+"price": 6.00,
+"colour" : ["one colour"],
+"size" : ["one size"],
+"description" : `A selection of nft's each un-perfectly composed and crafted over the course of two years at AUEA,
+ each moment captures a specific point in time`,
+"deliveryDetails": "get it when you want",
 }
 ]

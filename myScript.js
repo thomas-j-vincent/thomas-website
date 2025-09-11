@@ -28,6 +28,7 @@ searchInput.addEventListener('input', () => {
     product.productType.some(c =>c.toLowerCase().includes(query)) ||
     product.colour.some(c => c.toLowerCase().includes(query)) // check colours too
   );  
+ // console.log(results);
   // optional: display results live
   const resultsContainer = document.getElementById("results");
   if (resultsContainer) {

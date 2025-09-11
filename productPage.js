@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, displayResults, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
@@ -53,266 +53,339 @@ loadFromStorage();
   return newDiv;
 }
 
- function displayResults2(item) {
- console.log("Displaying item:", item);
- document.getElementById("added").style.visibility = "hidden";
+function displayResults2(item) {
+  document.getElementById("added").style.visibility = "hidden";
 // document.getElementById("unselected").style.visibility = "hidden";
- const imageDiv = document.querySelector(".imageDiv");
- if (imageDiv) {
-  imageDiv.innerHTML = ""; // clear old stuff
-  imageDiv.appendChild(displayImages(item));
- }
+  const imageDiv = document.querySelector(".imageDiv");
+  if (imageDiv) {
+    imageDiv.innerHTML = ""; // clear old stuff
+    imageDiv.appendChild(displayImages(item));
+  }
 
- const newDiv = document.createElement("div");
- newDiv.classList.add("product-container");
-
- const table = document.createElement("table");
- table.classList.add("basket-table");
- table.border = "0";
- table.cellSpacing = "0";
- table.cellPadding = "5";
-
- const tbody = document.createElement("tbody");
+  const newDiv = document.createElement("div");
+  newDiv.classList.add("product-container");
+  const table = document.createElement("table");
+  table.classList.add("basket-table");
+  table.border = "0";
+  table.cellSpacing = "0";
+  table.cellPadding = "5";
+  const tbody = document.createElement("tbody");
  
  // Row 1: Product Name END 
- let row1 = tbody.insertRow();
- row1.innerHTML =
- `<td colspan="9" style="border-bottom: 1px solid #ddd; border: 1px solid black;" class="productName"> ${item.name}
- </td>`
- ;
+  let row1 = tbody.insertRow();
+  row1.innerHTML =
+  `<td colspan="9" style="border-bottom: 1px solid #ddd; border: 1px solid black;" class="productName">
+  ${item.name}</td>`;
 
  // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  &nbsp;</td>`;
 
  // Row 2: Colours END
- let row2 = tbody.insertRow();
+  let row2 = tbody.insertRow();
+  let colourLabel = row2.insertCell();
+  colourLabel.textContent = "Colour:";
+  colourLabel.style.width = "100px";
+  colourLabel.style.border = "1px solid black";
 
- let colourLabel = row2.insertCell();
- colourLabel.textContent = "Colour:";
- colourLabel.style.width = "100px";
- colourLabel.style.border = "1px solid black";
-
- let i = 0;
- if (item.colour.length > 1) {
- let colourSpace = row2.insertCell();
- colourSpace.textContent = ""
- colourSpace.style.width = (100/item.colour.length)+ "%";
- const extraColours = item.colour.length - 1; //SAME LINE subtract the default first colour END
- for (let i = 0; i < extraColours; i++) {
+  let i = 0;
+  if (item.colour.length > 1) {
+    let colourSpace = row2.insertCell();
+    colourSpace.textContent = ""
+    colourSpace.style.width = (100/item.colour.length)+ "%";
+    const extraColours = item.colour.length - 1; //SAME LINE subtract the default first colour END
+    for (let i = 0; i < extraColours; i++) {
  //i++;
- const colourIndex = i + 1;
- const cellWidth = 100/item.colour.length;
+      const colourIndex = i + 1;
+      const cellWidth = 100/item.colour.length;
  // console.log("Cell width:", cellWidth);
- let colourCell = row2.insertCell();
- colourCell.textContent = item.colour[colourIndex];
- colourCell.classList.add("productColour");
- colourCell.style.width = cellWidth + "%";
- colourCell.style.border = "1px solid black";
+      let colourCell = row2.insertCell();
+      colourCell.textContent = item.colour[colourIndex];
+      colourCell.classList.add("productColour");
+      colourCell.style.width = cellWidth + "%";
+      colourCell.style.border = "1px solid black";
+      const thisColour = item.colour[colourIndex];
 
- const thisColour = item.colour[colourIndex];
- colourCell.addEventListener("click", () => {
- item.selectedColour = thisColour;
- console.log("User selected colour:",item.selectedColour, thisColour);
- console.log(item.selectedColour);
- formatImage(item, item.selectedColour);
- row2.querySelectorAll(".productColour").forEach(c =>
- c.style.background = "");
- colourCell.style.background = "lightblue";
- imageDiv.innerHTML = ""; // clear old stuff
- imageDiv.appendChild(displayImages(item));
- });
- i++;
- };
- } else {
-
- let colourSpace = row2.insertCell();
- colourSpace.textContent = ""
- colourSpace.style.width = "50%";
- 
- let colourCell = row2.insertCell();
- colourCell.textContent = item.colour[0];   //SAME LINE safer than item.colour END
- colourCell.classList.add("productColour");
- colourCell.style.width = "120px"; //SAME LINE fixed width END
- colourCell.style.border = "1px solid black";
-
- colourCell.addEventListener("click", () => {
- item.selectedColour = item.colour[0];
- console.log("User selected colour:", item.colour[0]);
- row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
- colourCell.style.background = "lightblue";
- imageDiv.innerHTML = ""; // clear old stuff
- imageDiv.appendChild(displayImages(item));
- });
- };
+      colourCell.addEventListener("click", () => {
+        item.selectedColour = thisColour;
+        console.log("User selected colour:",item.selectedColour, thisColour);
+        console.log(item.selectedColour);
+        formatImage(item, item.selectedColour);
+        row2.querySelectorAll(".productColour").forEach(c =>
+          c.style.background = "");
+        colourCell.style.background = "lightblue";
+        imageDiv.innerHTML = ""; // clear old stuff
+        imageDiv.appendChild(displayImages(item));
+      });
+      i++;
+    };
+  } else {
+    let colourSpace = row2.insertCell();
+    colourSpace.textContent = ""
+    colourSpace.style.width = "50%";
+    let colourCell = row2.insertCell();
+    colourCell.textContent = item.colour[0];   //SAME LINE safer than item.colour END
+    colourCell.classList.add("productColour");
+    colourCell.style.width = "120px"; //SAME LINE fixed width END
+    colourCell.style.border = "1px solid black";
+    colourCell.addEventListener("click", () => {
+      item.selectedColour = item.colour[0];
+      console.log("User selected colour:", item.colour[0]);
+      row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
+      colourCell.style.background = "lightblue";
+      imageDiv.innerHTML = ""; // clear old stuff
+      imageDiv.appendChild(displayImages(item));
+    });
+  };
  // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  &nbsp;</td>`;
 
  // Row 3: Sizes END
- let row3 = tbody.insertRow();
-
- let sizeLabel = row3.insertCell();
- sizeLabel.textContent = "Size:";
- sizeLabel.style.width = "100px";
- sizeLabel.style.border = "1px solid black";
-
- let ii = 0;
- if (item.size.length > 1) {
- let sizeSpace = row3.insertCell();
- sizeSpace.textContent = ""
- sizeSpace.style.width = (100/item.size.length) + "%";
- const extraSizes = Math.max(item.size.length - 1, 0); //SAME LINE subtract the default first colour END
- while (ii < extraSizes) {
+  let row3 = tbody.insertRow();
+  let sizeLabel = row3.insertCell();
+  sizeLabel.textContent = "Size:";
+  sizeLabel.style.width = "100px";
+  sizeLabel.style.border = "1px solid black";
+  let ii = 0;
+  if (item.size.length > 1) {
+    let sizeSpace = row3.insertCell();
+    sizeSpace.textContent = ""
+    sizeSpace.style.width = (100/item.size.length) + "%";
+    const extraSizes = Math.max(item.size.length - 1, 0); //SAME LINE subtract the default first colour END
+    while (ii < extraSizes) {
  //ii++;
- const sizeIndex = ii + 1;
- const cellWidth = Math.max(100/item.size.length);
- console.log("Cell width:", cellWidth);
- let sizeCell = row3.insertCell();
- sizeCell.textContent = item.size[sizeIndex];
- sizeCell.classList.add("productSize");
- sizeCell.style.width = cellWidth + "%";
- sizeCell.style.border = "1px solid black";
-
- const thisSize = item.size[sizeIndex];
- sizeCell.addEventListener("click", () => {
-item.selectedSize = thisSize;
- console.log("User selected size:",item.selectedSize, thisSize);
- row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
- sizeCell.style.background = "lightblue";
- });
- ii++;
- };
- } else {
-
- let sizeSpace = row3.insertCell();
- sizeSpace.textContent = "";
-  sizeSpace.style.width = "50%";
-
- let sizeCell = row3.insertCell();
- sizeCell.textContent = item.size[0]; //SAME LINE safer than item.size END
- sizeCell.classList.add("productSize");
- sizeCell.style.width = "120px"; //SAME LINE fixed width END
- sizeCell.style.border = "1px solid black";
-
- sizeCell.addEventListener("click", () => {
- console.log("User selected size:", item.size[0]);
- item.selectedSize = item.size[0];
- console.log(item.selectedSize);
- row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
- sizeCell.style.background = "lightblue";
- });
- };
+      const sizeIndex = ii + 1;
+      const cellWidth = Math.max(100/item.size.length);
+      console.log("Cell width:", cellWidth);
+      let sizeCell = row3.insertCell();
+      sizeCell.textContent = item.size[sizeIndex];
+      sizeCell.classList.add("productSize");
+      sizeCell.style.width = cellWidth + "%";
+      sizeCell.style.border = "1px solid black";
+      const thisSize = item.size[sizeIndex];
+      sizeCell.addEventListener("click", () => {
+        item.selectedSize = thisSize;
+        console.log("User selected size:",item.selectedSize, thisSize);
+        row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
+        sizeCell.style.background = "lightblue";
+      });
+      ii++;
+    };
+  } else {
+    let sizeSpace = row3.insertCell();
+    sizeSpace.textContent = "";
+    sizeSpace.style.width = "50%";
+    let sizeCell = row3.insertCell();
+    sizeCell.textContent = item.size[0]; //SAME LINE safer than item.size END
+    sizeCell.classList.add("productSize");
+    sizeCell.style.width = "120px"; //SAME LINE fixed width END
+    sizeCell.style.border = "1px solid black";
+    sizeCell.addEventListener("click", () => {
+      console.log("User selected size:", item.size[0]);
+      item.selectedSize = item.size[0];
+      console.log(item.selectedSize);
+      row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
+      sizeCell.style.background = "lightblue";
+    });
+  };
  // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  &nbsp;</td>`;
  
  // Row 4: Price END
- tbody.insertRow().innerHTML = `<td style="width:100px; border: 1px solid black;" class="productPrice">Price:</td>
- <td colspan="8" style="border: 1px solid black;" class="productPriceValue">£${item.price}</td>`
- ;
+  tbody.insertRow().innerHTML = `<td style="width:100px; border: 1px solid black;" class="productPrice">
+  Price:</td>
+  <td colspan="8" style="border: 1px solid black;" class="productPriceValue">
+  £${item.price}</td>`;
  // Spacer Row END
-tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselected"></td>`;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselected"></td>`;
 
  // Row 5: Add to Basket END
- let row5 = tbody.insertRow();
- row5.innerHTML = `<td colspan="9" style="border: 1px solid black;
-  text-align:center; cursor:pointer;" class="addToBasket">
- Add to Basket
- </td>`
- ;
- row5.addEventListener("click", () => {
-
- if (item.selectedColour === undefined || item.selectedSize === undefined) {
- document.getElementById("added").style.visibility = "hidden";
- document.getElementById("unselected").style.visibility = "visible";
- document.getElementById("unselected").innerHTML = "You have not selected the required options";
- console.log("item not added!");
- } else {
- addToBasket(item);
- console.log( item.selectedSize, item.selectedColour);
- document.getElementById("unselected").style.visibility = "hidden";
- document.getElementById("added").style.visibility = "visible";
- document.getElementById("added").innerHTML = "item added!";
- }
- });
+  let row5 = tbody.insertRow();
+  row5.innerHTML = `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" class="addToBasket">
+  Add to Basket</td>`;
+  row5.addEventListener("click", () => {
+    if (item.selectedColour === undefined || item.selectedSize === undefined) {
+      document.getElementById("added").style.visibility = "hidden";
+      document.getElementById("unselected").style.visibility = "visible";
+      document.getElementById("unselected").innerHTML = "You have not selected the required options";
+      console.log("item not added!");
+    } else {
+      addToBasket(item);
+      console.log( item.selectedSize, item.selectedColour);
+      document.getElementById("unselected").style.visibility = "hidden";
+      document.getElementById("added").style.visibility = "visible";
+      document.getElementById("added").innerHTML = "item added!";
+    }
+  });
 
  // Spacer Row END
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
  // Row 6: Checkout
- let row6 = tbody.insertRow()
+  let row6 = tbody.insertRow()
   row6.innerHTML =
-` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "checkout">
- Checkout
- </td>`
- ;
- row6.addEventListener("click", () => {
- window.location.href="checkout.html";
- });
+  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "checkout">
+  Checkout</td>`;
+  row6.addEventListener("click", () => {
+    window.location.href="checkout.html";
+  });
 
- tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  &nbsp;</td>`;
 
- let row7 = tbody.insertRow()
- row7.innerHTML = 
- ` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Product description">Product Description
- </td>`
- ;
+  let row7 = tbody.insertRow()
+  row7.innerHTML = 
+  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Product description">
+  Product Description</td>`;
 
   tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
- let row8 = tbody.insertRow()
- row8.innerHTML = 
- ` <td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">${item.description}
- </td>`
- ;
+  let row8 = tbody.insertRow()
+  row8.innerHTML = 
+  `<td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">
+  ${item.description}</td>`;
 
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  &nbsp;</td>`;
 
   let row9 = tbody.insertRow()
- row9.innerHTML = 
- ` <td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Delivery Details">Delivery Details
- </td>`
- ;
+  row9.innerHTML = 
+  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Delivery Details">
+  Delivery Details</td>`;
 
   tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
- let row10 = tbody.insertRow()
- row10.innerHTML = 
- ` <td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">${item.deliveryDetails}
- </td>`
- ;
+  let row10 = tbody.insertRow()
+  row10.innerHTML = 
+  `<td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">
+  ${item.deliveryDetails}</td>`;
 
-// let row11 = tbody.insertRow()
-// row11.innerHTML = 
-// ` <td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">${completeLook()}
- //</td>`
-// ;
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
 
- table.appendChild(tbody);
- newDiv.appendChild(table);
+    let row11 = tbody.insertRow()
+  row11.innerHTML = 
+  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Complete the look">
+  Complete the look</td>`;
+
+  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+
+  let row12 = tbody.insertRow();
+  let cell = row12.insertCell();
+  cell.colSpan = 9;
+  cell.style.border = "1px solid black";
+
+  const lookTable = completeLook(item);
+
+  cell.appendChild(lookTable);
+  table.appendChild(tbody);
+  newDiv.appendChild(table);
 
  // Attach to productDetails END
- document.querySelector(".productDetails").appendChild(newDiv);
- }
-
-/* function completeLook() {
-  const query = item.productType;
-  let table = document.createElement("table");
-  table.className = "completeLook";
-  const myDiv = document.getElementsByClassName('search-box')[0];
-  const searchInput = document.querySelector('.search-box input');
-  const results = products.filter(product => 
-  product.productType.includes(query)
-  );  
-  results.slice (0-3);
-if (query = "clothing") {
-  console.log("item is clothing");
+  document.querySelector(".productDetails").appendChild(newDiv);
 }
-  console.log("item is clothing");
- } 
-  */
+
+function completeLook(item) {
+  const query = item.productType[1];   // e.g. "clothing"
+  const compare = item.productType[0]; // e.g. "shirt"
+  console.log("query:", query);
+  console.log("compare:", compare);
+  let results;
+  if (query === "non-clothing"){
+    results = products.filter(product => 
+      product.productType.includes(query));
+    console.log("preslice:",results)
+    results.splice (0,1);
+    console.log("afterslice:",results)
+  } else {
+    results = products.filter(product => 
+    product.productType.includes(query) &&
+    !product.productType.includes(compare))
+    if (results === 0) {
+      results = products.filter(product => 
+      product.productType.includes(query));
+    }
+  }
+  results.splice (3);
+  console.log("results:",results.length);
+  let i = 0;
+
+   const containerDiv = document.createElement("div");
+
+//  let resultsLength = results.length;
+  for (let i = 0; i < results.length; i++){
+  const item = results[i]; 
+  console.log(i);
+
+    const newDiv = document.createElement("div");
+    newDiv.classList.add("completeLook");
+    newDiv.style.border = "1px solid black";
+    newDiv.addEventListener("click", function() {
+      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
+    });
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+
+  //table.border = "0";
+  //  table.classList.add("basket-table");
+  table.cellSpacing = "1";
+  table.cellPadding = "5";
+ 
+  const colours = item.colour || []; // make sure it’s an array
+  const extraColours = Math.max(colours.length - 1, 0); // subtract the default first colour
+
+  const additionalInfo = item.additionalInfo || "&nbsp;";
+
+  // Row 1: Image + Name
+  let row1 = tbody.insertRow();
+  row1.innerHTML = `
+      <td class="itemImg">
+          <img src="${formatImage(item,item.colour[1] || item.colour[0], 1)}"
+           alt="${item.name}" width="128" height="128">
+      </td>
+  `;
+
+  // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td class="itemName">${item.name}</td>
+  `;
+
+    // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td class="itemPrice">£${item.price}</td>
+  `;
+      // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td  style=" font-size: 10px;" class="itemAdditionalInfo">
+       ${additionalInfo}
+       </td>
+  `;
+      // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td  style=" font-size: 10px;" class="availableColours">Available colours: ${extraColours}</td>
+  `;
+
+  table.appendChild(tbody);
+  newDiv.appendChild(table);
+  containerDiv.appendChild(newDiv);
+
+    if (i < results.length - 1) {
+    const spacer = document.createElement("div");
+    spacer.innerHTML = `<table><tbody>
+       <tr><td style="height: 50px;" colspan="9">&nbsp;</td></tr>
+     </tbody></table>`;
+    containerDiv.appendChild(spacer);
+  }
+}
+
+  console.log("results",results);
+ return containerDiv;
+};
 
 window.addEventListener("DOMContentLoaded", () => {
 
-    const container = document.getElementById("container");
+  const container = document.getElementById("container");
   if (container) {
     container.innerHTML = "";
   }
@@ -335,67 +408,8 @@ window.addEventListener("DOMContentLoaded", () => {
     //  return;
     }
 
-    console.log("Selected product:", selectedProduct);
-
-
     // Finally display
    displayResults2(selectedProduct);
-
-   /*function displayResults(item) {  SAME LINE, ONLY HERE SO I CAN REFERENCE IT LATER WITHOUT OPENING SEARCH PAGE END
-  const newDiv = document.createElement("div");
-  newDiv.classList.add("result-container");
-  newDiv.classList.add(item.name.replace(/\s+/g, '-').toLowerCase());
-  const productSlug = item.name.replace(/\s+/g, '-').toLowerCase();
-  newDiv.addEventListener("click", function() {
-    window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
- });
-
-  const table = document.createElement("table");
-  table.classList.add("basket-table");
-  table.border = "0";
-  table.cellSpacing = "0";
-  table.cellPadding = "5";
-
-const colours = item.colour || []; // make sure it’s an array
-const extraColours = Math.max(colours.length - 1, 0); // subtract the default first colour
-
-const additionalInfo = item.additionalInfo || "&nbsp;";
-
-  const tbody = document.createElement("tbody");
-
-  // Row 1: Image + Name
-  let row1 = tbody.insertRow();
-  row1.innerHTML = `
-      <td class="itemImg">
-          <img src="${formatImage(item,item.colour[1] || item.colour[0], 1)}" alt="${item.name}" width="128" height="128">
-      </td>
-  `;
-  // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td class="itemName">${item.name}</td>
-  `;
-    // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td class="itemPrice">£${item.price}</td>
-  `;
-      // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td  style=" font-size: 10px;" class="itemAdditionalInfo">
-       ${additionalInfo}
-       </td>
-  `;
-      // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td  style=" font-size: 10px;" class="availableColours">Available colours: ${extraColours}</td>
-  `;
-
-
-  table.appendChild(tbody);
-  newDiv.appendChild(table);
-
-  document.getElementById("searchResult").appendChild(newDiv);
-}
-  */
 
     
 

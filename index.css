@@ -181,7 +181,6 @@ background-color: red;
     padding: 2px 5px; /* smaller padding */
     line-height: 2.5;
 }
-
 .dropdown-content a:hover {background-color: #6e6d6d;}
 
 .dropdown:hover .dropdown-content {
