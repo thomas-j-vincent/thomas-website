@@ -8,7 +8,7 @@ updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
- function displayImages(item) {
+  function displayImages(item) {
 
   console.log(item.selectedColour);
 
@@ -25,10 +25,12 @@ loadFromStorage();
     if (i === 1) {
       let rowDiv = document.createElement("div");
       rowDiv.className = "image-row";
+//      rowDiv.id = "myImg";
       let img1 = document.createElement("img");
       img1.src = `${formatImage(item, colour, i)}`;
       img1.alt = `${item.name}${colour}`;
       img1.className = "unstacked-image";
+      img1.id = "myImg";
       rowDiv.appendChild(img1);
 
       if (i + 1 < item.imageCount) {
@@ -46,6 +48,7 @@ loadFromStorage();
       img.src = `${formatImage(item, colour, i)}`;
       img.alt = `${item.name}${colour}`;
       img.className = "stacked-image";
+      img.id = "myImg";
       newDiv.appendChild(img);
     }
     i++;
@@ -383,6 +386,80 @@ function completeLook(item) {
  return containerDiv;
 };
 
+// this is to make the images zoom-in-able on phone or mouse
+/*function zoomable() {
+  let scale = 1;
+let posX = 0, posY = 0;
+let isDragging = false;
+let startX, startY;
+
+// Reset zoom when modal opens
+function showImage(index) {
+  currentIndex = index;
+  modal.style.display = "block";
+  modalImg.src = images[index].src;
+  captionText.innerHTML = images[index].alt;
+  scale = 1;
+  posX = 0;
+  posY = 0;
+  modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+}
+
+// Zoom with mouse scroll
+modalImg.addEventListener("wheel", function(e) {
+  e.preventDefault();
+  const delta = e.deltaY > 0 ? -0.1 : 0.1;
+  scale = Math.min(Math.max(0.5, scale + delta), 5); // clamp between 0.5x and 5x
+  modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+});
+
+// Drag image with mouse
+modalImg.addEventListener("mousedown", function(e) {
+  isDragging = true;
+  startX = e.clientX - posX;
+  startY = e.clientY - posY;
+  modalImg.style.cursor = "grabbing";
+}); 
+
+window.addEventListener("mouseup", function() {
+  isDragging = false;
+  modalImg.style.cursor = "grab";
+});
+
+window.addEventListener("mousemove", function(e) {
+  if (!isDragging) return;
+  posX = e.clientX - startX;
+  posY = e.clientY - startY;
+  modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+});
+
+// Touch pinch-to-zoom
+let initialDistance = 0;
+modalImg.addEventListener("touchstart", function(e) {
+  if (e.touches.length === 2) {
+    initialDistance = Math.hypot(
+      e.touches[0].pageX - e.touches[1].pageX,
+      e.touches[0].pageY - e.touches[1].pageY
+    );
+  }
+}, { passive: false });
+
+modalImg.addEventListener("touchmove", function(e) {
+  if (e.touches.length === 2) {
+    e.preventDefault();
+    const newDistance = Math.hypot(
+      e.touches[0].pageX - e.touches[1].pageX,
+      e.touches[0].pageY - e.touches[1].pageY
+    );
+    const delta = (newDistance - initialDistance) / 200; // sensitivity
+    scale = Math.min(Math.max(0.5, scale + delta), 5);
+    modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+    initialDistance = newDistance;
+  }
+}, { passive: false });
+}
+*/
+
 window.addEventListener("DOMContentLoaded", () => {
 
   const container = document.getElementById("container");
@@ -411,7 +488,52 @@ window.addEventListener("DOMContentLoaded", () => {
     // Finally display
    displayResults2(selectedProduct);
 
-    
+var modal = document.getElementById("myModal");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+var closeBtn = document.getElementsByClassName("close")[0];
+var nextBtn = document.querySelector(".next");
+var prevBtn = document.querySelector(".prev");
 
+var images = document.querySelectorAll(".stacked-image, .unstacked-image");
+let currentIndex = 0;
+
+// Open modal when any image is clicked
+images.forEach((img, index) => {
+  img.addEventListener("click", function () {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    currentIndex = index;
+  });
+});
+
+// Close modal
+closeBtn.onclick = function () {
+  modal.style.display = "none";
+};
+
+// Next image
+nextBtn.onclick = function () {
+  currentIndex = (currentIndex + 1) % images.length;
+  modalImg.src = images[currentIndex].src;
+  captionText.innerHTML = images[currentIndex].alt;
+};
+
+// Previous image
+prevBtn.onclick = function () {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  modalImg.src = images[currentIndex].src;
+  captionText.innerHTML = images[currentIndex].alt;
+};
+
+document.addEventListener("keydown", function(e) {
+  if (modal.style.display === "block") {
+    if (e.key === "ArrowRight") nextBtn.onclick();
+    if (e.key === "ArrowLeft") prevBtn.onclick();
+    if (e.key === "Escape") modal.style.display = "none";
+  }
+});
+// zoomable();  SAME LINE uncomment if you want the images to be zoomable END
 
   
