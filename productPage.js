@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, updateBasketMessage, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
@@ -327,49 +327,14 @@ function completeLook(item) {
     newDiv.addEventListener("click", function() {
       window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
     });
-  const table = document.createElement("table");
-  const tbody = document.createElement("tbody");
+
+    const table = universalDisplay(item);
 
   //table.border = "0";
   //  table.classList.add("basket-table");
   table.cellSpacing = "1";
   table.cellPadding = "5";
- 
-  const colours = item.colour || []; // make sure it’s an array
-  const extraColours = Math.max(colours.length - 1, 0); // subtract the default first colour
 
-  const additionalInfo = item.additionalInfo || "&nbsp;";
-
-  // Row 1: Image + Name
-  let row1 = tbody.insertRow();
-  row1.innerHTML = `
-      <td class="itemImg">
-          <img src="${formatImage(item,item.colour[1] || item.colour[0], 1)}"
-           alt="${item.name}" width="128" height="128">
-      </td>
-  `;
-
-  // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td class="itemName">${item.name}</td>
-  `;
-
-    // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td class="itemPrice">£${item.price}</td>
-  `;
-      // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td  style=" font-size: 10px;" class="itemAdditionalInfo">
-       ${additionalInfo}
-       </td>
-  `;
-      // Simple price row for now
-  tbody.insertRow().innerHTML = `
-       <td  style=" font-size: 10px;" class="availableColours">Available colours: ${extraColours}</td>
-  `;
-
-  table.appendChild(tbody);
   newDiv.appendChild(table);
   containerDiv.appendChild(newDiv);
 
@@ -460,6 +425,25 @@ modalImg.addEventListener("touchmove", function(e) {
 }
 */
 
+function mayAlsoLike(item) {
+  const compare = item.productType[0]; // e.g. "shirt"
+  let results;
+  results = products.filter(product => 
+  product.productType.includes(compare)); // search via item type
+  //document.getElementById("mayLike");// create a table
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+  
+  tbody.insertRow().innerHTML = `
+       <td>May Also Like</td>
+  `;
+  // use universalDisplay
+  // scroll somehow
+
+    table.appendChild(tbody);
+     document.getElementById("mayLike").appendChild(tbody);
+}
+
 window.addEventListener("DOMContentLoaded", () => {
 
   const container = document.getElementById("container");
@@ -487,6 +471,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Finally display
    displayResults2(selectedProduct);
+   mayAlsoLike(selectedProduct);
 
 var modal = document.getElementById("myModal");
 var modalImg = document.getElementById("img01");

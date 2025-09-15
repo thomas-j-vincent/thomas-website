@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, existingSearchResults, removeAllItems, addToBasket, removeFromBasket, addProduct, formatImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, universalDisplay, existingSearchResults, removeAllItems, addToBasket, removeFromBasket, addProduct, formatImage} from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 

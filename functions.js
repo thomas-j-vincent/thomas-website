@@ -47,6 +47,47 @@ set ("searchResults", newResults);
 console.log(get("searchResults"));
 } 
 
+export function universalDisplay(item) {
+  const colours = item.colour || []; // make sure it’s an array
+  const extraColours = Math.max(colours.length - 1, 0); // subtract the default first colour
+  const additionalInfo = item.additionalInfo || "&nbsp;";
+
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+
+  // Row 1: Image + Name
+  let row1 = tbody.insertRow();
+  row1.innerHTML = `
+      <td class="itemImg">
+          <img src="${formatImage(item,item.colour[1] || item.colour[0], 1)}"
+           alt="${item.name}" width="128" height="128">
+      </td>
+  `;
+
+  // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td class="itemName">${item.name}</td>
+  `;
+
+    // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td class="itemPrice">£${item.price}</td>
+  `;
+      // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td  style=" font-size: 10px;" class="itemAdditionalInfo">
+       ${additionalInfo}
+       </td>
+  `;
+      // Simple price row for now
+  tbody.insertRow().innerHTML = `
+       <td  style=" font-size: 10px;" class="availableColours">Available colours: ${extraColours}</td>
+  `;
+
+  table.appendChild(tbody);
+  return table;
+}
+
  export function checkBasket() {
   console.log(("basket items are"), get("basketProducts"));
   console.log(("display items:"), get("basketDisplay"));
