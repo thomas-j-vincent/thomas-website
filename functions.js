@@ -3,7 +3,8 @@ import { products } from "./products.js";
  const variable = {
  itemsInBasket: 0,
  basketProducts: [],
- basketDisplay: []
+ basketDisplay: [], 
+ searchResults: []
  }
 
  function saveToStorage() {
@@ -27,12 +28,24 @@ import { products } from "./products.js";
  set("basketProducts", []);  // SAME LINE empty product list END
  set("basketDisplay", []);
  set("itemsInBasket", 0);    // SAME LINE reset counter END
+ set ("searchResults", []);
  updateBasketMessage();      // SAME LINE 3. Update the basket message or UI END
  checkBasket();
  }
  window.removeAllItems = removeAllItems;
 
  loadFromStorage();
+
+export function existingSearchResults(query) {
+const array = get("searchResults");
+if(!array.includes(query)) {
+array.push(query);
+console.log(array);
+}
+const newResults = array.slice(0, 10);
+set ("searchResults", newResults);
+console.log(get("searchResults"));
+} 
 
  export function checkBasket() {
   console.log(("basket items are"), get("basketProducts"));
