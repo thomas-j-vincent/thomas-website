@@ -1,9 +1,9 @@
 import { set, get } from "./functions.js";
 export const products = [
 {
-"productType" : ["nft", "non-clothing", "all"],
-"productTag" : "item1",
-"name" :"Elle mugshot",
+"productType" : ["nft", "non-clothing", "all"], // first type is actual item eg: "shirt" second is 
+"productTag" : "item1",                         //clothing or non clothing, third doesnt matter
+"name" :"Elle mugshot",  // recommend keeping the name 27 characters long
 "image" :"./images/Elle.JPEG",
 "imageCount" : 4,
 "price": 7.00,
@@ -119,7 +119,7 @@ export const products = [
 {
 "productType" : ["belt", "clothing", "all"],
 "productTag" : "item10",
-"name":" if you have an axe, and replace the handle three times, and the head five times. is it the same axe?",
+"name":"name is 27 characters",
 "image" :"./images/Sam.JPG",
 "imageCount" : 4,
 "price": 6.00,

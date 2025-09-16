@@ -435,51 +435,105 @@ modalImg.addEventListener("touchmove", function(e) {
 }
 */
 
- function mayAlsoLike(item) {
-  const compare = item.productType[0]; // e.g. "shirt"
+function mayAlsoLike(item) {
+  const compare = item.productType[0];
   let results = products.filter(product => product.productType.includes(compare));
   results.splice(0, 1); // remove the current product
 
+  // Table for header + carousel row
   const table = document.createElement("table");
   const tbody = document.createElement("tbody");
 
+  // Header row
   const headerRow = tbody.insertRow();
   const headerCell = headerRow.insertCell();
   headerCell.textContent = "May Also Like";
+  headerCell.colSpan = 3;
+  headerCell.style.fontWeight = "bold";
+  headerCell.style.padding = "10px";
 
-  const productRow = tbody.insertRow();
+  // Carousel row
+  const row = tbody.insertRow();
 
-  for (let i = 0; i < results.length; i++) {
-    const item = results[i];
+  // Left arrow
+  const leftCell = row.insertCell();
+  const leftBtn = document.createElement("button");
+  leftBtn.textContent = "‹";
+  leftBtn.style.cursor = "pointer";
+  leftBtn.disabled = true; // start disabled
+  leftCell.appendChild(leftBtn);
+
+  // Flexbox wrapper for items
+  const flexCell = row.insertCell();
+  flexCell.colSpan = 1;
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.gap = "20px";
+  wrapper.style.overflowX = "auto";
+  wrapper.style.scrollBehavior = "smooth";
+  wrapper.style.width = "600px"; // control visible area
+  wrapper.style.padding = "10px";
+
+  // Hide scrollbar (works in most browsers)
+  wrapper.style.scrollbarWidth = "none"; // Firefox
+  wrapper.style.msOverflowStyle = "none"; // IE/Edge
+  wrapper.style.overflowY = "hidden"; // no vertical bar
+  wrapper.addEventListener("scroll", () => {
+    wrapper.style.scrollbarWidth = "none";
+  });
+  wrapper.classList.add("no-scrollbar"); // fallback via CSS if needed
+
+  // Right arrow
+  const rightCell = row.insertCell();
+  const rightBtn = document.createElement("button");
+  rightBtn.textContent = "›";
+  rightBtn.style.cursor = "pointer";
+  rightCell.appendChild(rightBtn);
+
+  // Populate product items
+  results.forEach(result => {
     const newDiv = document.createElement("div");
-
     newDiv.classList.add("completeLook");
     newDiv.style.border = "1px solid black";
-    newDiv.addEventListener("click", function() {
-      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
+    newDiv.style.width = "180px";
+    newDiv.style.flexShrink = "0";
+
+    newDiv.addEventListener("click", () => {
+      window.location.href = `product.html?q=${encodeURIComponent(result.name)}`;
     });
-  
-    const table = universalDisplay(item); // use universalDisplay
 
-    table.cellSpacing = "1";
-    table.cellPadding = "5";
+    const productTable = universalDisplay(result);
+    newDiv.appendChild(productTable);
 
-    newDiv.appendChild(table);      
+    wrapper.appendChild(newDiv);
+  });
 
-    const cell = productRow.insertCell();
-    cell.appendChild(newDiv);
+  flexCell.appendChild(wrapper);
 
-    if (i < results.length - 1) {
-      const spacerCell = productRow.insertCell();
-      spacerCell.style.width = "50px"; // adjust spacing
-    }
-  }
-
+  // Append everything
   table.appendChild(tbody);
   document.getElementById("mayLike").appendChild(table);
 
-    // scroll somehow
+  // Arrow scroll logic
+  const scrollAmount = 200;
+  leftBtn.addEventListener("click", () => {
+    wrapper.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  });
+  rightBtn.addEventListener("click", () => {
+    wrapper.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  });
+
+  // Update arrow state on scroll
+  function updateArrows() {
+    const maxScrollLeft = wrapper.scrollWidth - wrapper.clientWidth;
+    leftBtn.disabled = wrapper.scrollLeft <= 0;
+    rightBtn.disabled = wrapper.scrollLeft >= maxScrollLeft - 1;
+  }
+
+  wrapper.addEventListener("scroll", updateArrows);
+  updateArrows(); // run initially
 }
+
 
 window.addEventListener("DOMContentLoaded", () => {
 

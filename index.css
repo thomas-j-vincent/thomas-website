@@ -180,6 +180,27 @@ a:active {
 .next:hover {
   background-color: rgba(0,0,0,0.6);
 }
+
+#mayLike button {
+  background: none;
+  border: none;
+  font-size: 2rem;   /* big arrows */
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #333;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+#mayLike button:hover:not(:disabled) {
+  color: black;
+  transform: scale(1.2);
+}
+
+#mayLike button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
   .modal-content {
