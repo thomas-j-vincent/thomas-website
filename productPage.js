@@ -300,17 +300,7 @@ function wrappedUniversalDisplay(item) {  // wrapped universal display is only u
     });
   
     const table = universalDisplay(item);
-    let i = 0;
 
-  if (i < results.length - 1) {
-    const spacerRow = tbody.insertRow();
-    const spacerCell = spacerRow.insertCell();
-    spacerCell.colSpan = 2; // adjust if multiple columns
-    spacerCell.style.height = "50px";
-  }
-
-  //table.border = "0";
-  //  table.classList.add("basket-table");
   table.cellSpacing = "1";
   table.cellPadding = "5";
 
@@ -445,13 +435,11 @@ modalImg.addEventListener("touchmove", function(e) {
 }
 */
 
-function mayAlsoLike(item) {
+ function mayAlsoLike(item) {
   const compare = item.productType[0]; // e.g. "shirt"
-  let results;
-  results = products.filter(product => 
-  product.productType.includes(compare)); // search via item type
-  results.splice (0,1);
-  //document.getElementById("mayLike");// create a table
+  let results = products.filter(product => product.productType.includes(compare));
+  results.splice(0, 1); // remove the current product
+
   const table = document.createElement("table");
   const tbody = document.createElement("tbody");
 
@@ -461,30 +449,36 @@ function mayAlsoLike(item) {
 
   const productRow = tbody.insertRow();
 
-  console.log(results);
-  console.log("results:",results.length);
-  for (let i = 0; i < results.length; i++){
-    const item = results[i]; 
+  for (let i = 0; i < results.length; i++) {
+    const item = results[i];
+    const newDiv = document.createElement("div");
 
-    const element = wrappedUniversalDisplay(item);
-    //document.getElementById("mayLike").appendChild(element);
+    newDiv.classList.add("completeLook");
+    newDiv.style.border = "1px solid black";
+    newDiv.addEventListener("click", function() {
+      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
+    });
+  
+    const table = universalDisplay(item); // use universalDisplay
+
+    table.cellSpacing = "1";
+    table.cellPadding = "5";
+
+    newDiv.appendChild(table);      
+
     const cell = productRow.insertCell();
-    cell.appendChild(element);
-   
-    /*
+    cell.appendChild(newDiv);
+
     if (i < results.length - 1) {
-    const spacerRow = tbody.insertRow();
-    const spacerCell = spacerRow.insertCell();
-    spacerCell.colSpan = 2; // adjust if multiple columns
-    spacerCell.style.height = "50px";
-  }
-    */
+      const spacerCell = productRow.insertCell();
+      spacerCell.style.width = "50px"; // adjust spacing
+    }
   }
 
-  // use universalDisplay
-  // scroll somehow
   table.appendChild(tbody);
   document.getElementById("mayLike").appendChild(table);
+
+    // scroll somehow
 }
 
 window.addEventListener("DOMContentLoaded", () => {
