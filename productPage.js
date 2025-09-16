@@ -289,18 +289,43 @@ function displayResults2(item) {
   document.querySelector(".productDetails").appendChild(newDiv);
 }
 
+function wrappedUniversalDisplay(item) {  // wrapped universal display is only used once, therefore can have those line break bits in
+
+    const newDiv = document.createElement("div");
+
+    newDiv.classList.add("completeLook");
+    newDiv.style.border = "1px solid black";
+    newDiv.addEventListener("click", function() {
+      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
+    });
+  
+    const table = universalDisplay(item);
+    let i = 0;
+
+  if (i < results.length - 1) {
+    const spacerRow = tbody.insertRow();
+    const spacerCell = spacerRow.insertCell();
+    spacerCell.colSpan = 2; // adjust if multiple columns
+    spacerCell.style.height = "50px";
+  }
+
+  //table.border = "0";
+  //  table.classList.add("basket-table");
+  table.cellSpacing = "1";
+  table.cellPadding = "5";
+
+  newDiv.appendChild(table);
+  return newDiv;
+  }
+
 function completeLook(item) {
   const query = item.productType[1];   // e.g. "clothing"
   const compare = item.productType[0]; // e.g. "shirt"
-  console.log("query:", query);
-  console.log("compare:", compare);
   let results;
   if (query === "non-clothing"){
     results = products.filter(product => 
       product.productType.includes(query));
-    console.log("preslice:",results)
     results.splice (0,1);
-    console.log("afterslice:",results)
   } else {
     results = products.filter(product => 
     product.productType.includes(query) &&
@@ -311,32 +336,28 @@ function completeLook(item) {
     }
   }
   results.splice (3);
-  console.log("results:",results.length);
   let i = 0;
-
-   const containerDiv = document.createElement("div");
+  const containerDiv = document.createElement("div");
 
 //  let resultsLength = results.length;
   for (let i = 0; i < results.length; i++){
   const item = results[i]; 
-  console.log(i);
-
-    const newDiv = document.createElement("div");
-    newDiv.classList.add("completeLook");
-    newDiv.style.border = "1px solid black";
-    newDiv.addEventListener("click", function() {
-      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
-    });
-
-    const table = universalDisplay(item);
-
-  //table.border = "0";
-  //  table.classList.add("basket-table");
-  table.cellSpacing = "1";
-  table.cellPadding = "5";
-
-  newDiv.appendChild(table);
-  containerDiv.appendChild(newDiv);
+const newDiv = document.createElement("div");
+ newDiv.classList.add("completeLook");
+  newDiv.style.border = "1px solid black";
+   newDiv.addEventListener("click", function() {
+     window.location.href = `product.html?
+     q=${encodeURIComponent(item.name)}`;
+     });
+      const table = universalDisplay(item);
+       //table.border = "0";
+       //  // table.classList.add("basket-table");
+         table.cellSpacing = "1";
+          table.cellPadding = "5";
+           newDiv.appendChild(table);
+            containerDiv.appendChild(newDiv);
+//  const element = wrappedUniversalDisplay(item);
+//  containerDiv.appendChild(element);
 
     if (i < results.length - 1) {
     const spacer = document.createElement("div");
@@ -347,7 +368,6 @@ function completeLook(item) {
   }
 }
 
-  console.log("results",results);
  return containerDiv;
 };
 
@@ -430,18 +450,41 @@ function mayAlsoLike(item) {
   let results;
   results = products.filter(product => 
   product.productType.includes(compare)); // search via item type
+  results.splice (0,1);
   //document.getElementById("mayLike");// create a table
   const table = document.createElement("table");
   const tbody = document.createElement("tbody");
-  
-  tbody.insertRow().innerHTML = `
-       <td>May Also Like</td>
-  `;
+
+  const headerRow = tbody.insertRow();
+  const headerCell = headerRow.insertCell();
+  headerCell.textContent = "May Also Like";
+
+  const productRow = tbody.insertRow();
+
+  console.log(results);
+  console.log("results:",results.length);
+  for (let i = 0; i < results.length; i++){
+    const item = results[i]; 
+
+    const element = wrappedUniversalDisplay(item);
+    //document.getElementById("mayLike").appendChild(element);
+    const cell = productRow.insertCell();
+    cell.appendChild(element);
+   
+    /*
+    if (i < results.length - 1) {
+    const spacerRow = tbody.insertRow();
+    const spacerCell = spacerRow.insertCell();
+    spacerCell.colSpan = 2; // adjust if multiple columns
+    spacerCell.style.height = "50px";
+  }
+    */
+  }
+
   // use universalDisplay
   // scroll somehow
-
-    table.appendChild(tbody);
-     document.getElementById("mayLike").appendChild(tbody);
+  table.appendChild(tbody);
+  document.getElementById("mayLike").appendChild(table);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
