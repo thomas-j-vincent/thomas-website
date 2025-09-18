@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, universalDisplay, existingSearchResults, removeAllItems, addToBasket, removeFromBasket, addProduct, formatImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, universalDisplay, removeAllItems, addToBasket, removeFromBasket, addProduct, formatImage} from "./functions.js";
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 
@@ -38,7 +38,6 @@ if (query) {
     product.productType.some(c => c.toLowerCase().includes(query.toLowerCase())) ||
     product.colour.some(c => c.toLowerCase().includes(query.toLowerCase()))
   );
-  existingSearchResults(query);
       // Show results
   const resultsContainer = document.getElementById("results");
   resultsContainer.innerHTML = "";

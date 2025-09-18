@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import {get, set, updateBasketMessage, addProduct, enableTouchHover, loadFromStorage, existingSearchResults} from "./functions.js";
+import {get, set, updateBasketMessage, addProduct, enableTouchHover, loadFromStorage} from "./functions.js";
 
 updateBasketMessage();
 enableTouchHover();
@@ -28,7 +28,6 @@ searchInput.addEventListener('input', () => {
     product.productType.some(c =>c.toLowerCase().includes(query)) ||
     product.colour.some(c => c.toLowerCase().includes(query))
   );  
-    existingSearchResults(query);
   // optional: display results live
   const resultsContainer = document.getElementById("results");
   if (resultsContainer) {

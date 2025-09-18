@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, existingSearchResults, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
     // Get product name from URL (?item=...)
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
@@ -7,6 +7,7 @@ import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDispl
 updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
+existingSearchResults(itemName);
 
   function displayImages(item) {
 
@@ -438,13 +439,21 @@ modalImg.addEventListener("touchmove", function(e) {
 function mayAlsoLike(item) {
   const compare = item.productType[0];
   let results = products.filter(product => product.productType.includes(compare));
-  results.splice(0, 1); // remove the current product
+  results.splice(0, 1); // remove current product
+
+  const itemWidth = 200; // px per card
+  const gap = 20;        // px between cards
+  const screenWidth = window.innerWidth;
+
+  // how many fit fully on screen
+  const itemsPerRow = Math.floor(screenWidth / (itemWidth + gap));
+  const visibleWidth = itemsPerRow * (itemWidth + gap);
 
   // Table for header + carousel row
   const table = document.createElement("table");
   const tbody = document.createElement("tbody");
 
-  // Header row
+  // Header
   const headerRow = tbody.insertRow();
   const headerCell = headerRow.insertCell();
   headerCell.textContent = "May Also Like";
@@ -460,28 +469,22 @@ function mayAlsoLike(item) {
   const leftBtn = document.createElement("button");
   leftBtn.textContent = "‹";
   leftBtn.style.cursor = "pointer";
-  leftBtn.disabled = true; // start disabled
+  leftBtn.style.padding = "41px";
+  leftBtn.disabled = true;
   leftCell.appendChild(leftBtn);
 
-  // Flexbox wrapper for items
+  // Flex wrapper
   const flexCell = row.insertCell();
-  flexCell.colSpan = 1;
   const wrapper = document.createElement("div");
   wrapper.style.display = "flex";
-  wrapper.style.gap = "20px";
+  wrapper.style.gap = gap + "px";
+  wrapper.style.border = "5px";
   wrapper.style.overflowX = "auto";
   wrapper.style.scrollBehavior = "smooth";
-  wrapper.style.width = "600px"; // control visible area
-  wrapper.style.padding = "10px";
-
-  // Hide scrollbar (works in most browsers)
-  wrapper.style.scrollbarWidth = "none"; // Firefox
-  wrapper.style.msOverflowStyle = "none"; // IE/Edge
-  wrapper.style.overflowY = "hidden"; // no vertical bar
-  wrapper.addEventListener("scroll", () => {
-    wrapper.style.scrollbarWidth = "none";
-  });
-  wrapper.classList.add("no-scrollbar"); // fallback via CSS if needed
+  wrapper.style.padding = "10px, 200px, 10px, 10px";
+  wrapper.style.width = visibleWidth + "px"; // fill screen width exactly
+  wrapper.classList.add("no-scrollbar");
+  flexCell.appendChild(wrapper);
 
   // Right arrow
   const rightCell = row.insertCell();
@@ -490,12 +493,12 @@ function mayAlsoLike(item) {
   rightBtn.style.cursor = "pointer";
   rightCell.appendChild(rightBtn);
 
-  // Populate product items
+  // Render ALL results
   results.forEach(result => {
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
     newDiv.style.border = "1px solid black";
-    newDiv.style.width = "180px";
+    newDiv.style.width = itemWidth + "px";
     newDiv.style.flexShrink = "0";
 
     newDiv.addEventListener("click", () => {
@@ -503,19 +506,17 @@ function mayAlsoLike(item) {
     });
 
     const productTable = universalDisplay(result);
+    productTable.style.width = "100%";
     newDiv.appendChild(productTable);
 
     wrapper.appendChild(newDiv);
   });
 
-  flexCell.appendChild(wrapper);
-
-  // Append everything
   table.appendChild(tbody);
   document.getElementById("mayLike").appendChild(table);
 
   // Arrow scroll logic
-  const scrollAmount = 200;
+  const scrollAmount = itemWidth + gap;
   leftBtn.addEventListener("click", () => {
     wrapper.scrollBy({ left: -scrollAmount, behavior: "smooth" });
   });
@@ -523,7 +524,6 @@ function mayAlsoLike(item) {
     wrapper.scrollBy({ left: scrollAmount, behavior: "smooth" });
   });
 
-  // Update arrow state on scroll
   function updateArrows() {
     const maxScrollLeft = wrapper.scrollWidth - wrapper.clientWidth;
     leftBtn.disabled = wrapper.scrollLeft <= 0;
@@ -531,9 +531,125 @@ function mayAlsoLike(item) {
   }
 
   wrapper.addEventListener("scroll", updateArrows);
-  updateArrows(); // run initially
+  updateArrows();
+
+  // Adjust on resize
+  window.addEventListener("resize", () => {
+    const newItemsPerRow = Math.floor(window.innerWidth / (itemWidth + gap));
+    wrapper.style.width = (newItemsPerRow * (itemWidth + gap)) + "px";
+    updateArrows();
+  });
 }
 
+function previousSearches() {
+  let results = get("viewedProducts");
+  console.log(get("viewedProducts"));
+  results = results.filter(name => name !== selectedProduct.name);
+  console.log(results);
+
+  const itemWidth = 200; // px per card
+  const gap = 20;        // px between cards
+  const screenWidth = window.innerWidth;
+
+  // how many fit fully on screen
+  const itemsPerRow = Math.floor(screenWidth / (itemWidth + gap));
+  const visibleWidth = itemsPerRow * (itemWidth + gap);
+
+  // Table for header + carousel row
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+
+  // Header
+  const headerRow = tbody.insertRow();
+  const headerCell = headerRow.insertCell();
+  headerCell.textContent = "Previously viewed: ";
+  headerCell.colSpan = 3;
+  headerCell.style.fontWeight = "bold";
+  headerCell.style.padding = "10px";
+
+  // Carousel row
+  const row = tbody.insertRow();
+
+  // Left arrow
+  const leftCell = row.insertCell();
+  const leftBtn = document.createElement("button");
+  leftBtn.textContent = "‹";
+  leftBtn.style.cursor = "pointer";
+  leftBtn.style.padding = "41px";
+  leftBtn.disabled = true;
+  leftCell.appendChild(leftBtn);
+
+  // Flex wrapper
+  const flexCell = row.insertCell();
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.gap = gap + "px";
+  wrapper.style.border = "5px";
+  wrapper.style.overflowX = "auto";
+  wrapper.style.scrollBehavior = "smooth";
+  wrapper.style.padding = "10px, 200px, 10px, 10px";
+  wrapper.style.width = visibleWidth + "px"; // fill screen width exactly
+  wrapper.classList.add("no-scrollbar");
+  flexCell.appendChild(wrapper);
+
+  // Right arrow
+  const rightCell = row.insertCell();
+  const rightBtn = document.createElement("button");
+  rightBtn.textContent = "›";
+  rightBtn.style.cursor = "pointer";
+  rightCell.appendChild(rightBtn);
+
+  // Render ALL results
+  results.forEach(resultName => {
+
+    const product = products.find(p => p.name === resultName);
+    if (!product) return; // skip if not found
+
+    const newDiv = document.createElement("div");
+    newDiv.classList.add("completeLook");
+    newDiv.style.border = "1px solid black";
+    newDiv.style.width = itemWidth + "px";
+    newDiv.style.flexShrink = "0";
+
+    newDiv.addEventListener("click", () => {
+      window.location.href = `product.html?q=${encodeURIComponent(product.name)}`;
+    });
+
+    const productTable = universalDisplay(product);
+    productTable.style.width = "100%";
+    newDiv.appendChild(productTable);
+
+    wrapper.appendChild(newDiv);
+  });
+
+  table.appendChild(tbody);
+  document.getElementById("previousSearches").appendChild(table);
+
+  // Arrow scroll logic
+  const scrollAmount = itemWidth + gap;
+  leftBtn.addEventListener("click", () => {
+    wrapper.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  });
+  rightBtn.addEventListener("click", () => {
+    wrapper.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  });
+
+  function updateArrows() {
+    const maxScrollLeft = wrapper.scrollWidth - wrapper.clientWidth;
+    leftBtn.disabled = wrapper.scrollLeft <= 0;
+    rightBtn.disabled = wrapper.scrollLeft >= maxScrollLeft - 1;
+  }
+
+  wrapper.addEventListener("scroll", updateArrows);
+  updateArrows();
+
+  // Adjust on resize
+  window.addEventListener("resize", () => {
+    const newItemsPerRow = Math.floor(window.innerWidth / (itemWidth + gap));
+    wrapper.style.width = (newItemsPerRow * (itemWidth + gap)) + "px";
+    updateArrows();
+  });
+}
 
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -563,6 +679,8 @@ window.addEventListener("DOMContentLoaded", () => {
     // Finally display
    displayResults2(selectedProduct);
    mayAlsoLike(selectedProduct);
+   previousSearches(selectedProduct);
+
 
 var modal = document.getElementById("myModal");
 var modalImg = document.getElementById("img01");
