@@ -1,0 +1,33 @@
+/* SAME LINE FROM DISPLAY RESULTS END  */
+/* #region*/
+.result-container {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box; 
+}
+.result-container table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.result-container img {
+  width: 100%;        /* fill the width of its cell */
+  height: auto;       /* maintain aspect ratio */
+  display: block;
+  aspect-ratio: 1 / 1;   /* makes it a square */
+  object-fit: cover;     /* remove inline spacing issues */
+}
+.basket-table {
+  border: none;
+  padding: 5px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+#searchResult {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  gap: 40px;
+}
+/* #endregion*/

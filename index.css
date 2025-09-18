@@ -33,16 +33,13 @@ a:link {
   text-decoration: none;
   color: #F5F1DE;
 }
-
 a:visited {
   color:black !important;
 }
-
 a:hover {
   text-decoration: underline;
   color: black;
 }
-
 a:active {
   text-decoration: underline;
     color:black;
@@ -76,59 +73,6 @@ a:active {
 .page-container {
   margin:5vw
 }
-#searchResult {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(200px, 1fr)); /* exactly 3 columns */
-  gap: 40px;
-}
-
-.productName {
-  background-color: blue;;
-  padding: 10px;
-  width: 950px;
-  height: 100px;
-  text-align: center;
-}
-.addToBasket {
-  background-color: blue;;
-  padding: 10px;
-  width: 950px;
-  height: 100px;
-  text-align: center;
-}
-.productPrice {
-  background-color: blue;
-  height: 50px;
-}
-.productColour {
-background-color: red;
-/* margin: 10px;
-  padding: 10px; */
-  
-}
-.productPriceValue {
-  text-align: center;
-}
-.result-container {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box; 
-}
-.result-container table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-.result-container img {
-  width: 100%;        /* fill the width of its cell */
-  height: auto;       /* maintain aspect ratio */
-  display: block;
-  aspect-ratio: 1 / 1;   /* makes it a square */
-  object-fit: cover;     /* remove inline spacing issues */
-}
-
 .dropdown-content a {
   color: black;
   padding: 12px 12px;
@@ -138,16 +82,15 @@ background-color: red;
 }
 .menu-table, .menu-th, .menu-td {
   border:1px solid black;
-    border-collapse: collapse;
-    text-align: center;
+  border-collapse: collapse;
+  text-align: center;
 }
 .basket-table{
-    text-align: left;
-    padding: 2px 5px; /* smaller padding */
-    line-height: 2.5;
+  text-align: left;
+  padding: 2px 5px; /* smaller padding */
+  line-height: 2.5;
 }
 .dropdown-content a:hover {background-color: #6e6d6d;}
-
 .dropdown:hover .dropdown-content {
   display: block;
 }
@@ -160,9 +103,7 @@ background-color: red;
   cursor: pointer;
   overflow: visible; /* allow icon to float outside */
 }
-
-/* The expanding search box */
-.search-box {
+.search-box {/* The expanding search box */
   position: absolute;
   right: 0;
   top: 50%;
@@ -177,9 +118,7 @@ background-color: red;
   overflow: hidden;
   transition: width 0.5s ease, background 0.5s ease, border-color 0.5s ease;
 }
-
-/* Search input */
-.search-box input[type="search"] {
+.search-box input[type="search"] {/* Search input */
   border: none;
   outline: none;
   padding-left: 10px;
@@ -188,15 +127,11 @@ background-color: red;
   background: transparent;
   font-size: 16px;
   color: black;
-
-  /* Remove the browser's default clear (x) */
-  -webkit-appearance: none;
+  -webkit-appearance: none;  /* Remove the browser's default clear (x) */
   -moz-appearance: none;
   appearance: none;
 }
-
-/* Floating icon */
-.icon2 {
+.icon2 {/* Floating icon */
   position: absolute;
   right: 0;
   top: 50%;
@@ -206,18 +141,14 @@ background-color: red;
   z-index: 2;
   transition: right 0.5s ease, transform 0.5s ease;
 }
-
-/* Hover triggers box expansion and input appears */
-.container2:hover .search-box {  
+.container2:hover .search-box {  /* Hover triggers box expansion and input appears */
   width: 90px;
   background: rgba(209,203,193,1);
   border-color: rgba(136,139,141,1);
 }
-
 .container2:hover .search-box input[type="search"] {
   width: 240px; /* expand input to fill box */
 }
-
 .container2:hover .icon2 {
   right: 90px; /* icon slides with box */
   transform: translate(-50%, -225%);

@@ -18,10 +18,6 @@ loadFromStorage();
 
   const table = universalDisplay(item);
   table.classList.add("basket-table");
-  table.border = "0";
-  table.cellSpacing = "0";
-  table.cellPadding = "5";
-
 
  // table.appendChild(tbody);
   newDiv.appendChild(table);
@@ -44,7 +40,6 @@ if (query) {
   if (results.length > 0) {
     results.forEach(product => {
       const div = document.createElement("div");
-      //div.textContent = `${product.name} - £${product.price}`;
       displayResults(product);
       resultsContainer.appendChild(div);
     });
