@@ -1,6 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, existingSearchResults, removeAllItems, checkBasket, addToBasket, removeFromBasket, formatImage, nextImage, prevImage} from "./functions.js";
-    // Get product name from URL (?item=...)
+import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, existingSearchResults, addToBasket, formatImage} from "./functions.js";
     const itemName = new URLSearchParams(window.location.search).get("q");
     console.log("URL itemName:", itemName);
 
@@ -289,25 +288,6 @@ function displayResults2(item) {
  // Attach to productDetails END
   document.querySelector(".productDetails").appendChild(newDiv);
 }
-
-function wrappedUniversalDisplay(item) {  // wrapped universal display is only used once, therefore can have those line break bits in
-
-    const newDiv = document.createElement("div");
-
-    newDiv.classList.add("completeLook");
-    newDiv.style.border = "1px solid black";
-    newDiv.addEventListener("click", function() {
-      window.location.href = `product.html?q=${encodeURIComponent(item.name)}`;
-    });
-  
-    const table = universalDisplay(item);
-
-  table.cellSpacing = "1";
-  table.cellPadding = "5";
-
-  newDiv.appendChild(table);
-  return newDiv;
-  }
 
 function completeLook(item) {
   const query = item.productType[1];   // e.g. "clothing"
