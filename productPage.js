@@ -14,9 +14,6 @@ existingSearchResults(itemName);
 
   let newDiv = document.createElement("div");
   newDiv.className = "image-table";
-  newDiv.border = "1";
-  newDiv.cellPadding = "5";
-  newDiv.cellSpacing = "0";
 
   const colour = item.selectedColour || item.colour[1] ||item.colour[0]  ||"";
   let i= 0;
@@ -25,7 +22,6 @@ existingSearchResults(itemName);
     if (i === 1) {
       let rowDiv = document.createElement("div");
       rowDiv.className = "image-row";
-//      rowDiv.id = "myImg";
       let img1 = document.createElement("img");
       img1.src = `${formatImage(item, colour, i)}`;
       img1.alt = `${item.name}${colour}`;
@@ -58,7 +54,6 @@ existingSearchResults(itemName);
 
 function displayResults2(item) {
   document.getElementById("added").style.visibility = "hidden";
-// document.getElementById("unselected").style.visibility = "hidden";
   const imageDiv = document.querySelector(".imageDiv");
   if (imageDiv) {
     imageDiv.innerHTML = ""; // clear old stuff
@@ -69,9 +64,6 @@ function displayResults2(item) {
   newDiv.classList.add("product-container");
   const table = document.createElement("table");
   table.classList.add("basket-table");
-  table.border = "0";
-  table.cellSpacing = "0";
-  table.cellPadding = "5";
   const tbody = document.createElement("tbody");
  
  // Row 1: Product Name END 
@@ -98,10 +90,8 @@ function displayResults2(item) {
     colourSpace.style.width = (100/item.colour.length)+ "%";
     const extraColours = item.colour.length - 1; //SAME LINE subtract the default first colour END
     for (let i = 0; i < extraColours; i++) {
- //i++;
       const colourIndex = i + 1;
       const cellWidth = 100/item.colour.length;
- // console.log("Cell width:", cellWidth);
       let colourCell = row2.insertCell();
       colourCell.textContent = item.colour[colourIndex];
       colourCell.classList.add("productColour");
@@ -309,91 +299,79 @@ function completeLook(item) {
   results.splice (3);
   let i = 0;
   const containerDiv = document.createElement("div");
-
-//  let resultsLength = results.length;
   for (let i = 0; i < results.length; i++){
-  const item = results[i]; 
-const newDiv = document.createElement("div");
- newDiv.classList.add("completeLook");
-  newDiv.style.border = "1px solid black";
-   newDiv.addEventListener("click", function() {
-     window.location.href = `product.html?
-     q=${encodeURIComponent(item.name)}`;
-     });
-      const table = universalDisplay(item);
-       //table.border = "0";
-       //  // table.classList.add("basket-table");
-         table.cellSpacing = "1";
-          table.cellPadding = "5";
-           newDiv.appendChild(table);
-            containerDiv.appendChild(newDiv);
-//  const element = wrappedUniversalDisplay(item);
-//  containerDiv.appendChild(element);
-
+    const item = results[i]; 
+    const newDiv = document.createElement("div");
+    newDiv.classList.add("completeLook");
+    newDiv.addEventListener("click", function() {
+      window.location.href = `product.html?
+      q=${encodeURIComponent(item.name)}`;
+    });
+    const table = universalDisplay(item);
+    newDiv.appendChild(table);
+    containerDiv.appendChild(newDiv);
     if (i < results.length - 1) {
-    const spacer = document.createElement("div");
-    spacer.innerHTML = `<table><tbody>
-       <tr><td style="height: 50px;" colspan="9">&nbsp;</td></tr>
-     </tbody></table>`;
-    containerDiv.appendChild(spacer);
-  }
-}
-
+      const spacer = document.createElement("div");
+      spacer.innerHTML = `<table><tbody>
+        <tr><td style="height: 50px;" colspan="9">&nbsp;</td></tr>
+      </tbody></table>`;
+      containerDiv.appendChild(spacer);
+    }
+  } 
  return containerDiv;
 };
 
 // this is to make the images zoom-in-able on phone or mouse
 /*function zoomable() {
   let scale = 1;
-let posX = 0, posY = 0;
-let isDragging = false;
-let startX, startY;
+  let posX = 0, posY = 0;
+  let isDragging = false;
+  let startX, startY;
 
-// Reset zoom when modal opens
-function showImage(index) {
-  currentIndex = index;
-  modal.style.display = "block";
-  modalImg.src = images[index].src;
-  captionText.innerHTML = images[index].alt;
-  scale = 1;
-  posX = 0;
-  posY = 0;
-  modalImg.style.transform = `translate(0px, 0px) scale(1)`;
-}
+  function showImage(index) {
+    currentIndex = index;
+    modal.style.display = "block";
+    modalImg.src = images[index].src;
+    captionText.innerHTML = images[index].alt;
+    scale = 1;
+    posX = 0;
+    posY = 0;
+    modalImg.style.transform = `translate(0px, 0px) scale(1)`;
+  }
 
 // Zoom with mouse scroll
-modalImg.addEventListener("wheel", function(e) {
-  e.preventDefault();
-  const delta = e.deltaY > 0 ? -0.1 : 0.1;
-  scale = Math.min(Math.max(0.5, scale + delta), 5); // clamp between 0.5x and 5x
-  modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-});
+  modalImg.addEventListener("wheel", function(e) {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    scale = Math.min(Math.max(0.5, scale + delta), 5); // clamp between 0.5x and 5x
+    modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  });
 
 // Drag image with mouse
-modalImg.addEventListener("mousedown", function(e) {
-  isDragging = true;
-  startX = e.clientX - posX;
-  startY = e.clientY - posY;
-  modalImg.style.cursor = "grabbing";
-}); 
+  modalImg.addEventListener("mousedown", function(e) {
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    modalImg.style.cursor = "grabbing";
+  }); 
 
-window.addEventListener("mouseup", function() {
-  isDragging = false;
-  modalImg.style.cursor = "grab";
-});
+  window.addEventListener("mouseup", function() {
+    isDragging = false;
+    modalImg.style.cursor = "grab";
+  });
 
-window.addEventListener("mousemove", function(e) {
-  if (!isDragging) return;
-  posX = e.clientX - startX;
-  posY = e.clientY - startY;
-  modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-});
+  window.addEventListener("mousemove", function(e) {
+    if (!isDragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    modalImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  });
 
 // Touch pinch-to-zoom
-let initialDistance = 0;
-modalImg.addEventListener("touchstart", function(e) {
-  if (e.touches.length === 2) {
-    initialDistance = Math.hypot(
+  let initialDistance = 0;
+  modalImg.addEventListener("touchstart", function(e) {
+    if (e.touches.length === 2) {
+      initialDistance = Math.hypot(
       e.touches[0].pageX - e.touches[1].pageX,
       e.touches[0].pageY - e.touches[1].pageY
     );
@@ -448,7 +426,6 @@ function mayAlsoLike(item) {
   const leftCell = row.insertCell();
   const leftBtn = document.createElement("button");
   leftBtn.textContent = "‹";
-  leftBtn.style.cursor = "pointer";
   leftBtn.style.padding = "41px";
   leftBtn.disabled = true;
   leftCell.appendChild(leftBtn);
@@ -456,12 +433,7 @@ function mayAlsoLike(item) {
   // Flex wrapper
   const flexCell = row.insertCell();
   const wrapper = document.createElement("div");
-  wrapper.style.display = "flex";
   wrapper.style.gap = gap + "px";
-  wrapper.style.border = "5px";
-  wrapper.style.overflowX = "auto";
-  wrapper.style.scrollBehavior = "smooth";
-  wrapper.style.padding = "10px, 200px, 10px, 10px";
   wrapper.style.width = visibleWidth + "px"; // fill screen width exactly
   wrapper.classList.add("no-scrollbar");
   flexCell.appendChild(wrapper);
@@ -470,14 +442,12 @@ function mayAlsoLike(item) {
   const rightCell = row.insertCell();
   const rightBtn = document.createElement("button");
   rightBtn.textContent = "›";
-  rightBtn.style.cursor = "pointer";
   rightCell.appendChild(rightBtn);
 
   // Render ALL results
   results.forEach(result => {
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
-    newDiv.style.border = "1px solid black";
     newDiv.style.width = itemWidth + "px";
     newDiv.style.flexShrink = "0";
 
@@ -554,7 +524,6 @@ function previousSearches() {
   const leftCell = row.insertCell();
   const leftBtn = document.createElement("button");
   leftBtn.textContent = "‹";
-  leftBtn.style.cursor = "pointer";
   leftBtn.style.padding = "41px";
   leftBtn.disabled = true;
   leftCell.appendChild(leftBtn);
@@ -562,12 +531,7 @@ function previousSearches() {
   // Flex wrapper
   const flexCell = row.insertCell();
   const wrapper = document.createElement("div");
-  wrapper.style.display = "flex";
   wrapper.style.gap = gap + "px";
-  wrapper.style.border = "5px";
-  wrapper.style.overflowX = "auto";
-  wrapper.style.scrollBehavior = "smooth";
-  wrapper.style.padding = "10px, 200px, 10px, 10px";
   wrapper.style.width = visibleWidth + "px"; // fill screen width exactly
   wrapper.classList.add("no-scrollbar");
   flexCell.appendChild(wrapper);
@@ -576,7 +540,6 @@ function previousSearches() {
   const rightCell = row.insertCell();
   const rightBtn = document.createElement("button");
   rightBtn.textContent = "›";
-  rightBtn.style.cursor = "pointer";
   rightCell.appendChild(rightBtn);
 
   // Render ALL results
@@ -586,8 +549,7 @@ function previousSearches() {
     if (!product) return; // skip if not found
 
     const newDiv = document.createElement("div");
-    newDiv.classList.add("completeLook");
-    newDiv.style.border = "1px solid black";
+    newDiv.classList.add("previousSearches");
     newDiv.style.width = itemWidth + "px";
     newDiv.style.flexShrink = "0";
 
