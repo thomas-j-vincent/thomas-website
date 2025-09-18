@@ -186,7 +186,7 @@ export function removeFromBasket(item) {
 
   const path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
 
-//  console.log("image:", path);
+  console.log("image:", path);
   return path;
 }
 let currentImageIndex = 1;

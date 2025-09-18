@@ -110,7 +110,6 @@ function displayResults2(item) {
         imageDiv.innerHTML = ""; // clear old stuff
         imageDiv.appendChild(displayImages(item));
       });
-      i++;
     };
   } else {
     let colourSpace = row2.insertCell();
