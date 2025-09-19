@@ -4,9 +4,9 @@ export const products = [
 "productType" : ["nft", "non-clothing", "all"], // first type is actual item eg: "shirt" second is 
 "productTag" : "item1",                         //clothing or non clothing, third doesnt matter
 "name" :"Elle mugshot",  // recommend keeping the name 27 characters long
-"imageCount" : 4,
-"price": 7.00,
-"colour" : ["one colour", "red", "yellow", "blue", "black"],// the last cell is smaller than the others
+"imageCount" : 4,        // there is a recommended size for the photos, 
+"price": 7.00,           //i suggest using standard landscape and portrait sizes
+"colour" : ["one colour", "red", "yellow", "blue", "black"],// the last cell is smaller than the others (bug)
 "size" : ["one size", "large", "medium", "small"],
 "description": `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
  each moment captures a specific point in time. This specific selection features Elle and her friends the
@@ -80,7 +80,7 @@ export const products = [
 "name":"Keep calm and carry on",
 "imageCount" : 4,
 "price": 6.00,
-"colour" : ["one colour", "red", "blue"], // add bentley blower for blue
+"colour" : ["one colour", "red", "blue"], 
 "size" : ["one size"],
 "description" : `take a break, (this item is apparently a belt)`,
 "deliveryDetails": "get it when you want",
