@@ -37,17 +37,19 @@ import { products } from "./products.js";
  loadFromStorage();
 
 export function existingSearchResults(itemName) {
-  console.log(itemName)
-let name = itemName;
-const array = get("viewedProducts") || [];
-if(!array.includes(name)) {
-array.unshift(name);
-console.log(array);
+  let array = get("viewedProducts") || [];
+  array.unshift(itemName);
+  let lastIndex = array.lastIndexOf(itemName);
+
+  if (lastIndex > 0) {
+    array.splice(lastIndex, 1);
+  }
+
+  const newResults = array.slice(0, 10);
+  set("viewedProducts", newResults);
+  console.log(get("viewedProducts"));
 }
-const newResults = array.slice(0, 10);
-set ("viewedProducts", newResults);
-console.log(get("viewedProducts"));
-} 
+
 
 export function universalDisplay(item) {
   const colours = item.colour || []; // make sure it’s an array

@@ -396,7 +396,8 @@ modalImg.addEventListener("touchmove", function(e) {
 function mayAlsoLike(item) {
   const compare = item.productType[0];
   let results = products.filter(product => product.productType.includes(compare));
-  results.splice(0, 1); // remove current product
+  results = results.filter(product => product.name !== item.name);
+ console.log(results);
 
   const itemWidth = 200; // px per card
   const gap = 20;        // px between cards
@@ -490,10 +491,11 @@ function mayAlsoLike(item) {
   });
 }
 
-function previousSearches() {
+// the function to display the searches from existingSearchResults
+function previousSearches() {  
   let results = get("viewedProducts");
   console.log(get("viewedProducts"));
-  results = results.filter(name => name !== selectedProduct.name);
+  //results = results.filter(name => name !== selectedProduct.name);
   console.log(results);
 
   const itemWidth = 200; // px per card
