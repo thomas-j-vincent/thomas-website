@@ -191,7 +191,7 @@ export function formatImage(item, selectedColour, value = 1) {
     path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
   }
 
-  console.log("trying image:", path);
+  //console.log("trying image:", path);
 
   return new Promise((resolve) => {
     const img = new Image();
