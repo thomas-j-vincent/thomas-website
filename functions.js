@@ -173,7 +173,7 @@ export function removeFromBasket(item) {
  return `£ ${amount.toFixed(2)}`;
  }
 
-export function formatImage(item, selectedColour, value = 1) {
+/*export function formatImage(item, selectedColour, value = 1) {
   // fallback: use the item's selectedColour if no param is passed
   const colour = selectedColour || item.selectedColour || "";
 
@@ -192,18 +192,8 @@ export function formatImage(item, selectedColour, value = 1) {
   }
 
   console.log("trying image:", path);
-
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.src = path;
-
-    img.onload = () => resolve(path); // success → return path
-    img.onerror = () => {
-      console.error("file not found:", path);
-      resolve(null); // fail → return null
-    };
-  });
 }
+  */
 
 let currentImageIndex = 1;
 export function showImage(item, selectedColour, index) {
