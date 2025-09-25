@@ -173,7 +173,7 @@ export function removeFromBasket(item) {
  return `£ ${amount.toFixed(2)}`;
  }
 
- export function formatImage(item, selectedColour, value = 1) {
+export function formatImage(item, selectedColour, value = 1) {
   // fallback: use the item's selectedColour if no param is passed
   const colour = selectedColour || item.selectedColour || "";
 
@@ -182,13 +182,25 @@ export function removeFromBasket(item) {
   const safeColour = String(colour).replace(/\s+/g, "_");
   const safeNumber = String(value).replace(/\s+/g, "_");
 
- if (colour === undefined) {
-  const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
- }
+  let path;
 
-  const path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
+  if (!colour) {
+    // fallback if no colour is defined
+    path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
+  } else {
+    path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
+  }
 
-  console.log("image:", path);
+  // Try loading the image once
+  const img = new Image();
+  img.src = path;
+
+  img.onerror = () => {
+    console.error("file not found:", path);
+    // you could also set path = null or a fallback image here
+  };
+
+  console.log("trying image:", path);
   return path;
 }
 let currentImageIndex = 1;
