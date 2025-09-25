@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // Rebuild DOM from item data
    addProduct(item);
   });
-  updateBasketMessage();
+ // updateBasketMessage();
 });
 
 const myDiv = document.getElementsByClassName('search-box')[0];
