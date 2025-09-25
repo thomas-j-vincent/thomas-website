@@ -176,7 +176,9 @@ export function removeFromBasket(item) {
 export function formatImage(item, selectedColour, value = 1) {
   // fallback: use the item's selectedColour if no param is passed
  // const colour = selectedColour || item.selectedColour || "";
-
+ item + 1;
+ selectedColour + 1;
+ value +1;
   // normalise name and colour (remove spaces, make lowercase, etc.)
  // const safeName = String(item.name).replace(/\s+/g, "_");
  // const safeColour = String(colour).replace(/\s+/g, "_");
@@ -239,8 +241,8 @@ export function prevImage(item) {
 
 export function addProduct(item) {  //SAME LINE displays the items in the basket to the basket dropdown END
  // Create new product container END
-const basketProducts = get("basketProducts") || [];
-const basketItem = basketProducts.find(obj =>
+  const basketProducts = get("basketProducts") || [];
+  const basketItem = basketProducts.find(obj =>
   obj.item.name === item.name &&
   obj.item.selectedColour === item.selectedColour &&
   obj.item.selectedSize === item.selectedSize
