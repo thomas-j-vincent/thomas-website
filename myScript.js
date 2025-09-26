@@ -7,9 +7,11 @@ loadFromStorage();
 
 window.addEventListener("DOMContentLoaded", () => {
   const basketProducts = get("basketProducts") || [];
+  console.log(basketProducts);
   basketProducts.forEach(({ item }) => {
+    console.log(item);
     // Rebuild DOM from item data
-   addProduct(item);
+ //  addProduct(item);
   });
   updateBasketMessage();
 });
