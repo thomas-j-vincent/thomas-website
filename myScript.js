@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
   basketProducts.forEach(({ item }) => {
     console.log(item);
     // Rebuild DOM from item data
- //  addProduct(item);
+   addProduct(item);
   });
   updateBasketMessage();
 });
