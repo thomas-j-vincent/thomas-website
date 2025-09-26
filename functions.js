@@ -181,14 +181,13 @@ export function formatImage(item, selectedColour, value = 1) {
   const safeColour = String(colour).replace(/\s+/g, "_");
   const safeNumber = String(value).replace(/\s+/g, "_");
 
-  let path = 0;
+ // let path = 0;
 
-  if (!colour) {
+  if (colour === undefined) {
     // fallback if no colour is defined
-    path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
-  } else {
-    path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
+   const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
   }
+  const path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
 
   console.log("trying image:", path);
   return (path);
