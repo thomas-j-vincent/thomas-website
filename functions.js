@@ -175,23 +175,20 @@ export function removeFromBasket(item) {
 
 export function formatImage(item, selectedColour, value = 1) {
   // fallback: use the item's selectedColour if no param is passed
- // const colour = selectedColour || item.selectedColour || "";
- item + 1;
- selectedColour + 1;
- value +1;
+  const colour = selectedColour || item.selectedColour || "";
   // normalise name and colour (remove spaces, make lowercase, etc.)
- // const safeName = String(item.name).replace(/\s+/g, "_");
- // const safeColour = String(colour).replace(/\s+/g, "_");
- // const safeNumber = String(value).replace(/\s+/g, "_");
+  const safeName = String(item.name).replace(/\s+/g, "_");
+  const safeColour = String(colour).replace(/\s+/g, "_");
+  const safeNumber = String(value).replace(/\s+/g, "_");
 
   let path = 0;
 
- // if (!colour) {
+  if (!colour) {
     // fallback if no colour is defined
- ///   path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
- // } else {
- //   path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
- // }
+    path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
+  } else {
+    path = `./images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
+  }
 
   console.log("trying image:", path);
   return (path);
