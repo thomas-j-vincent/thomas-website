@@ -73,7 +73,7 @@ export function universalDisplay(item) {
        <td class="itemName">${item.name}</td>
   `;
 
-    // Simple price row for now
+    // Simple price row for now SAME LINE format price? END
   tbody.insertRow().innerHTML = `
        <td class="itemPrice">£${item.price}</td>
   `;
