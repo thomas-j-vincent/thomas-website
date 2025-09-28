@@ -182,7 +182,7 @@ export function formatImage(item, selectedColour, value = 1) {
   const safeColour = String(colour).replace(/\s+/g, "_");
   const safeNumber = String(value).replace(/\s+/g, "_");
   const basePath = `images/${safeName}/${safeColour}-${safeNumber}`;
-  const extensions = [".JPEG", ".jpeg", ".jpg", ".png" ];
+  const extensions = [".JPEG", ".jpeg", ".jpg" ];
     for (let ext of extensions) {
     const path = `${basePath}${ext}`;
     if (imageExists(path)) {
