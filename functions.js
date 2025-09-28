@@ -187,7 +187,7 @@ export function formatImage(item, selectedColour, value = 1) {
     // fallback if no colour is defined
    const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
   }
-  const path = `images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
+  const path = `https://thomas-j-vincent.github.io/images/${safeName}/${safeColour}-${safeNumber}.JPEG`;
 
   console.log("trying image:", path);
   return (path);
