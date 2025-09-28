@@ -175,22 +175,31 @@ export function removeFromBasket(item) {
 
 export function formatImage(item, selectedColour, value = 1) {
   // fallback: use the item's selectedColour if no param is passed
-  const colour = selectedColour || item.selectedColour || "";
+  const colour = selectedColour || item.selectedColour || "oneColour" || "";
+
   // normalise name and colour (remove spaces, make lowercase, etc.)
   const safeName = String(item.name).replace(/\s+/g, "_");
   const safeColour = String(colour).replace(/\s+/g, "_");
   const safeNumber = String(value).replace(/\s+/g, "_");
-
- // let path = 0;
-
-  if (colour === undefined) {
-    // fallback if no colour is defined
-   const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
+  const basePath = `images/${safeName}/${safeColour}-${safeNumber}`;
+  const extensions = [".JPEG", ".jpeg", ".jpg", ".png" ];
+    for (let ext of extensions) {
+    const path = `${basePath}${ext}`;
+    if (imageExists(path)) {
+      console.log("image found:", path);
+      return path;
+    }
   }
-  const path = `images/${safeName}/${safeColour}-${safeNumber}.jpeg`;
 
-  console.log("trying image:", path);
-  return (path);
+  console.warn("No image found for", basePath);
+  return null;
+}
+
+// helper: try loading image without blocking
+function imageExists(url) {
+  const img = new Image();
+  img.src = url;
+  return img.complete || img.height > 0;
 }
 
 let currentImageIndex = 1;
