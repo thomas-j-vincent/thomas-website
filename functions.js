@@ -181,18 +181,14 @@ export function formatImage(item, selectedColour, value = 1) {
   const safeName = String(item.name).replace(/\s+/g, "_");
   const safeColour = String(colour).replace(/\s+/g, "_");
   const safeNumber = String(value).replace(/\s+/g, "_");
-  const basePath = `images/${safeName}/${safeColour}-${safeNumber}`;
-  const extensions = [".JPEG", ".jpeg", ".jpg" ];
-    for (let ext of extensions) {
-    const path = `${basePath}${ext}`;
-    if (imageExists(path)) {
-      console.log("image found:", path);
-      return path;
-    }
+   if (colour === undefined) {
+    // fallback if no colour is defined
+   const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
   }
+  const path = `images/${safeName}/${safeColour}-${safeNumber}.jpeg`;
 
-  console.warn("No image found for", basePath);
-  return null;
+  console.log("trying image:", path);
+  return (path);
 }
 
 // helper: try loading image without blocking
