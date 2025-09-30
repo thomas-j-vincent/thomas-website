@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import {get, updateBasketMessage, addProduct, enableTouchHover, loadFromStorage} from "./functions.js";
+import {get, updateBasketMessage, addProduct, enableTouchHover, loadFromStorage, set} from "./functions.js";
 
 updateBasketMessage();
 enableTouchHover();
@@ -23,6 +23,8 @@ const searchInput = document.querySelector('.search-box input');
 searchInput.addEventListener('input', () => {
   const query = searchInput.value.toLowerCase(); // get typed text
   console.log("User typed:", query);
+  set ("searchInput", query);
+  console.log(get("searchInput"));
 
   // filter products (assuming products[] is already loaded with JSON)
    const results = products.filter(product => 

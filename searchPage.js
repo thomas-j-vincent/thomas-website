@@ -7,6 +7,23 @@ updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
+window.addEventListener("load", () => {  //SAME LINE scrolls to an amount if scroll is set within the code END 
+  const params = new URLSearchParams(window.location.search);
+  const scroll = parseInt(params.get("scroll"), 10);
+  if (!isNaN(scroll)) {
+    window.scrollTo({ top: scroll, behavior: "smooth" });
+  } else {
+   console.log("error");
+  }
+});
+
+if (document.body.dataset.page === "search-result") {  // SAME LINE only adds the scroll listener to the search page END 
+  document.addEventListener("scroll", () => {
+  let up =  document.documentElement.scrollTop;
+  set ("scrollAmount", up);
+  });
+}
+
  function displayResults(item) {
   const newDiv = document.createElement("div");
   newDiv.classList.add("result-container");
@@ -34,6 +51,7 @@ if (query) {
     product.productType.some(c => c.toLowerCase().includes(query.toLowerCase())) ||
     product.colour.some(c => c.toLowerCase().includes(query.toLowerCase()))
   );
+  console.log(products);
       // Show results
   const resultsContainer = document.getElementById("results");
   resultsContainer.innerHTML = "";

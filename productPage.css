@@ -1,4 +1,15 @@
+/* SAME LINE CONTROLS THE BACK BUTTON END  */
+/* #region */
+#back .icon{
+  color: blue;
+  padding-left: 50px;
+}
 
+#back .icon:hover {
+ color: red;
+}
+
+/* #endregion */
 /* SAME LINE THE LEFT HAND TABLE END  */
 /*#region */
 .productLayout {

@@ -2,9 +2,11 @@ import { products } from "./products.js";
 
  const variable = {
  itemsInBasket: 0,
+ scrollAmount: 0,
+ searchInput: "",
  basketProducts: [],
  basketDisplay: [], 
- viewedProduct: []
+ viewedProduct: [],
  }
 
  function saveToStorage() {
@@ -25,9 +27,10 @@ import { products } from "./products.js";
    container.innerHTML = "";   // SAME LINE removes all product rows END
  }
  console.log("products removed!")
- set("basketProducts", []);  // SAME LINE empty product list END
- set("basketDisplay", []);
- set("itemsInBasket", 0);    // SAME LINE reset counter END
+ set ("itemsInBasket", 0);    // SAME LINE reset counter END
+ set ("scrollAmount", 0);
+ set ("basketProducts", []);  // SAME LINE empty product list END
+ set ("basketDisplay", []);
  set ("viewedProducts", []);
  updateBasketMessage();      // SAME LINE 3. Update the basket message or UI END
  checkBasket();

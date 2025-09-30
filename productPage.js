@@ -610,6 +610,11 @@ window.addEventListener("DOMContentLoaded", () => {
   updateBasketMessage();
  });
 
+  document.getElementById("back").addEventListener("click", () => {
+    let searchInput = get("searchInput");
+    let scrollAmount = get("scrollAmount");
+  window.location.href = `search.html?q=${encodeURIComponent(searchInput)}&scroll=${get("scrollAmount")}`;
+  });
     // Find product in JSON
     const selectedProduct = products.find(p => p.name === itemName);
 
