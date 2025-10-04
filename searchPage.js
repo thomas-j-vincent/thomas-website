@@ -15,6 +15,16 @@ window.addEventListener("load", () => {  //SAME LINE scrolls to an amount if scr
   } else {
    console.log("error");
   }
+  let source = params.get("source");
+  if (!isNaN(source)) { // if it is a number
+  console.log(source);
+  } else if (source === "menu") {
+    console.log("ayo this works");
+    let searchResults = document.getElementsByClassName("searchResults")[0];
+    searchResults.style.visibility = "hidden";
+  } else {
+  console.log("error");
+  }
 });
 
 if (document.body.dataset.page === "search-result") {  // SAME LINE only adds the scroll listener to the search page END 

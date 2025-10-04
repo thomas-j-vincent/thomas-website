@@ -2,7 +2,7 @@ import { products } from "./products.js";
 
  const variable = {
  itemsInBasket: 0,
- scrollAmount: 0,
+ scrollAmount: 0,   // SAME LINE might work without END
  searchInput: "",
  basketProducts: [],
  basketDisplay: [], 
@@ -28,7 +28,7 @@ import { products } from "./products.js";
  }
  console.log("products removed!")
  set ("itemsInBasket", 0);    // SAME LINE reset counter END
- set ("scrollAmount", 0);
+ set ("scrollAmount", 0);     // SAME LINE might work without END
  set ("basketProducts", []);  // SAME LINE empty product list END
  set ("basketDisplay", []);
  set ("viewedProducts", []);
@@ -66,7 +66,7 @@ export function universalDisplay(item) {
   let row1 = tbody.insertRow(); 
   row1.innerHTML = `
       <td class="itemImg"> 
-          <img src="${formatImage(item,item.colour[1] || item.colour[0], 1)}" 
+          <img src="${formatImage(item,item.selectedColour || item.colour[0], 1)}" 
            alt="${item.name}" width="128" height="128">
       </td>
   `;

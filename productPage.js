@@ -610,9 +610,16 @@ window.addEventListener("DOMContentLoaded", () => {
   updateBasketMessage();
  });
 
+window.addEventListener('load', () => {
+  const text = document.querySelector('.productDetails');
+  const images = document.querySelector('.imageColumn');
+  if (text && images) {
+    images.style.minHeight = `${text.scrollHeight}px`;
+  }
+});
+
   document.getElementById("back").addEventListener("click", () => {
     let searchInput = get("searchInput");
-    let scrollAmount = get("scrollAmount");
   window.location.href = `search.html?q=${encodeURIComponent(searchInput)}&scroll=${get("scrollAmount")}`;
   });
     // Find product in JSON
