@@ -190,7 +190,6 @@ export function formatImage(item, selectedColour, value = 1) {
   }
   const path = `images/${safeName}/${safeColour}-${safeNumber}.jpeg`;
 
-  console.log("trying image:", path);
   return (path);
 }
 

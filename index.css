@@ -239,30 +239,6 @@ a:active {
   gap: 40px;
 }
 
-.productLayout {
-  display: flex;
-  gap: 50px;
-  width: 100%
-}
-
-.imageDiv img {
-  width: min(950px); /* max 200px or 20% of viewport width */
-  height: auto; 
-  float: left;           /* keep aspect ratio */
-  display: block;          /* removes inline spacing */
-  margin: 0 auto;          /* centers image */
-  border: 1px solid black;
-  object-fit: contain;     /* ensures full image shows */
-}
-
-.productDetails {
-  flex: 1;
-  float: right;
-  border: 5px solid black;
-  box-sizing: border-box;
-  margin-right: 50px;
-}
-
 .productName {
   background-color: blue;;
   padding: 10px;

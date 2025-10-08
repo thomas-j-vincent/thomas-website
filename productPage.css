@@ -12,12 +12,77 @@
 /* #endregion */
 /* SAME LINE THE LEFT HAND TABLE END  */
 /*#region */
-.productLayout {
-  display: flex;
-  align-items: flex-start; /* align at top */
-  gap: 50px;
-  width: 100%
+.page {
+display: flex;
 }
+.productLayout {
+  flex: 1;
+/* display: flex;           /* SAME LINE MIGHT HAVE BROKEN STICKY BOTTOM, MIGHT NOT HAVE, CAN BE COMMENTED OUT END*/
+  align-items: flex-start;                                                                        /* align at top */
+  border: 5px solid black; 
+  gap: 50px; 
+  width: 100%;
+}
+.imageColumn, .imageColumn2 {
+  border: 5px solid black;
+  width: 70vw;
+  z-index: -1;
+  position: relative;
+  gap: 0;
+  flex-direction: column;
+  align-items: stretch;
+       /* overflow: hidden; SAME LINE usign overflow hidden constrains the images to below the sticky section END */
+}
+.imageColumn { outline: 2px solid red; }
+.imageDiv { outline: 2px solid green; }
+.imageDiv img { outline: 2px solid blue; }
+.imageColumn2 {
+  height: 1740px;
+}
+.productDetails {                                           /* SAME LINE where displayResults2 gets atached to END*/
+  flex: 1;                                                    /* SAME LINE aligns the details box to the right END*/
+  border: 5px solid black;
+  float: right;
+  width: 30vw;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  /*z-index: 0;*/
+  background: white;
+                            /* margin-right: 50px; *//* SAME LINE adds border to the right (doesnt look nice) END */       
+}
+.imageDiv, .imageDiv2 {
+  width: 201px;
+  display: block;
+}
+.imageDiv {
+  width: 100%;
+  height: auto; /* or a fixed height like 350px if needed */
+  align-items: stretch;
+}
+.imageDiv img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;  /* or 'contain' if you want the full image visible */
+  border: 1px solid black;
+  display: block;
+}
+.imageDiv2 {
+  height: 174px;
+  width: 70vw;
+  position: absolute;
+}
+.imageDiv img, .imageDiv2 img {
+  display: block;
+  max-width: 100%;                                                   /* never let images overflow their container */
+  height: auto; 
+  border: 1px solid black;
+  object-fit: contain;
+}
+.imageDiv img:hover {opacity: 0.7;} 
+
 /*#endregion*/
 
 /* SAME LINE FROM DISPLAYRESULTS2 END*/
@@ -25,30 +90,32 @@
 
 .image-table {  /* SAME LINE the image bit END*/
 border: 1px;
-padding: 5px;
 border-collapse: separate;
 border-spacing: 0;   
+height: auto;
+width: 100%;
+align-items: stretch;
 }
 .image-row {
   display: flex;
-  align-items: flex-start;
-  width: 35vw;
+  align-items: stretch;
+  width: 70vw;
+  gap: 0;
+  border-spacing: 0;   
+  height: auto;
 }
 .image-row .unstacked-image {   /* SAME LINE specifically for images NOT next to one other END*/
   flex: 1 1 0;   
-  width: auto;   
+  width: 35vw;   
   display: block; 
+  /*overflow: hidden; */
 }
-.image-table .stacked-image {   /* SAME LINE specifically for images next to one other END*/
+.image-table .stacked-image {                   /* SAME LINE specifically for images next to one other END*/
   width: 70vw;
   display: block;
 }
-.productDetails { /* SAME LINE where displayResults2 gets atached to END*/
-  flex: 1;
-  border: 5px solid black;
-  box-sizing: border-box;
-  margin-right: 50px;
-}
+/* where product details should be */
+
 .basket-table {   /* SAME LINE from displayResults2 END*/
   border: none;
   padding: 5px;  
@@ -161,14 +228,8 @@ background-color: red;
   cursor: grab;
   transition: transform 0.1s ease;
 }
-.imageDiv img {
-  display: block;
-  max-width: 100%;   /* never let images overflow their container */
-  height: auto;
-  border: 1px solid black;
-  object-fit: contain;
-}
-.imageDiv img:hover {opacity: 0.7;}
+/* where image div img should be */
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -268,3 +329,28 @@ background-color: red;
   }
 }
 /*#endregion*/
+@media (hover: none) and (pointer: coarse) {
+  .productLayout {
+  display: flex;
+  gap: 50px;
+  width: 100%
+}
+
+.imageDiv img {
+  width: min(950px); /* max 200px or 20% of viewport width */
+  height: auto; 
+  float: left;           /* keep aspect ratio */
+  display: block;          /* removes inline spacing */
+  margin: 0 auto;          /* centers image */
+  border: 1px solid black;
+  object-fit: contain;     /* ensures full image shows */
+}
+
+.productDetails {
+  flex: 1;
+  float: right;
+  border: 5px solid black;
+  box-sizing: border-box;
+  margin-right: 50px;
+}
+}

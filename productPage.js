@@ -1,7 +1,6 @@
 import { products } from "./products.js";
 import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, existingSearchResults, addToBasket, formatImage} from "./functions.js";
-    const itemName = new URLSearchParams(window.location.search).get("q");
-    console.log("URL itemName:", itemName);
+    const itemName = new URLSearchParams(window.location.search).get("q"); 
 
 updateBasketMessage();
 enableTouchHover();
@@ -9,56 +8,117 @@ loadFromStorage();
 existingSearchResults(itemName);
 
   function displayImages(item) {
-
-  console.log(item.selectedColour);
-
   let newDiv = document.createElement("div");
+  let newDiv2 = document.createElement("div");
+  const imageDiv = document.querySelector(".imageDiv");
+  const imageDiv2 = document.querySelector(".imageDiv2");
   newDiv.className = "image-table";
-
+  newDiv2.className = "image-table";
   const colour = item.selectedColour || item.colour[1] ||item.colour[0]  ||"";
   let i= 0;
+  const imageTable = document.querySelector('.imageDiv2 .image-table');
+const imageColumn2 = document.querySelector('.imageColumn2');
 
+if (imageTable && imageColumn2) {
+  const tableBottom = imageTable.getBoundingClientRect().bottom;
+  const columnBottom = imageColumn2.getBoundingClientRect().bottom;
+  
+  const gap = columnBottom - tableBottom;
+  console.log("Vertical gap:", gap);
+}
   while (i < item.imageCount) {
-    if (i === 1) {
+    if (i === 0) {
       let rowDiv = document.createElement("div");
       rowDiv.className = "image-row";
       let img1 = document.createElement("img");
-      img1.src = `${formatImage(item, colour, i)}`;
+      img1.src = `${formatImage(item, colour, 0)}`;
       img1.alt = `${item.name}${colour}`;
       img1.className = "unstacked-image";
       img1.id = "myImg";
       rowDiv.appendChild(img1);
-
-      if (i + 1 < item.imageCount) {
+      newDiv.appendChild(rowDiv);
+      imageDiv.appendChild(newDiv)
+    } else if (i=== 1) {
+      let rowDiv = document.createElement("div");
+      rowDiv.className = "image-row";
+      let img1 = document.createElement("img");
+      img1.src = `${formatImage(item, colour, 1)}`;
+      img1.alt = `${item.name}${colour}`;
+      img1.className = "unstacked-image";
+      img1.id = "myImg";
+      rowDiv.appendChild(img1);
+      if (i + 1 < item.imageCount) {                // SAME LINE makes the images line up next to each other by putting it in the same row END
         let img2 = document.createElement("img");
         img2.src = `${formatImage(item, colour, i + 1)}`;
         img2.alt = `${item.name}${colour}`;
         img2.className = "unstacked-image";
         rowDiv.appendChild(img2);
-        i++;
+        i++;                                      // SAME LINE adds an extra 1 to i in order to not duplicate stacked image
       }
-
-      newDiv.appendChild(rowDiv);
+ 
+      newDiv2.appendChild(rowDiv);
+      imageDiv2.appendChild(newDiv2)
     } else {
       let img = document.createElement("img");
       img.src = `${formatImage(item, colour, i)}`;
       img.alt = `${item.name}${colour}`;
       img.className = "stacked-image";
       img.id = "myImg";
-      newDiv.appendChild(img);
+      newDiv2.appendChild(img);
+      imageDiv2.appendChild(newDiv2);
+            let img2 = document.createElement("img");
+      img2.src = `${formatImage(item, colour, 2)}`;
+      img2.alt = `${item.name}${colour}`;
+      img2.className = "stacked-image";
+      img2.id = "myImg";
+      newDiv2.appendChild(img2);
+      imageDiv2.appendChild(newDiv2);
+      /*
+                  let img3 = document.createElement("img");
+      img3.src = `${formatImage(item, colour, 2)}`;
+      img3.alt = `${item.name}${colour}`;
+      img3.className = "stacked-image";
+      img3.id = "myImg";
+      newDiv2.appendChild(img3);
+      imageDiv2.appendChild(newDiv2);
+            */
     }
     i++;
   }
-  return newDiv;
+
+ // return newDiv;
 }
+
+function cropOverflowingImages() {
+  const container = document.querySelector('.imageColumn2');
+  const containerBottom = container.getBoundingClientRect().bottom;
+
+  const images = container.querySelectorAll('.stacked-image');
+
+  images.forEach(img => {
+    const rect = img.getBoundingClientRect();
+
+    if (rect.bottom > containerBottom) {
+      const overflow = rect.bottom - containerBottom;
+      img.style.clipPath = `inset(0 0 ${overflow}px 0)`;
+    } else {
+      img.style.clipPath = 'none';
+    }
+  });
+}
+
 
 function displayResults2(item) {
   document.getElementById("added").style.visibility = "hidden";
   const imageDiv = document.querySelector(".imageDiv");
+  const imageDiv2 = document.querySelector(".imageDiv2");
   if (imageDiv) {
     imageDiv.innerHTML = ""; // clear old stuff
-    imageDiv.appendChild(displayImages(item));
-  }
+    imageDiv2.innerHTML = "";
+    displayImages(item);
+  //  imageDiv.appendChild(displayImages(item));
+  //  imageDiv2.appendChild(displayImages(item));  
+    }
 
   const newDiv = document.createElement("div");
   newDiv.classList.add("product-container");
@@ -108,7 +168,9 @@ function displayResults2(item) {
           c.style.background = "");
         colourCell.style.background = "lightblue";
         imageDiv.innerHTML = ""; // clear old stuff
+        imageDiv2.innerHTML = "";
         imageDiv.appendChild(displayImages(item));
+        imageDiv2.appendChild(displayImages(item));
       });
     };
   } else {
@@ -126,7 +188,9 @@ function displayResults2(item) {
       row2.querySelectorAll(".productColour").forEach(c => c.style.background = "");
       colourCell.style.background = "lightblue";
       imageDiv.innerHTML = ""; // clear old stuff
+      imageDiv2.innerHTML = "";
       imageDiv.appendChild(displayImages(item));
+      imageDiv2.appendChild(displayImages(item));
     });
   };
  // Spacer Row END
@@ -149,7 +213,6 @@ function displayResults2(item) {
  //ii++;
       const sizeIndex = ii + 1;
       const cellWidth = Math.max(100/item.size.length);
-      console.log("Cell width:", cellWidth);
       let sizeCell = row3.insertCell();
       sizeCell.textContent = item.size[sizeIndex];
       sizeCell.classList.add("productSize");
@@ -158,7 +221,6 @@ function displayResults2(item) {
       const thisSize = item.size[sizeIndex];
       sizeCell.addEventListener("click", () => {
         item.selectedSize = thisSize;
-        console.log("User selected size:",item.selectedSize, thisSize);
         row3.querySelectorAll(".productSize").forEach(c => c.style.background = "");
         sizeCell.style.background = "lightblue";
       });
@@ -303,8 +365,7 @@ function completeLook(item) {
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
     newDiv.addEventListener("click", function() {
-      window.location.href = `product.html?
-      q=${encodeURIComponent(item.name)}`;
+      window.location.href = `product.html?q=${encodeURIComponent(item.name)}&source=completeLook`;
     });
     const table = universalDisplay(item);
     newDiv.appendChild(table);
@@ -320,7 +381,7 @@ function completeLook(item) {
  return containerDiv;
 };
 
-// this is to make the images zoom-in-able on phone or mouse
+// this is to make the images zoom-in-able on phone or mouse END
 /*function zoomable() {
   let scale = 1;
   let posX = 0, posY = 0;
@@ -392,23 +453,67 @@ modalImg.addEventListener("touchmove", function(e) {
 }, { passive: false });
 }
 */
+// this supposidly resizes the images to fit the space END
+function fillImageColumn() {
+  const column = document.querySelector('.imageColumn2');
+  if (!column) return;
+
+  const tables = column.querySelectorAll('.image-table');
+  if (tables.length === 0) return;
+
+  // Reset any previous inline height (in case of resize or re-render)
+  column.querySelectorAll('img').forEach(img => img.style.height = '');
+
+  // Measure total image-table height
+  const columnHeight = column.clientHeight;
+  let totalHeight = 0;
+
+  tables.forEach(table => {
+    totalHeight += table.offsetHeight;
+  });
+
+  // If there's empty space, stretch the last image
+  if (totalHeight < columnHeight) {
+    const extraSpace = columnHeight - totalHeight;
+    const lastImage = tables[tables.length - 1].querySelector('img:last-child');
+
+    if (lastImage) {
+      const currentHeight = lastImage.offsetHeight;
+      lastImage.style.height = `${currentHeight + extraSpace}px`;
+      lastImage.style.objectFit = 'cover'; // ensures clean scaling
+    }
+  }
+}
+
+// this makes the imageColumn (1) the same height as product details (not required) END
+function updateHeights() {       
+  const productLayout = document.querySelector('.productLayout');
+  const productDetails = document.querySelector('.productDetails');
+  const image2 = document.querySelector('.imageColumn2');
+  const image = document.querySelector('.imageColumn');
+  if (productLayout && productDetails && image && image2) {
+    const detailsHeight = productDetails.offsetHeight;
+    const imageHeight = image.offsetHeight;
+    console.log(detailsHeight);
+    const image2Height = (detailsHeight - imageHeight);
+    productLayout.style.minHeight = `${detailsHeight}px`;
+    image2.style.minHeight = `${image2Height}px`;
+  }
+}
 
 function mayAlsoLike(item) {
   const compare = item.productType[0];
   let results = products.filter(product => product.productType.includes(compare));
   results = results.filter(product => product.name !== item.name);
- console.log(results);
 
   const itemWidth = 200; // px per card
   const gap = 20;        // px between cards
   const screenWidth = window.innerWidth;
 
-  // how many fit fully on screen
-  const itemsPerRow = Math.floor(screenWidth / (itemWidth + gap));
+  const itemsPerRow = Math.floor(screenWidth / (itemWidth + gap));  // SAME LINE how many fit fully on screen END
   const visibleWidth = itemsPerRow * (itemWidth + gap);
 
-  // Table for header + carousel row
-  const table = document.createElement("table");
+  const table = document.createElement("table");     // SAME LINE Table for header + carousel row ENDs
   const tbody = document.createElement("tbody");
 
   // Header
@@ -452,7 +557,7 @@ function mayAlsoLike(item) {
     newDiv.style.flexShrink = "0";
 
     newDiv.addEventListener("click", () => {
-      window.location.href = `product.html?q=${encodeURIComponent(result.name)}`;
+      window.location.href = `product.html?q=${encodeURIComponent(result.name)}&source=mayAlsoLike`;
     });
 
     const productTable = universalDisplay(result);
@@ -494,10 +599,7 @@ function mayAlsoLike(item) {
 // the function to display the searches from existingSearchResults
 function previousSearches() {  
   let results = get("viewedProducts");
-  console.log(get("viewedProducts"));
   //results = results.filter(name => name !== selectedProduct.name);
-  console.log(results);
-
   const itemWidth = 200; // px per card
   const gap = 20;        // px between cards
   const screenWidth = window.innerWidth;
@@ -594,33 +696,69 @@ function previousSearches() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+function autoZoomImages() {
+  const layout = document.querySelector('.productLayout');
+  const details = document.querySelector('.productDetails');
+  const imageDiv = document.querySelector('.imageDiv');
 
+  if (!layout || !details || !imageDiv) return;
+
+  // Get available width for images (match productDetails width)
+  const availableWidth = details.clientWidth;
+
+  // Get all images inside imageDiv
+  const images = imageDiv.querySelectorAll('img');
+  if (images.length === 0) return;
+
+  images.forEach(img => {
+    // Reset styles
+    img.style.width = '';
+    img.style.height = '';
+    img.style.objectFit = 'contain';
+
+    // Wait for image to load to get natural dimensions
+    if (img.complete) {
+      scaleImage(img, availableWidth);
+    } else {
+      img.onload = () => scaleImage(img, availableWidth);
+    }
+  });
+
+  function scaleImage(img, availableWidth) {
+    // Set width to fill the available space
+    img.style.width = availableWidth + 'px';
+    // Set height to maintain aspect ratio
+    const aspectRatio = img.naturalHeight / img.naturalWidth;
+    img.style.height = (availableWidth * aspectRatio) + 'px';
+    img.style.objectFit = 'cover';
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("container");
   if (container) {
     container.innerHTML = "";
   }
-
   const basketProducts = get("basketProducts") || [];
- basketProducts.forEach(({ item }) => {
-    // Rebuild DOM from item data
-    
-   addProduct(item);
+  basketProducts.forEach(({ item }) => {
+    // Rebuild DOM from item data  
+    addProduct(item);
   });
   updateBasketMessage();
- });
-
-window.addEventListener('load', () => {
-  const text = document.querySelector('.productDetails');
-  const images = document.querySelector('.imageColumn');
-  if (text && images) {
-    images.style.minHeight = `${text.scrollHeight}px`;
-  }
 });
 
   document.getElementById("back").addEventListener("click", () => {
     let searchInput = get("searchInput");
-  window.location.href = `search.html?q=${encodeURIComponent(searchInput)}&scroll=${get("scrollAmount")}`;
+    let viewedProducts = get("viewedProducts")
+    let viewedProduct = viewedProducts.slice (1,2);
+    console.log(viewedProduct);
+    const params = new URLSearchParams(window.location.search);
+    let source = params.get("source");
+    if (source === "completeLook" || source === "mayAlsoLike") {
+      window.location.href = `product.html?q=${encodeURIComponent(viewedProduct)}`
+    } else {
+      window.location.href = `search.html?q=${encodeURIComponent(searchInput)}&scroll=${get("scrollAmount")}`;
+    }
   });
     // Find product in JSON
     const selectedProduct = products.find(p => p.name === itemName);
@@ -630,11 +768,29 @@ window.addEventListener('load', () => {
       document.querySelector(".productDetails").textContent = "Product not found.";
     //  return;
     }
+    
+  window.addEventListener('load', () =>{
+    setTimeout(updateHeights, 100);
+    cropOverflowingImages();
+    autoZoomImages();
+    const img = document.querySelector('img[src="images/Zain_mugshot/one_colour-0.jpeg"]');
+    img.style.removeProperty('width');
+    img.style.removeProperty('height');
+    //fillImageColumn();
+  } );
+  window.addEventListener('resize', () => {
+    updateHeights();
+    cropOverflowingImages();
+    autoZoomImages();
+    const img = document.querySelector('img[src="images/Zain_mugshot/one_colour-0.jpeg"]');
+    img.style.removeProperty('width');
+    img.style.removeProperty('height');
+    //fillImageColumn();
+  } );
 
-    // Finally display
-   displayResults2(selectedProduct);
-   mayAlsoLike(selectedProduct);
-   previousSearches(selectedProduct);
+  displayResults2(selectedProduct); //SAME LINE finally displays all the functions END
+  mayAlsoLike(selectedProduct);
+  previousSearches(selectedProduct);
 
 
 var modal = document.getElementById("myModal");
@@ -684,5 +840,3 @@ document.addEventListener("keydown", function(e) {
   }
 });
 // zoomable();  SAME LINE uncomment if you want the images to be zoomable END
-
-  
