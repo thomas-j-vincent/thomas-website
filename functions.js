@@ -1,6 +1,6 @@
 import { products } from "./products.js";
 
- const variable = {
+const variable = {
  itemsInBasket: 0,
  scrollAmount: 0,   // SAME LINE might work without END
  searchInput: "",
@@ -9,11 +9,11 @@ import { products } from "./products.js";
  viewedProduct: [],
  }
 
- function saveToStorage() {
+function saveToStorage() {
  localStorage.setItem("basketState", JSON.stringify(variable));
  }
 
- export function loadFromStorage() {
+export function loadFromStorage() {
  const stored = localStorage.getItem("basketState");
  if (stored) {
   const parsed = JSON.parse(stored);
@@ -21,7 +21,7 @@ import { products } from "./products.js";
  } 
 }
 
- export function removeAllItems() {
+export function removeAllItems() {
  const container = document.getElementById("container");    // SAME LINE 1. Clear the DOM END
  if (container) {
    container.innerHTML = "";   // SAME LINE removes all product rows END
@@ -95,17 +95,17 @@ export function universalDisplay(item) {
   return table;
 }
 
- export function checkBasket() {
+export function checkBasket() {
   console.log(("basket items are"), get("basketProducts"));
   console.log(("display items:"), get("basketDisplay"));
  }
  window.checkBasket = checkBasket;
 
- export function get(key) {
+export function get(key) {
  return variable[key];
  }
 
- export function set(key, value) {
+export function set(key, value) {
  variable[key] = value;
  saveToStorage();
  } 
@@ -172,7 +172,7 @@ export function removeFromBasket(item) {
   set("itemsInBasket", newItems);
 }
   
- export function formatPrice(amount) {
+export function formatPrice(amount) {
  return `£ ${amount.toFixed(2)}`;
  }
 
@@ -190,6 +190,12 @@ export function formatImage(item, selectedColour, value = 1) {
   }
   const path = `images/${safeName}/${safeColour}-${safeNumber}.jpeg`;
 
+  return (path);
+}
+
+export function formatCollectionImage(type,functionNumber,i ){
+  const number = functionNumber || 0;
+  const path = `images/collection/${number}/${type}-${i}.JPG`;
   return (path);
 }
 

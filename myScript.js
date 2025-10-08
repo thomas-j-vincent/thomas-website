@@ -5,6 +5,7 @@ updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
+
 window.addEventListener("DOMContentLoaded", () => {
   const basketProducts = get("basketProducts") || [];
   basketProducts.forEach(({ item }) => {
