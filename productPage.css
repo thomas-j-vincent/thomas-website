@@ -19,12 +19,10 @@ display: flex;
   flex: 1;
 /* display: flex;           /* SAME LINE MIGHT HAVE BROKEN STICKY BOTTOM, MIGHT NOT HAVE, CAN BE COMMENTED OUT END*/
   align-items: flex-start;                                                                        /* align at top */
-  border: 5px solid black; 
   gap: 50px; 
   width: 100%;
 }
 .imageColumn, .imageColumn2 {
-  border: 5px solid black;
   width: 70vw;
   z-index: -1;
   position: relative;
@@ -33,9 +31,6 @@ display: flex;
   align-items: stretch;
        /* overflow: hidden; SAME LINE usign overflow hidden constrains the images to below the sticky section END */
 }
-.imageColumn { outline: 2px solid red; }
-.imageDiv { outline: 2px solid green; }
-.imageDiv img { outline: 2px solid blue; }
 .imageColumn2 {
   height: 1740px;
 }
@@ -53,33 +48,23 @@ display: flex;
   background: white;
                             /* margin-right: 50px; *//* SAME LINE adds border to the right (doesnt look nice) END */       
 }
-.imageDiv, .imageDiv2 {
-  width: 201px;
-  display: block;
-}
 .imageDiv {
-  width: 100%;
   height: auto; /* or a fixed height like 350px if needed */
   align-items: stretch;
-}
-.imageDiv img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;  /* or 'contain' if you want the full image visible */
-  border: 1px solid black;
   display: block;
 }
 .imageDiv2 {
   height: 174px;
   width: 70vw;
   position: absolute;
+  display: block;
 }
 .imageDiv img, .imageDiv2 img {
   display: block;
   max-width: 100%;                                                   /* never let images overflow their container */
   height: auto; 
-  border: 1px solid black;
-  object-fit: contain;
+  object-fit: contain;                                         /* or 'contain' if you want the full image visible */
+  border: 1px, solid, black;
 }
 .imageDiv img:hover {opacity: 0.7;} 
 

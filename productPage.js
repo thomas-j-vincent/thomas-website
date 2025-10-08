@@ -84,6 +84,7 @@ if (imageTable && imageColumn2) {
             */
     }
     i++;
+        cropOverflowingImages();
   }
 
  // return newDiv;
@@ -169,8 +170,9 @@ function displayResults2(item) {
         colourCell.style.background = "lightblue";
         imageDiv.innerHTML = ""; // clear old stuff
         imageDiv2.innerHTML = "";
-        imageDiv.appendChild(displayImages(item));
+        //imageDiv.appendChild(displayImages(item));
         imageDiv2.appendChild(displayImages(item));
+        cropOverflowingImages();
       });
     };
   } else {
@@ -191,6 +193,7 @@ function displayResults2(item) {
       imageDiv2.innerHTML = "";
       imageDiv.appendChild(displayImages(item));
       imageDiv2.appendChild(displayImages(item));
+      cropOverflowingImages();
     });
   };
  // Spacer Row END
