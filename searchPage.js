@@ -22,7 +22,10 @@ window.addEventListener("load", () => {  //SAME LINE scrolls to an amount if scr
     console.log("ayo this works");
     let searchResults = document.getElementsByClassName("searchResults")[0];
     searchResults.style.visibility = "hidden";
-  } else {
+  } else if (source === "collection") {
+    // add an image to the top oop!
+    console.log(source);
+  }else{
   console.log("error");
   }
 });

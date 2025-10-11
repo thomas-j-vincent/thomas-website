@@ -173,6 +173,7 @@ background-color: red;
 }
 #mayLike button:hover:not(:disabled) {
   color: black;
+    border: none;
   transform: scale(1.2);
 }
 #mayLike button:disabled {

@@ -1,8 +1,8 @@
 import { set, get } from "./functions.js";
 export const products = [
 {
-"productType" : ["nft", "non-clothing", "all"], // first type is actual item eg: "shirt" second is 
-"productTag" : "item1",                         //clothing or non clothing, third doesnt matter
+"productType" : ["nft", "non-clothing", "men", "all"], // first type is actual item eg: "shirt" second is 
+"productTag" : "item1",                         //clothing or non clothing, third is gender, fourth doesnt matter
 "name" :"Elle mugshot",  // recommend keeping the name 27 characters long
 "imageCount" : 4,        // there is a recommended size for the photos, 
 "price": 7.00,           //i suggest using standard landscape and portrait sizes
@@ -16,7 +16,7 @@ export const products = [
 "additionalInfo": "Bestseller"
 },
 {
-"productType" : ["nft", "non-clothing", "all"],
+"productType" : ["nft", "non-clothing", "unisex", "all"],
 "productTag" : "item2",
 "name":"Monil mugshot",
 "imageCount" : 3,
@@ -28,7 +28,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["trousers", "clothing", "all"],
+"productType" : ["trousers", "clothing","unisex", "all"],
 "productTag" : "item3",
 "name" :"Erin mugshot",
 "imageCount" : 5,
@@ -86,7 +86,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["belt", "clothing", "all"],
+"productType" : ["socks", "clothing", "men", "all"],
 "productTag" : "item8",
 "name":"inspirational message",
 "imageCount" : 4,
@@ -97,7 +97,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["belt", "clothing", "all"],
+"productType" : ["hoodie", "clothing", "unisex", "all"],
 "productTag" : "item9",
 "name":"Rolls Royce Boatail",
 "imageCount" : 4,
@@ -108,7 +108,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["belt", "clothing", "all"],
+"productType" : ["belt", "clothing", "men", "all"],
 "productTag" : "item10",
 "name":"name is 27 characters",
 "imageCount" : 4,
@@ -119,7 +119,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["belt", "clothing", "all"],
+"productType" : ["watch", "clothing", "unisex", "all"],
 "productTag" : "item11",
 "name":" if you have an axe, ",
 "imageCount" : 4,
@@ -130,7 +130,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["belt", "clothing", "all"],
+"productType" : ["belt", "clothing", "unisex", "all"],
 "productTag" : "item12",
 "name":" the twelfth item ",
 "imageCount" : 4,
@@ -141,7 +141,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["belt", "clothing", "all"],
+"productType" : ["belt", "clothing", "unisex", "all"],
 "productTag" : "item13",
 "name":" if you have an axe, and replace the handle three times, and the head five times. is it the same axe?",
 "imageCount" : 4,

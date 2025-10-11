@@ -67,7 +67,7 @@ export function universalDisplay(item) {
   row1.innerHTML = `
       <td class="itemImg"> 
           <img src="${formatImage(item,item.selectedColour || item.colour[0], 1)}" 
-           alt="${item.name}" width="128" height="128">
+            alt="${item.name}" width="128" height="128">
       </td>
   `;
 

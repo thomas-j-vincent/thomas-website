@@ -1,0 +1,42 @@
+/* SAME LINE FROM MAYALSOLIKE END*/
+/*#region*/
+.no-scrollbar {
+  display: flex;
+  border: 5px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px, 200px, 10px, 10px;
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.carousel-arrow {
+  background: none;
+  border: none;
+  font-size: 2rem;   /* big arrows */
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #333;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.carousel-arrow:hover:not(:disabled) {
+  color: black;
+  transform: scale(1.2);
+}
+.carousel-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.itemImg {
+  border: 1px, solid, black;
+}
+/*#endregion*/
+
+.bestseller{
+  display: flex;
+}
+.split {
+  flex: 1;
+  width: 100%;
+  background-color: blue;
+}

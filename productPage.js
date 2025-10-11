@@ -554,6 +554,7 @@ function mayAlsoLike(item) {
 
   // Render ALL results
   results.forEach(result => {
+    console.log(result);
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
     newDiv.style.width = itemWidth + "px";
@@ -754,12 +755,16 @@ window.addEventListener("DOMContentLoaded", () => {
     let searchInput = get("searchInput");
     let viewedProducts = get("viewedProducts")
     let viewedProduct = viewedProducts.slice (1,2);
+//    let safeItem = (query || "").toLowerCase();
     console.log(viewedProduct);
     const params = new URLSearchParams(window.location.search);
     let source = params.get("source");
     if (source === "completeLook" || source === "mayAlsoLike") {
       window.location.href = `product.html?q=${encodeURIComponent(viewedProduct)}`
-    } else {
+    } else if (source === "Men" || "Women" || "Children"){
+      window.location.href = `page.html?q=${encodeURIComponent(source)}`
+    }
+    else{
       window.location.href = `search.html?q=${encodeURIComponent(searchInput)}&scroll=${get("scrollAmount")}`;
     }
   });
