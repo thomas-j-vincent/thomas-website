@@ -1,3 +1,9 @@
+
+.header img{
+  width: 100%;
+  height: auto;
+}
+
 /* SAME LINE FROM MAYALSOLIKE END*/
 /*#region*/
 .no-scrollbar {
@@ -28,15 +34,19 @@
   cursor: default;
 }
 .itemImg {
+  width: 100%;
+  height: auto;
   border: 1px, solid, black;
 }
 /*#endregion*/
-
+.carousel img{
+  width: 100%;
+  height: auto;
+}
 .bestseller{
   display: flex;
 }
 .split {
   flex: 1;
   width: 100%;
-  background-color: blue;
 }
