@@ -3,6 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+.menuBar{
+  font-size: large;
+}
 .flex-container {
   display: flex;
   margin: 10;
@@ -154,6 +157,12 @@ a:active {
   transform: translate(-50%, -225%);
 }
 @media (hover: none) and (pointer: coarse) {
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: larger;
+}
 .flex-container {
   display: flex;
   margin: 10;
@@ -163,6 +172,10 @@ a:active {
   position: sticky;
   top: 0;
   z-index: 1;
+  font-size: large;
+}
+.menuBar{
+  font-size: large;
 }
 
 .flex-container>div {

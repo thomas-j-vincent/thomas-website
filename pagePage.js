@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, formatImage, removeAllItems, formatCollectionImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, newReleases, formatImage, removeAllItems, formatCollectionImage} from "./functions.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
@@ -8,16 +8,7 @@ updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
-function newReleases(query, appendTo, functionNumber) {
-  let number = functionNumber || 0; 
-    const header = document.querySelector(`.${appendTo}`);
-    header.innerHTML = `
-        <td class="itemImg"> 
-        <img src="${formatCollectionImage(query, number, 1)}" 
-            alt="${query}">
-        </td>
-    `;
-}
+
 function mayAlsoLike(query) {
 
   const itemWidth = 200; // SAME LINE px per card END
@@ -199,10 +190,13 @@ function split(query) {
   });
 
   if (filteredCategory.length < 2) {     // SAME LINE get a random product from category if only one result; END
-    let randomProductNumber = Math.floor(Math.random() * (category.length - 1 + 1)) + 1;
-    if (category[randomProductNumber]) {
-      filteredCategory.push(category[randomProductNumber]);
-    }
+    for (let attempts = 0; attempts < 10 && filteredCategory.length < 2; attempts++) {
+  let randomProductNumber = Math.floor(Math.random() * category.length);
+  if (category[randomProductNumber]) {
+    filteredCategory.push(category[randomProductNumber]);
+  }
+  if (filteredCategory.length > 5) break;
+}
   };
     let i = 0;
     const items = filteredCategory;
@@ -218,7 +212,8 @@ function split(query) {
 
       console.log(result);
       const img = document.createElement("img");
-      img.src = formatCollectionImage("men", 3, i);  // same as universalDisplay
+      img.src = formatCollectionImage(`${query}`, 3, i);  // same as universalDisplay
+      console.log(formatCollectionImage(`${query}`, 3, i));
       img.alt = type.name;
       img.style.width = "100%";
       img.style.height = "auto";
@@ -306,7 +301,6 @@ function exploreProducts(query) {
   const productsByClothType = {};   // SAME LINE filter by gender, get product types (trousers etc), if there are items display box, pass on type when clicked
   category.forEach(product => {
     let result = category;
-    console.log(product.name);
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
     newDiv.style.width = itemWidth + "px";
