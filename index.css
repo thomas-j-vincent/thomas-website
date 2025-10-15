@@ -6,6 +6,9 @@
 .menuBar{
   font-size: large;
 }
+.dropdown {
+  font-size: medium;
+}
 .flex-container {
   display: flex;
   margin: 10;
@@ -176,6 +179,9 @@ a:active {
 }
 .menuBar{
   font-size: large;
+}
+.dropdown {
+  font-size: medium;
 }
 
 .flex-container>div {
