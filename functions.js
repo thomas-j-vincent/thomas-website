@@ -390,6 +390,12 @@ export function enableTouchHover(selector = ".hoverable", dropdownSelector = ".d
       document.querySelectorAll('.dropdown-content').forEach(content => {
         content.style.display = 'none';
       });
-    });
+    }); 
   }
+}
+
+export function isMobileDevice() {
+  const touchCapable = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  const smallScreen = window.innerWidth <= 600;
+  return smallScreen || touchCapable;
 }

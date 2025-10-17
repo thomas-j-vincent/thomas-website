@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, existingSearchResults, addToBasket, formatImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, addProduct, universalDisplay, updateBasketMessage, existingSearchResults, addToBasket, formatImage, isMobileDevice} from "./functions.js";
     const itemName = new URLSearchParams(window.location.search).get("q"); 
 
 updateBasketMessage();
@@ -7,88 +7,97 @@ enableTouchHover();
 loadFromStorage();
 existingSearchResults(itemName);
 
-  function displayImages(item) {
-  let newDiv = document.createElement("div");
-  let newDiv2 = document.createElement("div");
+console.log(window.innerWidth);
+let mobileImageCell = null;
+let mobileImageCell2 = null;
+
+function displayImages(item) {
   const imageDiv = document.querySelector(".imageDiv");
   const imageDiv2 = document.querySelector(".imageDiv2");
-  newDiv.className = "image-table";
-  newDiv2.className = "image-table";
-  const colour = item.selectedColour || item.colour[1] ||item.colour[0]  ||"";
-  let i= 0;
-  const imageTable = document.querySelector('.imageDiv2 .image-table');
-const imageColumn2 = document.querySelector('.imageColumn2');
 
-if (imageTable && imageColumn2) {
-  const tableBottom = imageTable.getBoundingClientRect().bottom;
-  const columnBottom = imageColumn2.getBoundingClientRect().bottom;
-  
-  const gap = columnBottom - tableBottom;
-  console.log("Vertical gap:", gap);
-}
+  let rowContainer = document.createElement("div");
+  rowContainer.className = "image-table";
+
+  let mobileThirdRow = document.createElement("div");
+  mobileThirdRow.className = "image-table";
+
+  const colour = item.selectedColour || item.colour[1] || item.colour[0] || "";
+  let i = 0;
+
   while (i < item.imageCount) {
-    if (i === 0) {
+
+    if (i === 0) {     // SAME LINE FOR THE FIRST IMAGE (imageDiv) END
       let rowDiv = document.createElement("div");
       rowDiv.className = "image-row";
+
       let img1 = document.createElement("img");
       img1.src = `${formatImage(item, colour, 0)}`;
       img1.alt = `${item.name}${colour}`;
       img1.className = "unstacked-image";
       img1.id = "myImg";
+
       rowDiv.appendChild(img1);
-      newDiv.appendChild(rowDiv);
-      imageDiv.appendChild(newDiv)
-    } else if (i=== 1) {
+      rowContainer.appendChild(rowDiv);
+      imageDiv.appendChild(rowContainer);
+    }
+
+    else if (i === 1) { // SAME LINE for the SECOND + THIRD IMAGES, WHEN ON MOBILE GETS APPENDED ELSEWHERE END
       let rowDiv = document.createElement("div");
       rowDiv.className = "image-row";
+
       let img1 = document.createElement("img");
       img1.src = `${formatImage(item, colour, 1)}`;
       img1.alt = `${item.name}${colour}`;
       img1.className = "unstacked-image";
       img1.id = "myImg";
+
       rowDiv.appendChild(img1);
-      if (i + 1 < item.imageCount) {                // SAME LINE makes the images line up next to each other by putting it in the same row END
+
+      if (i + 1 < item.imageCount) {       // SAME LINE IF A 3RD IMAGE EXISTS END
         let img2 = document.createElement("img");
         img2.src = `${formatImage(item, colour, i + 1)}`;
         img2.alt = `${item.name}${colour}`;
         img2.className = "unstacked-image";
-        rowDiv.appendChild(img2);
-        i++;                                      // SAME LINE adds an extra 1 to i in order to not duplicate stacked image
+        img2.id = "myImg";
+
+        if (!isMobileDevice()) {       // SAME LINE ON DESKTOP  place 2nd & 3rd in same row END
+          rowDiv.appendChild(img2);
+        } else {           // SAME LINE ON MOBILE THE THIRD IMAGE GOES TO mobileImageCell2 END
+          let thirdDiv = document.createElement("div");
+          thirdDiv.className = "image-row";
+          thirdDiv.appendChild(img2);
+          mobileThirdRow.appendChild(thirdDiv);
+        }
+        i++; // SAME LINE SKIP THE THIRD IMAGE ON THE NEXT LOOP END
+      }  // SAME LINE (BELOW) MOBILE LOGIC PUT 2ND IMAGE IN mobileImageCell END
+
+      if (isMobileDevice() && typeof mobileImageCell !== "undefined") {
+        mobileImageCell.appendChild(rowDiv);
+        if (typeof mobileImageCell2 !== "undefined") {
+          mobileImageCell2.appendChild(mobileThirdRow);
+        }
+      } else {
+
+        imageDiv2.appendChild(rowDiv);         // SAME LINE ON DESKTOP ACT NORMAL FLOW END
       }
- 
-      newDiv2.appendChild(rowDiv);
-      imageDiv2.appendChild(newDiv2)
-    } else {
+
+    }
+
+    else { // SAME LINE, for any REMAINING IMAGES END
       let img = document.createElement("img");
       img.src = `${formatImage(item, colour, i)}`;
       img.alt = `${item.name}${colour}`;
       img.className = "stacked-image";
       img.id = "myImg";
-      newDiv2.appendChild(img);
-      imageDiv2.appendChild(newDiv2);
-            let img2 = document.createElement("img");
-      img2.src = `${formatImage(item, colour, 2)}`;
-      img2.alt = `${item.name}${colour}`;
-      img2.className = "stacked-image";
-      img2.id = "myImg";
-      newDiv2.appendChild(img2);
-      imageDiv2.appendChild(newDiv2);
-      /*
-                  let img3 = document.createElement("img");
-      img3.src = `${formatImage(item, colour, 2)}`;
-      img3.alt = `${item.name}${colour}`;
-      img3.className = "stacked-image";
-      img3.id = "myImg";
-      newDiv2.appendChild(img3);
-      imageDiv2.appendChild(newDiv2);
-            */
-    }
-    i++;
-        cropOverflowingImages();
-  }
 
- // return newDiv;
+      imageDiv2.appendChild(img);
+    }
+
+    i++;
+    cropOverflowingImages();
+  }
 }
+
 
 function cropOverflowingImages() {
   const container = document.querySelector('.imageColumn2');
@@ -113,13 +122,6 @@ function displayResults2(item) {
   document.getElementById("added").style.visibility = "hidden";
   const imageDiv = document.querySelector(".imageDiv");
   const imageDiv2 = document.querySelector(".imageDiv2");
-  if (imageDiv) {
-    imageDiv.innerHTML = ""; // clear old stuff
-    imageDiv2.innerHTML = "";
-    displayImages(item);
-  //  imageDiv.appendChild(displayImages(item));
-  //  imageDiv2.appendChild(displayImages(item));  
-    }
 
   const newDiv = document.createElement("div");
   newDiv.classList.add("product-container");
@@ -134,8 +136,10 @@ function displayResults2(item) {
   ${item.name}</td>`;
 
  // Spacer Row END
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  let row100 = tbody.insertRow()
+  row100.innerHTML = `<td colspan="9">
   &nbsp;</td>`;
+  row100.classList.add("spacer");
 
  // Row 2: Colours END
   let row2 = tbody.insertRow();
@@ -197,8 +201,10 @@ function displayResults2(item) {
     });
   };
  // Spacer Row END
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  let row200 = tbody.insertRow()
+  row200.innerHTML = `<td colspan="9">
   &nbsp;</td>`;
+  row200.classList.add("spacer");
 
  // Row 3: Sizes END
   let row3 = tbody.insertRow();
@@ -247,9 +253,11 @@ function displayResults2(item) {
     });
   };
  // Spacer Row END
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  let row300 = tbody.insertRow()
+  row300.innerHTML = `<td colspan="9">
   &nbsp;</td>`;
- 
+  row300.classList.add("spacer");
+
  // Row 4: Price END
   tbody.insertRow().innerHTML = `<td style="width:100px; border: 1px solid black;" class="productPrice">
   Price:</td>
@@ -277,70 +285,156 @@ function displayResults2(item) {
     }
   });
 
- // Spacer Row END
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+// END TABLE, MAKE A NEW TABLE, CAN APPEND TO THE SAME PLACE ON DESKTOP, DIFFERENT ON MOBILE END
 
- // Row 6: Checkout
-  let row6 = tbody.insertRow()
+
+ // Spacer Row END
+  if (isMobileDevice()) {
+      let row500 = tbody.insertRow()
+  row500.innerHTML = `<td colspan="9">
+  &nbsp;</td>`;
+  row500.classList.add("spacer"); 
+
+  console.log("hi");
+  let row501 = tbody.insertRow();
+  mobileImageCell = row501.insertCell();
+  mobileImageCell.colSpan = 9;
+  mobileImageCell.style.border = "1px solid black";
+  mobileImageCell.classList.add("mobileImageCell");
+
+  } else {
+
+  let row6 = tbody.insertRow()    // SAME LINE Row 6: Checkout END 
   row6.innerHTML =
   `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "checkout">
   Checkout</td>`;
   row6.addEventListener("click", () => {
     window.location.href="checkout.html";
   });
+  }
 
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  let row600 = tbody.insertRow()
+  row600.innerHTML = `<td colspan="9">
   &nbsp;</td>`;
+  row600.classList.add("spacer");
 
   let row7 = tbody.insertRow()
   row7.innerHTML = 
   `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Product description">
   Product Description</td>`;
+  let clicks2 = 0;
+  if (isMobileDevice()) {
+  console.log("isMobileDevice");
+  row7.addEventListener("click", () => {
+    console.log("clicked!");
+        clicks2 ++;
+    const itemDescription = document.getElementById("itemDescription");
+    if (clicks2 & 1 == 1) {
+      itemDescription.style.display = "block";
+    } else {
+      itemDescription.style.display = "none";
+    }
+  });
+}
 
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  let row700 = tbody.insertRow()
+  row700.innerHTML = `<td colspan="9">
+  &nbsp;</td>`;
+  row700.classList.add("spacer");
 
   let row8 = tbody.insertRow()
   row8.innerHTML = 
-  `<td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">
+  `<td colspan="9" class="description" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "itemDescription">
   ${item.description}</td>`;
 
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">
+  let row800 = tbody.insertRow()
+  row800.innerHTML = `<td colspan="9">
   &nbsp;</td>`;
+  row800.classList.add("spacer");
+  row800.classList.add("description2");
 
   let row9 = tbody.insertRow()
   row9.innerHTML = 
   `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Delivery Details">
   Delivery Details</td>`;
+  let clicks = 0;
+  if (isMobileDevice()) {
+  row9.addEventListener("click", () => {
+    clicks ++;
+    const deliveryDetails = document.getElementById("deliveryDetails");
+    if (clicks & 1 == 1) {
+      deliveryDetails.style.display = "block";
+    } else {
+      deliveryDetails.style.display = "none";
+    }
+  });
+}
 
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  let row900 = tbody.insertRow()
+  row900.innerHTML = `<td colspan="9">
+  &nbsp;</td>`;
+  row900.classList.add("spacer");
 
   let row10 = tbody.insertRow()
   row10.innerHTML = 
-  `<td colspan="9" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "description">
+  `<td colspan="9" class="description" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "deliveryDetails">
   ${item.deliveryDetails}</td>`;
 
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+    if (isMobileDevice()) {
+    console.log("hi");
+  let row1001 = tbody.insertRow();
+  mobileImageCell2 = row1001.insertCell();
+  mobileImageCell2.colSpan = 9;
+  mobileImageCell2.style.border = "1px solid black";
+  mobileImageCell2.classList.add("mobileImageCell");
+
+    let row1000 = tbody.insertRow()
+  row1000.innerHTML = `<td colspan="9">
+  &nbsp;</td>`;
+  row1000.classList.add("spacer");
+
+  } else {
+  let row1000 = tbody.insertRow()
+  row1000.innerHTML = `<td colspan="9">
+  &nbsp;</td>`;
+  row1000.classList.add("spacer");
+  row1000.classList.add("description");
+  }
+
+      imageDiv.innerHTML = ""; // clear old stuff
+    imageDiv2.innerHTML = "";
+    displayImages(item);
 
     let row11 = tbody.insertRow()
   row11.innerHTML = 
   `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Complete the look">
   Complete the look</td>`;
 
-  tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9">&nbsp;</td>`;
+  let row1100 = tbody.insertRow()
+  row1100.innerHTML = `<td colspan="9">
+  &nbsp;</td>`;
+  row1100.classList.add("spacer");
 
   let row12 = tbody.insertRow();
   let cell = row12.insertCell();
   cell.colSpan = 9;
   cell.style.border = "1px solid black";
-
   const lookTable = completeLook(item);
-
   cell.appendChild(lookTable);
+
   table.appendChild(tbody);
   newDiv.appendChild(table);
 
  // Attach to productDetails END
   document.querySelector(".productDetails").appendChild(newDiv);
+  /*
+    if (imageDiv) {
+    imageDiv.innerHTML = ""; // clear old stuff
+    imageDiv2.innerHTML = "";
+    displayImages(item);
+  //  imageDiv.appendChild(displayImages(item));
+  //  imageDiv2.appendChild(displayImages(item));  
+    }*/
 }
 
 function completeLook(item) {
@@ -376,8 +470,9 @@ function completeLook(item) {
     if (i < results.length - 1) {
       const spacer = document.createElement("div");
       spacer.innerHTML = `<table><tbody>
-        <tr><td style="height: 50px;" colspan="9">&nbsp;</td></tr>
+        <tr><td colspan="9">&nbsp;</td></tr>
       </tbody></table>`;
+      spacer.classList.add("spacer");
       containerDiv.appendChild(spacer);
     }
   } 
@@ -500,7 +595,9 @@ function updateHeights() {
     console.log(detailsHeight);
     const image2Height = (detailsHeight - imageHeight);
     productLayout.style.minHeight = `${detailsHeight}px`;
+    if(!isMobileDevice()){
     image2.style.minHeight = `${image2Height}px`;
+    };
   }
 }
 
@@ -738,6 +835,7 @@ function autoZoomImages() {
   }
 }
 
+
 window.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("container");
   if (container) {
@@ -780,8 +878,8 @@ window.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('load', () =>{
     setTimeout(updateHeights, 100);
     cropOverflowingImages();
-    autoZoomImages();
-    const img = document.querySelector('img[src="images/Zain_mugshot/one_colour-0.jpeg"]');
+    const img = document.querySelector('.imageDiv .image-row img');
+    //const img = document.querySelector('img[src="images/Zain_mugshot/one_colour-0.jpeg"]');
     img.style.removeProperty('width');
     img.style.removeProperty('height');
     //fillImageColumn();
@@ -799,6 +897,24 @@ window.addEventListener("DOMContentLoaded", () => {
   displayResults2(selectedProduct); //SAME LINE finally displays all the functions END
   mayAlsoLike(selectedProduct);
   previousSearches(selectedProduct);
+  
+  if (isMobileDevice()) {
+  console.log("Mobile detected!");
+  const imageColumn2 = document.querySelector('imageColumn2');
+  //imageColumn2.style.removeProperty('min-height');
+  let length = document.getElementsByClassName("description").length;
+  console.log(length);
+  let i= 0 ;
+  while (i< length){
+    console.log("while entered");
+    document.getElementsByClassName("description")[i].style.display = "none";
+    i++;
+  }
+
+  // Run mobile-specific behaviour here
+} else {
+  console.log("Desktop detected!");
+}
 
 
 var modal = document.getElementById("myModal");
