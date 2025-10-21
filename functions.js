@@ -63,12 +63,20 @@ export function universalDisplay(item) {
   const table = document.createElement("table");
   const tbody = document.createElement("tbody");
 
+  let altText;
+
+  if(item.name.length > 20) {
+    altText = item.name.substring(0,20);
+  } else {
+    altText = item.name;
+  }
+
   // SAME LINE (66) item colour shows non default, or if only one colour displays last END
   let row1 = tbody.insertRow(); 
   row1.innerHTML = `
     <td class="itemImg"> 
         <img src="${formatImage(item,item.selectedColour || item.colour[0], 1)}" 
-          alt="${item.name}" width="128" height="128">
+          alt="${altText}" width="128" height="128">
     </td>
   `;
 

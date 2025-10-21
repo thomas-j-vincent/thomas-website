@@ -128,7 +128,7 @@ function displayResults2(item) {
   const table = document.createElement("table");
   table.classList.add("basket-table");
   const tbody = document.createElement("tbody");
- 
+
  // Row 1: Product Name END 
   let row1 = tbody.insertRow();
   row1.innerHTML =
@@ -212,6 +212,7 @@ function displayResults2(item) {
   sizeLabel.textContent = "Size:";
   sizeLabel.style.width = "100px";
   sizeLabel.style.border = "1px solid black";
+  let row3Width;
   let ii = 0;
   if (item.size.length > 1) {
     let sizeSpace = row3.insertCell();
@@ -222,6 +223,8 @@ function displayResults2(item) {
  //ii++;
       const sizeIndex = ii + 1;
       const cellWidth = Math.max(100/item.size.length);
+      row3Width = cellWidth + "%";
+      console.log (row3Width);
       let sizeCell = row3.insertCell();
       sizeCell.textContent = item.size[sizeIndex];
       sizeCell.classList.add("productSize");
@@ -239,10 +242,13 @@ function displayResults2(item) {
     let sizeSpace = row3.insertCell();
     sizeSpace.textContent = "";
     sizeSpace.style.width = "50%";
+
     let sizeCell = row3.insertCell();
     sizeCell.textContent = item.size[0]; //SAME LINE safer than item.size END
     sizeCell.classList.add("productSize");
     sizeCell.style.width = "120px"; //SAME LINE fixed width END
+    row3Width = sizeCell.style.width
+    console.log(row3Width);
     sizeCell.style.border = "1px solid black";
     sizeCell.addEventListener("click", () => {
       console.log("User selected size:", item.size[0]);
@@ -259,10 +265,12 @@ function displayResults2(item) {
   row300.classList.add("spacer");
 
  // Row 4: Price END
-  tbody.insertRow().innerHTML = `<td style="width:100px; border: 1px solid black;" class="productPrice">
+  let row301 = tbody.insertRow()
+  row301.innerHTML = `<td style="width:100px; border: 1px solid black;" class="productPrice">
   Price:</td>
-  <td colspan="8" style="border: 1px solid black;" class="productPriceValue">
+  <td colspan="8" style="border: 1px solid black; width: ${row3Width}" class="productPriceValue">
   £${item.price}</td>`;
+  //row301.style.width = row3Width + "%";
  // Spacer Row END
   tbody.insertRow().innerHTML = `<td style="height: 50px;" colspan="9" id="unselected"></td>`;
 
@@ -285,9 +293,6 @@ function displayResults2(item) {
     }
   });
 
-// END TABLE, MAKE A NEW TABLE, CAN APPEND TO THE SAME PLACE ON DESKTOP, DIFFERENT ON MOBILE END
-
-
  // Spacer Row END
   if (isMobileDevice()) {
       let row500 = tbody.insertRow()
@@ -295,7 +300,6 @@ function displayResults2(item) {
   &nbsp;</td>`;
   row500.classList.add("spacer"); 
 
-  console.log("hi");
   let row501 = tbody.insertRow();
   mobileImageCell = row501.insertCell();
   mobileImageCell.colSpan = 9;
@@ -320,13 +324,11 @@ function displayResults2(item) {
 
   let row7 = tbody.insertRow()
   row7.innerHTML = 
-  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Product description">
+  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer; width: 950px" id = "Product description">
   Product Description</td>`;
   let clicks2 = 0;
   if (isMobileDevice()) {
-  console.log("isMobileDevice");
   row7.addEventListener("click", () => {
-    console.log("clicked!");
         clicks2 ++;
     const itemDescription = document.getElementById("itemDescription");
     if (clicks2 & 1 == 1) {
@@ -355,7 +357,7 @@ function displayResults2(item) {
 
   let row9 = tbody.insertRow()
   row9.innerHTML = 
-  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Delivery Details">
+  `<td colspan="9" class= "description2" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Delivery Details">
   Delivery Details</td>`;
   let clicks = 0;
   if (isMobileDevice()) {
@@ -380,34 +382,33 @@ function displayResults2(item) {
   `<td colspan="9" class="description" style="border: 1px solid black; text-align:left; cursor:pointer;" id = "deliveryDetails">
   ${item.deliveryDetails}</td>`;
 
-    if (isMobileDevice()) {
-    console.log("hi");
-  let row1001 = tbody.insertRow();
-  mobileImageCell2 = row1001.insertCell();
-  mobileImageCell2.colSpan = 9;
-  mobileImageCell2.style.border = "1px solid black";
-  mobileImageCell2.classList.add("mobileImageCell");
+  if (isMobileDevice()) {
+    let row1001 = tbody.insertRow();
+    mobileImageCell2 = row1001.insertCell();
+    mobileImageCell2.colSpan = 9;
+    mobileImageCell2.style.border = "1px solid black";
+    mobileImageCell2.classList.add("mobileImageCell");
 
     let row1000 = tbody.insertRow()
-  row1000.innerHTML = `<td colspan="9">
-  &nbsp;</td>`;
-  row1000.classList.add("spacer");
+    row1000.innerHTML = `<td colspan="9">
+    &nbsp;</td>`;
+    row1000.classList.add("spacer");
 
   } else {
-  let row1000 = tbody.insertRow()
-  row1000.innerHTML = `<td colspan="9">
-  &nbsp;</td>`;
-  row1000.classList.add("spacer");
-  row1000.classList.add("description");
-  }
+    let row1000 = tbody.insertRow()
+    row1000.innerHTML = `<td colspan="9">
+    &nbsp;</td>`;
+    row1000.classList.add("spacer");
+    row1000.classList.add("description");
+    }
 
-      imageDiv.innerHTML = ""; // clear old stuff
-    imageDiv2.innerHTML = "";
-    displayImages(item);
+  imageDiv.innerHTML = ""; // clear old stuff
+  imageDiv2.innerHTML = "";
+  displayImages(item);
 
     let row11 = tbody.insertRow()
   row11.innerHTML = 
-  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id = "Complete the look">
+  `<td colspan="9" style="border: 1px solid black; text-align:center; cursor:pointer;" id= "Complete the look" class="fullWidth">
   Complete the look</td>`;
 
   let row1100 = tbody.insertRow()
@@ -419,6 +420,7 @@ function displayResults2(item) {
   let cell = row12.insertCell();
   cell.colSpan = 9;
   cell.style.border = "1px solid black";
+  cell.classList.add("fullWidth");
   const lookTable = completeLook(item);
   cell.appendChild(lookTable);
 
@@ -597,6 +599,8 @@ function updateHeights() {
     productLayout.style.minHeight = `${detailsHeight}px`;
     if(!isMobileDevice()){
     image2.style.minHeight = `${image2Height}px`;
+    } else {
+      productLayout.style.width= "100%";
     };
   }
 }
@@ -650,8 +654,8 @@ function mayAlsoLike(item) {
   rightCell.appendChild(rightBtn);
 
   // Render ALL results
+  let i= 0;
   results.forEach(result => {
-    console.log(result);
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
     newDiv.style.width = itemWidth + "px";
@@ -663,9 +667,18 @@ function mayAlsoLike(item) {
 
     const productTable = universalDisplay(result);
     productTable.style.width = "100%";
-    newDiv.appendChild(productTable);
 
+    newDiv.appendChild(productTable);
     wrapper.appendChild(newDiv);
+  if(isMobileDevice()){
+  productTable.querySelectorAll(".itemAdditionalInfo").forEach(el => el.remove());
+  productTable.querySelectorAll(".availableColours").forEach(el => el.remove());
+  productTable.querySelectorAll("tr").forEach(tr => {
+  if (!tr.textContent.trim() && tr.children.length === 0) {
+    tr.remove();
+  }
+});
+  }
   });
 
   table.appendChild(tbody);
@@ -906,7 +919,6 @@ window.addEventListener("DOMContentLoaded", () => {
   console.log(length);
   let i= 0 ;
   while (i< length){
-    console.log("while entered");
     document.getElementsByClassName("description")[i].style.display = "none";
     i++;
   }

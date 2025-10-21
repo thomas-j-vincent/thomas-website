@@ -16,42 +16,41 @@
 .page {
 font-size: medium;
 }
-/*
+
 .productLayout {
 /* display: flex;           /* SAME LINE MIGHT HAVE BROKEN STICKY BOTTOM, MIGHT NOT HAVE, CAN BE COMMENTED OUT END*/
                                                                        /* align at top */
-                                                                       /*
   gap: 50px; 
-  width: 100%;
+  width: auto;
 }
-  */
+  /*
 .imageColumn {
- /* width: 70vw;
-  z-index: -1;*/
-  /*position: relative;*/
+  width: 70vw;
+  z-index: -1;
+  position: relative;*
   gap: 0;
-  /*flex-direction: column;*/
-  align-items: stretch;
-       /* overflow: hidden; SAME LINE usign overflow hidden constrains the images to below the sticky section END */
+  /*flex-direction: column;
+  align-items: stretch;*
+       /* overflow: hidden; SAME LINE usign overflow hidden constrains the images to below the sticky section END *
 }/*
 .imageColumn2 {
- /* height: 1740px;*
+  /* height: 1740px;*
   width: 70vw;
   /*z-index: -1;*
   position: absolute;
   gap: 0;
- /* flex-direction: column;*/
+  /* flex-direction: column;*/
   /*align-items: stretch;*
 } *
 .productDetails {                                           /* SAME LINE where displayResults2 gets atached to END*/
                                                       /* SAME LINE aligns the details box to the right END*
   border: 5px solid black;
- /* float: right;*/
+  /* float: right;*/
   /*width: 30vw;*/
 /*  position: -webkit-sticky;*/
- /* position: sticky;*
+  /* position: sticky;*
   font-size: medium;
- /* overflow: hidden;*
+  /* overflow: hidden;*
   box-sizing: border-box;
   /*z-index: 0;*
   background: white;
@@ -106,21 +105,37 @@ align-items: stretch;
 .image-table .stacked-image {                   /* SAME LINE specifically for images next to one other END*/
   display: block;
 }
-/* where product details should be *
+/* where product details should be */
 
-.basket-table {   /* SAME LINE from displayResults2 END*
-  border: none;
-  padding: 5px;  
-  border-collapse: separate;
-  border-spacing: 0; 
+.basket-table, 
+.basket-table tbody, 
+.basket-table tr {   /* SAME LINE from displayResults2 END*/
+  font-size: medium;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+.basket-table td .description, .description2, .productName, .mobileImageCell, .fullWidth {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+#itemDescription{
+  width: 100%;
+  display: block;
+  min-height: 80px;      /* keeps it from disappearing when above row changes */
+  box-sizing: border-box;
 }
 .productName {
   background-color: blue;
-  padding: 10px;
-  width: 950px;
-  height: 100px;
+  width: 100%;
   text-align: center;
 }
+.description{
+  width: 950;
+}
+/*
 .productColour {
 background-color: red;
 /* margin: 10px;
@@ -174,11 +189,11 @@ background-color: red;
   scrollbar-width: none;     /* Firefox */
 }
 #mayLike {
-height: 500px;
+height: auto;
 overflow: hidden;
 }
 #mayLike td{
-    height: 100px;
+    height: auto;
     overflow: hidden;
 }
 #mayLike button {

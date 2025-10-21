@@ -3,17 +3,17 @@ export const products = [
 {
 "productType" : ["nft", "non-clothing", "men", "all"], // first type is actual item eg: "shirt" second is 
 "productTag" : "item1",                         //clothing or non clothing, third is gender, fourth doesnt matter
-"name" :"Elle mugshot",  // recommend keeping the name 27 characters long
-"imageCount" : 4,        // there is a recommended size for the photos, 
-"price": 7.00,           //i suggest using standard landscape and portrait sizes
+"name" :"Elle mugshot",  // recommend keeping the name 20 (73) characters long (27 is theoretical best but when combi-
+"imageCount" : 4,        // ned with name it gets too long in the universalDisplay)
+"price": 7.00,           
 "colour" : ["one colour", "red", "yellow", "blue", "black"],// the last cell is smaller than the others (bug)
 "size" : ["one size", "large", "medium", "small"],
 "description": `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
  each moment captures a specific point in time. This specific selection features Elle and her friends the
  first was taken at AUEA, the second at the Asian food court, the third back at AUEA on the final day of
  school at the final photo was taken during a groupcall`,
-"deliveryDetails": "get it when you want",
-"additionalInfo": "Bestseller"
+"deliveryDetails": "get it when you want", // there is a recommended size for the photos,
+"additionalInfo": "Bestseller"             //i suggest using standard landscape and portrait sizes
 },
 {
 "productType" : ["nft", "non-clothing", "unisex", "all"],
@@ -143,7 +143,7 @@ export const products = [
 {
 "productType" : ["belt", "clothing", "unisex", "all"],
 "productTag" : "item13",
-"name":" if you have an axe, and replace the handle three times, and the head five times. is it the same axe?",
+"name":"if u have an axe, & replace le handle 3 times & head 5 times cest le same?",
 "imageCount" : 4,
 "price": 6.00,
 "colour" : ["one colour"],
