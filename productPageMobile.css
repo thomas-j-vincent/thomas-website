@@ -1,124 +1,57 @@
-/* SAME LINE CONTROLS THE BACK BUTTON END  */
-/* #region */
-#back .icon{
-  color: green;
-  padding-left: 50px;
-}
-
-#back .icon:hover {
- color: yellow;
-}
-
-/* #endregion */
 /* SAME LINE THE LEFT HAND TABLE END  */
 /*#region */
-
 .page {
 font-size: medium;
+display: initial;
 }
-
 .productLayout {
-/* display: flex;           /* SAME LINE MIGHT HAVE BROKEN STICKY BOTTOM, MIGHT NOT HAVE, CAN BE COMMENTED OUT END*/
-                                                                       /* align at top */
-  gap: 50px; 
+  align-items: initial;
   width: auto;
+} 
+.imageColumn, .imageColumn2 {
+  width: initial;
 }
-  /*
-.imageColumn {
-  width: 70vw;
-  z-index: -1;
-  position: relative;*
-  gap: 0;
-  /*flex-direction: column;
-  align-items: stretch;*
-       /* overflow: hidden; SAME LINE usign overflow hidden constrains the images to below the sticky section END *
-}/*
 .imageColumn2 {
-  /* height: 1740px;*
-  width: 70vw;
-  /*z-index: -1;*
-  position: absolute;
-  gap: 0;
-  /* flex-direction: column;*/
-  /*align-items: stretch;*
-} *
-.productDetails {                                           /* SAME LINE where displayResults2 gets atached to END*/
-                                                      /* SAME LINE aligns the details box to the right END*
-  border: 5px solid black;
-  /* float: right;*/
-  /*width: 30vw;*/
-/*  position: -webkit-sticky;*/
-  /* position: sticky;*
-  font-size: medium;
-  /* overflow: hidden;*
-  box-sizing: border-box;
-  /*z-index: 0;*
-  background: white;
-                            /* margin-right: 50px; *//* SAME LINE adds border to the right (doesnt look nice) END *       
-}*/
-.imageDiv {
-  height: auto; /* or a fixed height like 350px if needed */
-  align-items: stretch;
-  display: block;
-}/*
+  height: initial;
+} 
 .imageDiv2 {
-  height: 174px;
-  width: 70vw;
-  position: absolute;
-  display: block;
+  height: initial;
+  width: 100%;
+  position: initial;
 }
-*/
-.imageDiv img, .imageDiv2 img {
-  display: block;
-  width: 100%;                                                   /* never let images overflow their container */
-  height: auto; 
-  object-fit: contain;                                         /* or 'contain' if you want the full image visible */
-  border: 1px, solid, black;
+.imageDiv img {
+  float: left;           /* keep aspect ratio  */
+  margin: 0 auto;          /* centers image  */
 }
-.imageDiv img:hover {opacity: 0.7;} 
 
 /*#endregion*/
 
 /* SAME LINE FROM DISPLAYRESULTS2 END*/
 /*#region*/
-
-.image-table {  /* SAME LINE the image bit END*/
-border-collapse: separate;
-border-spacing: 0;   
-height: auto;
-width: 100%;
-align-items: stretch;
-}
 .image-row {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  border-spacing: 0;   
-  height: auto;
+  width: initial;
 }
 .image-row .unstacked-image {   /* SAME LINE specifically for images NOT next to one other END*/
-  flex: 1 1 0;   
   width: 100%;   
-  display: block; 
-  /*overflow: hidden; */
 }
-.image-table .stacked-image {                   /* SAME LINE specifically for images next to one other END*/
-  display: block;
+.productDetails {                                           /* SAME LINE where displayResults2 gets atached to END*/
+  width: initial;
+  bottom: initial;
+  font-size: medium;
 }
-/* where product details should be */
-
 .basket-table, 
 .basket-table tbody, 
 .basket-table tr {   /* SAME LINE from displayResults2 END*/
   font-size: medium;
   width: 100%;
   display: block;
-  box-sizing: border-box;
+  box-sizing: border-box; 
 }
-.basket-table td .description, .description2, .productName, .mobileImageCell, .fullWidth {
+.basket-table td .description, .description2, .productName, .mobileImageCell, .fullWidth, .addToBasket {
   display: block;
   width: 100%;
   box-sizing: border-box;
+  height: initial;
   border-bottom: 1px solid #ccc;
 }
 #itemDescription{
@@ -128,65 +61,30 @@ align-items: stretch;
   box-sizing: border-box;
 }
 .productName {
-  background-color: blue;
   width: 100%;
-  text-align: center;
 }
 .description{
   width: 950;
 }
-/*
-.productColour {
-background-color: red;
-/* margin: 10px;
-  padding: 10px; *
-  
-}
-.productPrice {
-  background-color: blue;
-  height: 50px;
-}
-.productPriceValue {
-  text-align: center;
-}
 .addToBasket {
-  background-color: blue;
-  padding: 10px;
   width: 100%;
-  height: 100px;
-  text-align: center;
 }
-*/
 /*#endregion*/
 
 /* SAME LINE FROM COMPLETELOOK END*/
 /*#region*/
-.spacer {
-  height: 50px;
-}
-.completeLook{
- border: 1px, solid, black;
-}
 .completeLook table{
   font-size: medium;
-  border: none;
-  padding: 5px;  
-  border-collapse: separate;
-  border-spacing: 0; 
+}
+.spacer {
+  height: 50px;
 }
 /*#endregion*/
 
 /* SAME LINE FROM MAYALSOLIKE END*/
 /*#region*/
 .no-scrollbar {
-        height: 300px;
-  display: flex;
-  border: 5px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 10px, 200px, 10px, 10px;
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
+  height: 300px;
 }
 #mayLike {
 height: auto;
@@ -195,25 +93,6 @@ overflow: hidden;
 #mayLike td{
     height: auto;
     overflow: hidden;
-}
-#mayLike button {
-  background: none;
-  border: none;
-  font-size: 2rem;   /* big arrows */
-  font-weight: bold;
-  cursor: pointer;
-  padding: 5px 10px;
-  color: #333;
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-#mayLike button:hover:not(:disabled) {
-  color: black;
-    border: none;
-  transform: scale(1.2);
-}
-#mayLike button:disabled {
-  opacity: 0.3;
-  cursor: default;
 }
 /*#endregion*/
 
@@ -227,125 +106,14 @@ overflow: hidden;
   font-size: medium;
 }
 .previousSearches {
-  border: 1px solid black;
   overflow: hidden;
-}
-#previousSearches button {
-  background: none;
-  border: none;
-  font-size: 2rem;   /* big arrows */
-  font-weight: bold;
-  cursor: pointer;
-  padding: 5px 10px;
-  color: #333;
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-#previousSearches button:hover:not(:disabled) {
-  color: black;
-  transform: scale(1.2);
-}
-#previousSearches button:disabled {
-  opacity: 0.3;
-  cursor: default;
 }
 /*#endregion*/
 
 /* SAME LINE FROM THE MODAL END*/
 /*#region*/
-#img01 {
-  cursor: grab;
-  transition: transform 0.1s ease;
-}
-/* where image div img should be */
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-}
 /* Modal Content (image) */
 .modal-content {
-  margin: auto;
-  display: block;
-  width: 80%;
-  max-width: 700px;
-}
-/* Caption of Modal Image */
-#caption {
-  margin: auto;
-  display: block;
-  width: 80%;
-  max-width: 700px;
-  text-align: center;
-  color: #ccc;
-  padding: 10px 0;
-  height: 150px;
-}
-/* Add Animation */
-.modal-content, #caption {  
-  animation-name: zoom;
-  animation-duration: 0.6s;
-}
-@keyframes zoom {
-  from {transform: scale(0.1)} 
-  to {transform: scale(1)}
-}
-/* The Close Button */
-.close {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.close:hover,
-.close:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
-}
-.prev,
-.next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 30px;
-  transition: 0.3s;
-  user-select: none;
-}
-
-/* Position prev button to the left */
-.prev {
-  left: 0;
-}
-
-/* Position next button to the right */
-.next {
-  right: 0;
-}
-
-/* On hover, add a little background */
-.prev:hover,
-.next:hover {
-  background-color: rgba(0,0,0,0.6);
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  width: 100%;
 }
 /*#endregion*/

@@ -6,7 +6,7 @@
 }
 
 #back .icon:hover {
- color: red;
+  color: red;
 }
 
 /* #endregion */
@@ -17,7 +17,6 @@ display: flex;
 }
 .productLayout {
   flex: 1;
-/* display: flex;           /* SAME LINE MIGHT HAVE BROKEN STICKY BOTTOM, MIGHT NOT HAVE, CAN BE COMMENTED OUT END*/
   align-items: flex-start;                                                                        /* align at top */
   gap: 50px; 
   width: 100%;
@@ -36,7 +35,6 @@ display: flex;
 }
 .productDetails {                                           /* SAME LINE where displayResults2 gets atached to END*/
   flex: 1;                                                    /* SAME LINE aligns the details box to the right END*/
-  border: 5px solid black;
   float: right;
   width: 30vw;
   position: -webkit-sticky;
@@ -134,13 +132,12 @@ background-color: red;
   height: 100px;
   text-align: center;
 }
-
 /*#endregion*/
 
 /* SAME LINE FROM COMPLETELOOK END*/
 /*#region*/
 .completeLook{
- border: 1px, solid, black;
+  border: 1px, solid, black;
 }
 .completeLook table{
   border: none;
@@ -176,7 +173,7 @@ background-color: red;
 }
 #mayLike button:hover:not(:disabled) {
   color: black;
-    border: none;
+  border: none;
   transform: scale(1.2);
 }
 #mayLike button:disabled {
@@ -189,7 +186,7 @@ background-color: red;
 /*#region*/
 
 .previousSearches {
-  border: 1px solid black;
+  border: 1px solid black; /* really? */
 }
 #previousSearches button {
   background: none;
@@ -309,38 +306,4 @@ background-color: red;
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
-
-
-/* 100% Image Width on Smaller Screens 
-@media only screen and (max-width: 700px){
-  .modal-content {
-    width: 100%;
-  }
-}
-/*#endregion
-@media (hover: none) and (pointer: coarse) {
-  .productLayout {
-  display: flex;
-  gap: 50px;
-  width: 100%
-}
-
-.imageDiv img {
-  width: min(950px); /* max 200px or 20% of viewport width 
-  height: auto; 
-  float: left;           /* keep aspect ratio 
-  display: block;          /* removes inline spacing 
-  margin: 0 auto;          /* centers image 
-  border: 1px solid black;
-  object-fit: contain;     /* ensures full image shows 
-}
-
-.productDetails {
-  flex: 1;
-  float: right;
-  border: 5px solid black;
-  box-sizing: border-box;
-  margin-right: 50px;
-}
-}
-*/
+/*#endregion*/
