@@ -560,7 +560,7 @@ export function formatCollectionImage(type,functionNumber,i ){
       if (fileExists(path)) return path;
     }
 
-    return "images/collection/${number}/${type}-${i}.JPG"; // fallback
+    return `images/collection/${number}/${type}-${i}.JPG`; // fallback
 }
 
 function fileExists(url) {
