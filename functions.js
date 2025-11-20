@@ -553,7 +553,7 @@ export function formatImage(item, selectedColour, value = 1) {
 export function formatCollectionImage(type,functionNumber,i ){
   const number = functionNumber || 0;
   const base = `images/collection/${number}/${type}-${i}`;
-  const extensions = ["jpg", "jpeg","JPG", "JPEG"];
+  const extensions = [ "JPEG","jpg", "jpeg","JPG"];
 
   for (const ext of extensions) {
       const path = `${base}.${ext}`;
