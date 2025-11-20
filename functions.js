@@ -552,8 +552,22 @@ export function formatImage(item, selectedColour, value = 1) {
 
 export function formatCollectionImage(type,functionNumber,i ){
   const number = functionNumber || 0;
-  const path = `images/collection/${number}/${type}-${i}.JPG`;
-  return (path);
+  const base = `images/collection/${number}/${type}-${i}`;
+  const extensions = ["jpg", "jpeg", "png", "JPG", "JPEG"];
+
+  for (const ext of extensions) {
+      const path = `${base}.${ext}`;
+      if (fileExists(path)) return path;
+    }
+
+    return "images/collection/${number}/${type}-${i}.JPG"; // fallback
+}
+
+function fileExists(url) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("HEAD", url, false);
+  xhr.send();
+  return xhr.status !== 404;
 }
 
 // helper: try loading image without blocking

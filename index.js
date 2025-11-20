@@ -11,7 +11,7 @@ let query = "men";
 
 query = "women";
 
-exploreByCategory(query);
+    exploreByCategory(query);
 
 query = "children";
 
