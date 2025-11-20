@@ -11,7 +11,7 @@ export const products = [
 "description": `A selection of nft's each perfectly composed and crafted over the course of two years at AUEA,
  each moment captures a specific point in time. This specific selection features Elle and her friends the
  first was taken at AUEA, the second at the Asian food court, the third back at AUEA on the final day of
- school at the final photo was taken during a groupcall`,
+ school at the final photo was taken during a groupcall`,// PICK JPG OR JPEG THEN UPDATE FORMAT IMAGE
 "deliveryDetails": "get it when you want", // there is a recommended size for the photos,
 "additionalInfo": "Bestseller"             //i suggest using standard landscape and portrait sizes
 },
