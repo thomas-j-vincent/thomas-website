@@ -419,8 +419,8 @@ export function exploreProducts(query) {
 
     console.log(i);
     const img = document.createElement("img");
-    img.src = formatCollectionImage(safeItem, 2, i);  // same as universalDisplay
-    img.alt = type.name;//SAMELINE   ^^^safeitem?
+    img.src = formatCollectionImage(safeItem, 4, i);  // same as universalDisplay
+    img.alt = safeItem;//SAMELINE   ^^^safeitem?
     img.style.width = "100%";
     img.style.height = "auto";
     newDiv.appendChild(img);
@@ -428,7 +428,7 @@ export function exploreProducts(query) {
     i ++;
     });
   table.appendChild(tbody);
-  document.getElementById("category").appendChild(table);
+  document.getElementById("explore").appendChild(table);
 
   // Arrow scroll logic
   const scrollAmount = itemWidth + gap;
