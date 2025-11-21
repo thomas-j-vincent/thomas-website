@@ -397,6 +397,7 @@ export function exploreProducts(query) {
   });
 
   let category;
+    let i = 0;
   let safeItem = (query || "").toLowerCase();
 
   if (safeItem === "children") {
