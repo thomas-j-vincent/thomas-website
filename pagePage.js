@@ -3,17 +3,18 @@ import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, newRe
 
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
-console.log(query);
+    let safeItem = (query || "").toLowerCase();
+console.log(safeItem);
 
 updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
-newReleases(query, "header");
-exploreByCategory(query);
-newReleases(query, "carousel", 1);
-split(query);
-exploreProducts(query);
+newReleases(safeItem, "header");
+exploreByCategory(safeItem);
+newReleases(safeItem, "carousel", 1);
+split(safeItem);
+exploreProducts(safeItem);
 
 /*  allows us to change what the website does depending on the button clicked 
 if (query === "Men"){
