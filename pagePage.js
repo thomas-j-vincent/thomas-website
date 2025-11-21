@@ -3,6 +3,7 @@ import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, newRe
 
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
+console.log(query);
 
 updateBasketMessage();
 enableTouchHover();
