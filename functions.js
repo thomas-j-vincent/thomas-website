@@ -225,8 +225,8 @@ export function exploreByCategory(query) {
 
     console.log(i);
     const img = document.createElement("img");
-    img.src = formatCollectionImage("men", 2, i);  // same as universalDisplay
-    img.alt = type.name;
+    img.src = formatCollectionImage(safeItem, 2, i);  // same as universalDisplay
+    img.alt = type.name;//SAMELINE   ^^^safeitem?
     img.style.width = "100%";
     img.style.height = "auto";
     newDiv.appendChild(img);
@@ -416,15 +416,18 @@ export function exploreProducts(query) {
       window.location.href = `product.html?q=${encodeURIComponent(product.name)}&source=${query}`;  //SAME LINE needs changing! END
     });
 
-    const productTable = universalDisplay2(result); //SAME LINE was type END
-    productTable.style.width = "100%";
-    newDiv.appendChild(productTable);
-
+    console.log(i);
+    const img = document.createElement("img");
+    img.src = formatCollectionImage(safeItem, 2, i);  // same as universalDisplay
+    img.alt = type.name;//SAMELINE   ^^^safeitem?
+    img.style.width = "100%";
+    img.style.height = "auto";
+    newDiv.appendChild(img);
     wrapper.appendChild(newDiv);
+    i ++;
     });
-
   table.appendChild(tbody);
-  document.getElementById("explore").appendChild(table);
+  document.getElementById("category").appendChild(table);
 
   // Arrow scroll logic
   const scrollAmount = itemWidth + gap;
