@@ -32,7 +32,7 @@ function displayImages(item) {
 
       let img1 = document.createElement("img");
       img1.src = `${formatImage(item, colour, 0)}`;
-      img1.alt = `${item.name}${colour}`;
+      img1.alt = `${item.name}`;
       img1.className = "unstacked-image";
       img1.id = "myImg";
 
@@ -47,7 +47,7 @@ function displayImages(item) {
 
       let img1 = document.createElement("img");
       img1.src = `${formatImage(item, colour, 1)}`;
-      img1.alt = `${item.name}${colour}`;
+      img1.alt = `${item.name}`;
       img1.className = "unstacked-image";
       img1.id = "myImg";
 
@@ -56,7 +56,7 @@ function displayImages(item) {
       if (i + 1 < item.imageCount) {       // SAME LINE IF A 3RD IMAGE EXISTS END
         let img2 = document.createElement("img");
         img2.src = `${formatImage(item, colour, i + 1)}`;
-        img2.alt = `${item.name}${colour}`;
+        img2.alt = `${item.name}`;
         img2.className = "unstacked-image";
         img2.id = "myImg";
 
@@ -862,21 +862,31 @@ window.addEventListener("DOMContentLoaded", () => {
   updateBasketMessage();
 });
 
+    const params = new URLSearchParams(window.location.search);
+
   document.getElementById("back").addEventListener("click", () => {
     let searchInput = get("searchInput");
     let viewedProducts = get("viewedProducts")
     let viewedProduct = viewedProducts.slice (1,2);
-//    let safeItem = (query || "").toLowerCase();
     console.log(viewedProduct);
     const params = new URLSearchParams(window.location.search);
     let source = params.get("source");
-    if (source === "completeLook" || source === "mayAlsoLike") {
-      window.location.href = `product.html?q=${encodeURIComponent(viewedProduct)}`
-    } else if (source === "Men" || "Women" || "Children"){
-      window.location.href = `page.html?q=${encodeURIComponent(source)}`
+    let safeItem = (source || "").toLowerCase();
+    let array = get("previousSource") || [];
+    let result = array.find(item =>
+      item !== "completeLook" && item !== "mayAlsoLike"
+    );
+    console.log(result)
+    if (safeItem === "completelook" || safeItem == "mayalsolike") {
+      window.location.href = `product.html?q=${encodeURIComponent(viewedProduct)}&source=${result}` // << need a way of storing previous product so can go back more than once
+    } else if (safeItem === "men" || safeItem === "women" || safeItem === "children"){
+      window.location.href = `page.html?q=${encodeURIComponent(safeItem)}`
     }
-    else{
+    else if (safeItem == "") {
       window.location.href = `search.html?q=${encodeURIComponent(searchInput)}&scroll=${get("scrollAmount")}`;
+    }
+    else {
+      console.log("error");
     }
   });
     // Find product in JSON
@@ -901,7 +911,7 @@ window.addEventListener("DOMContentLoaded", () => {
     updateHeights();
     cropOverflowingImages();
     autoZoomImages();
-    const img = document.querySelector('img[src="images/Zain_mugshot/one_colour-0.jpeg"]');
+    const img = document.querySelector('img[src="images/Zain_mugshot/one_colour-0.jpeg"]'); //WHAT EVEN IS THIS?
     img.style.removeProperty('width');
     img.style.removeProperty('height');
     //fillImageColumn();

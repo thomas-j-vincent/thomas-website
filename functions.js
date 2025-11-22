@@ -7,6 +7,7 @@ const variable = {
   basketProducts: [],
   basketDisplay: [], 
   viewedProduct: [],
+  previousSource: [],
 }
 
 function saveToStorage() {
