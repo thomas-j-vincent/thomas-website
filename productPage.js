@@ -165,6 +165,9 @@ function displayResults2(item) {
       const thisColour = item.colour[colourIndex];
 
       colourCell.addEventListener("click", () => {
+        imageDiv.innerHTML = ""; // clear old stuff
+        imageDiv2.innerHTML = "";
+        document.querySelectorAll(".unstacked-image").forEach(img => img.remove());
         item.selectedColour = thisColour;
         console.log("User selected colour:",item.selectedColour, thisColour);
         console.log(item.selectedColour);
@@ -172,8 +175,7 @@ function displayResults2(item) {
         row2.querySelectorAll(".productColour").forEach(c =>
           c.style.background = "");
         colourCell.style.background = "lightblue";
-        imageDiv.innerHTML = ""; // clear old stuff
-        imageDiv2.innerHTML = "";
+
         //imageDiv.appendChild(displayImages(item));
         imageDiv2.appendChild(displayImages(item));
         cropOverflowingImages();
