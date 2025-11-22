@@ -629,10 +629,10 @@ export function addProduct(item) {  //SAME LINE displays the items in the basket
   table.cellPadding = "5";
   const tbody = document.createElement("tbody");
 
- // Row 1: Image + Name
+ // Row 1: Image + Name                                                       // VVVV width="128" height="128"//`
   tbody.insertRow().innerHTML =`
-    <td colspan="4" rowspan="4" class="itemImg">
-    <img src="${formatImage(item, item.selectedColour, 1)}" alt="${item.name}" width="128" height="128">
+    <td  colspan="4" rowspan="4" class="itemImg" style="width:128px; height:128px">
+    <img src="${formatImage(item, item.selectedColour, 1)}" alt="${item.name}"width="128" height="128"> 
     </td>
     <td rowspan="7" style="width:50px;">&nbsp;</td>
     <td colspan="6" style="border-bottom: 1px solid #ddd;" class="itemName">${item.name}</td>`
@@ -651,9 +651,9 @@ export function addProduct(item) {  //SAME LINE displays the items in the basket
 
  // Row 5: Qty / Size / Colour
   tbody.insertRow().innerHTML =`
-    <td style="width:25px; border: 1px solid; text-align:center;" class="plus-btn"><i class="fa-solid fa-plus"></i></td>
+    <td style="width:25px; border: 1px solid; text-align:center;" class="minus-btn"><i class="fa-solid fa-minus"></i></td>
     <td style="width:50px; text-align:center;" colspan="2" class="qty-cell">${quantity}</td>
-    <td style="width:25px; border:1px solid; text-align:center;" class="minus-btn"><i class="fa-solid fa-minus"></i></td>
+    <td style="width:25px; border:1px solid; text-align:center;" class="plus-btn"><i class="fa-solid fa-plus"></i></td>
     <td style="width:75px; border-bottom:1px solid #ddd;" colspan="3" class="itemSize">${item.selectedSize}</td>
     <td style="width:25px; text-align:center;"><i class="fa-solid fa-grip-lines-vertical"></i></td>
     <td style="width:50px; border-bottom:1px solid #ddd;" colspan="2" class="itemColour">${item.selectedColour}</td>

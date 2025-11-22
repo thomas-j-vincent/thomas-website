@@ -48,13 +48,14 @@ a:hover {
 }
 a:active {
   text-decoration: underline;
-    color:black;
+  color:black;
 }
 .colour {
   color: #F5F1DE;
 }
 .dropdown-content {
-  display: none;
+  display: none;  /*controls whether the basket stays open or no*/
+  width: auto;
   position: absolute;
   background-color: #EEEEEE;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -62,10 +63,10 @@ a:active {
   right: 0;
 }
 .menu {
-    width: 100%;
+  width: 100%;
 }
 .basket {
-   width: 40%;
+  width: auto;
 }
 .searchResults {
   text-align: center;
@@ -231,11 +232,12 @@ a:active {
 }
 
 .menu {
-    width: 100%;
+  width: 100%;
 }
 
 .basket {
-   width: 40%;
+  width: 100%;
+  font-size: smaller;
 }
 
 .searchResults {
@@ -246,6 +248,10 @@ a:active {
   position: sticky;
   top: 75px;
   background-color: white;
+}
+
+#checkout {
+  font-size: xx-large;
 }
 
 .page-container {
@@ -280,7 +286,7 @@ a:active {
 }
 
 .productColour {
-background-color: red;
+  background-color: red;
 }
 
 .productPriceValue {
