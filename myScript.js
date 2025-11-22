@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const basketProducts = get("basketProducts") || [];
   basketProducts.forEach(({ item }) => {
     addProduct(item); // SAME LINE Rebuild DOM from item data END
+    console.log(item);
   });
   updateBasketMessage();
 });

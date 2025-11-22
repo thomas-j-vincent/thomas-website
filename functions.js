@@ -208,12 +208,12 @@ export function exploreByCategory(query) {
   });
 
   Object.keys(productsByClothType).forEach(type => {
-    console.log(`Found type: ${type} with ${productsByClothType[type].length} items`);
+  //  console.log(`Found type: ${type} with ${productsByClothType[type].length} items`);
       productsByClothType[type] = [productsByClothType[type][0]]
     const items = productsByClothType[type]
     items.forEach(item => {  // SAME LINE display result for each product type
   let result = category;
-    console.log(result);
+    //console.log(result);
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
     newDiv.style.width = itemWidth + "px";
@@ -223,7 +223,7 @@ export function exploreByCategory(query) {
       window.location.href = `search.html?q=${encodeURIComponent(type)}&source=collection`;
     });
 
-    console.log(i);
+    //console.log(i);
     const img = document.createElement("img");
     img.src = formatCollectionImage(safeItem, 2, i);  // same as universalDisplay
     img.alt = type.name;//SAMELINE   ^^^safeitem?
@@ -417,7 +417,7 @@ export function exploreProducts(query) {
       window.location.href = `product.html?q=${encodeURIComponent(product.name)}&source=${query}`;  //SAME LINE needs changing! END
     });
 
-    console.log(i);
+    //console.log(i);
     const img = document.createElement("img");
     img.src = formatCollectionImage(safeItem, 4, i);  // same as universalDisplay
     img.alt = safeItem;//SAMELINE   ^^^safeitem?
