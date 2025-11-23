@@ -10,6 +10,8 @@ const variable = {
   previousSource: [],
 }
 
+  const nextIndex = looper(5); // 5 is the maximum number of images for the carousel
+
 function saveToStorage() {
   localStorage.setItem("basketState", JSON.stringify(variable));
 }
@@ -123,22 +125,68 @@ function universalDisplay2(item, i) {
   return table;
 }
 
-export function newReleases(query, appendTo, functionNumber) {
+export function newReleases(query, appendTo, functionNumber, i) {
+
+  const header = document.querySelector(`.${appendTo}`);
+  let safeItem = (query || "").toLowerCase();
+
+  if (functionNumber === 0){
   let number = functionNumber || 0; 
-    const header = document.querySelector(`.${appendTo}`);
-    header.innerHTML = `
-        <td class="itemImg"> 
-        <img src="${formatCollectionImage(query, number, 1)}" 
-            alt="${query}">
-        </td>
-    `;
+  header.innerHTML = `
+    <td class="itemImg"> 
+      <img src="${formatCollectionImage(safeItem, number, 1)}" 
+      alt="${query}">
+    </td>
+  `;
+  return;
+
+  } else if (functionNumber === 1){
+
+    const productsByGender = {};    
+    products.forEach(product => {    // SAME LINE filter by gender, pass to next filter
+      const key = product.productType[2];
+      if (!key) return;
+      if (!productsByGender[key]) productsByGender[key] = [];
+      productsByGender[key].push(product);
+    });
+
+    let category;
+
+    if (safeItem === "children") { 
+      category = productsByGender["children"] || [];
+    } else {
+      category =  (productsByGender[safeItem] || []).concat(productsByGender["unisex"] || []);   
+    }  // SAME LINE category is a list of all the items sorted by gender END 
+
+    if (i == "undefined"){
+      i=0
+    }
+
+    let index = i % category.length;   // ensures valid index
+    let result = category[index];   //increments
+    console.log(result.name);  // safe
+
+  header.innerHTML = `
+    <td class="itemImg"> 
+      <img src="${formatImage(result, "oneColour", 99)}"   
+      alt="${result.name}">
+    </td>
+  `; // 99 is special number for the carousel format
+
+    header.addEventListener("click", e =>{
+      console.log("go to product");
+      window.location.href = `search.html?q=${encodeURIComponent(query)}&source=collection`;
+      // on click go to product // collection
+    });
+};
 }
 
 export function exploreByCategory(query) {
 
   const itemWidth = 200; // SAME LINE px per card END
   const gap = 20;        // SAME LINE px between cards END
-  const screenWidth = window.innerWidth;
+  const screenWidth = document.documentElement.clientWidth;
+  console.log(screenWidth);
 
   const itemsPerRow = Math.floor(screenWidth / (itemWidth + gap));  // SAME LINE how many fit fully on screen END
   const visibleWidth = itemsPerRow * (itemWidth + gap);
@@ -210,10 +258,10 @@ export function exploreByCategory(query) {
 
   Object.keys(productsByClothType).forEach(type => {
   //  console.log(`Found type: ${type} with ${productsByClothType[type].length} items`);
-      productsByClothType[type] = [productsByClothType[type][0]]
+    productsByClothType[type] = [productsByClothType[type][0]]
     const items = productsByClothType[type]
     items.forEach(item => {  // SAME LINE display result for each product type
-  let result = category;
+      let result = category;
     //console.log(result);
     const newDiv = document.createElement("div");
     newDiv.classList.add("completeLook");
@@ -338,7 +386,7 @@ export function exploreProducts(query) {
 
   const itemWidth = 200; // px per card
   const gap = 20;        // px between cards
-  const screenWidth = window.innerWidth;
+  const screenWidth = document.documentElement.clientWidth;
 
   const itemsPerRow = Math.floor(screenWidth / (itemWidth + gap));  // SAME LINE how many fit fully on screen END
   const visibleWidth = itemsPerRow * (itemWidth + gap);
@@ -457,6 +505,73 @@ export function exploreProducts(query) {
   });
 }
 
+function looper(max) { // SAME LINE starts on one END 
+  let i = 1;
+
+  return function() {
+    i = (i + 1) % max;   // SAME LINE increments + wraps back to 0 automatically END
+    return i;
+  };
+}
+
+  function autoScroll(element) {
+    const index = nextIndex();
+    newReleases("men", "carousel", 1, index);
+  }
+
+  export function scrollCarousel (element) {
+    console.log(element);
+  const carousel = document.getElementById(element);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        console.log("Carousel is on screen.");
+       // autoScroll(element); // your function
+      }
+    });
+  }, {
+    threshold: 0.1 // 10% visible counts as "on screen"
+  });
+
+  observer.observe(carousel);
+
+  let lastX = null;
+  let totalMovement = 0;
+
+  window.addEventListener("mousemove", (e) => {
+    if (lastX === null) {
+      lastX = e.clientX;
+      return;
+    }
+
+    const delta = Math.abs(e.clientX - lastX);
+    totalMovement += delta;
+    lastX = e.clientX;
+
+    if (totalMovement > 9000) {  // 100px threshold
+      console.log("Mouse moved enough, scrolling carousel");
+      console.log(totalMovement);
+      autoScroll(element);
+      totalMovement = 0; // reset counter
+    }
+  });
+
+  let lastScroll = window.scrollY;
+
+  window.addEventListener("scroll", () => {
+    const current = window.scrollY;
+    const difference = Math.abs(current - lastScroll);
+
+    if (difference > 40) { // 40px of scrolling triggers auto-scroll
+      console.log("User scrolled page");
+      autoScroll(element);
+    }
+
+    lastScroll = current;
+  });
+}
+
 export function checkBasket() {
   console.log(("basket items are"), get("basketProducts"));
   console.log(("display items:"), get("basketDisplay"));
@@ -549,7 +664,7 @@ export function formatImage(item, selectedColour, value = 1) {
   const safeNumber = String(value).replace(/\s+/g, "_");
   if (colour === undefined) {
     // fallback if no colour is defined
-    const path = `./images/${safeName}-oneColour-${safeNumber}.JPEG`;
+    const path = `./images/${safeName}-oneColour-${safeNumber}.jpeg`;
   }
   const path = `images/${safeName}/${safeColour}-${safeNumber}.jpeg`;
   return (path);
@@ -557,7 +672,7 @@ export function formatImage(item, selectedColour, value = 1) {
 
 export function formatCollectionImage(type,functionNumber,i ){
   const number = functionNumber || 0;
-  const path = `images/collection/${number}/${type}-${i}.jpeg`;
+  const path = `images/collection/${number}/${type}/${i}.jpeg`;
   return (path);
 }
 

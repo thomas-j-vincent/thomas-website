@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, newReleases, exploreByCategory, split, exploreProducts, formatImage, removeAllItems, formatCollectionImage} from "./functions.js";
+import { get, set, enableTouchHover, loadFromStorage, updateBasketMessage, newReleases, exploreByCategory, scrollCarousel, split, exploreProducts, formatImage, removeAllItems, formatCollectionImage} from "./functions.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
@@ -10,9 +10,10 @@ updateBasketMessage();
 enableTouchHover();
 loadFromStorage();
 
-newReleases(safeItem, "header");
+newReleases(safeItem, "header", 0, 1);
 exploreByCategory(safeItem);
-newReleases(safeItem, "carousel", 1);
+newReleases(safeItem, "carousel", 1, 1);
+scrollCarousel("carousel");
 split(safeItem);
 exploreProducts(safeItem);
 
