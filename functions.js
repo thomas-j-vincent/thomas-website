@@ -163,6 +163,7 @@ export function newReleases(query, appendTo, functionNumber, i) {
     }
 
     let index = i % category.length;   // ensures valid index
+    console.log(category.length);
     let result = category[index];   //increments
     console.log(result.name);  // safe
 
