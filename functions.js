@@ -176,7 +176,7 @@ export function newReleases(query, appendTo, functionNumber, i) {
 
     header.addEventListener("click", e =>{
       console.log("go to product");
-      window.location.href = `search.html?q=${encodeURIComponent(query)}&source=collection`;
+      window.location.href = `product.html?q=${encodeURIComponent(result.name)}&source=${safeItem}`;
       // on click go to product // collection
     });
 };
