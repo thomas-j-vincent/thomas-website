@@ -40,7 +40,7 @@ export const products = [
 "deliveryDetails": "get it when you want",
 },
 {
-"productType" : ["shirt", "clothing", "all"],
+"productType" : ["shirt", "clothing", "children", "all"],
 "productTag" : "item4",
 "name":"Sam mugshot",
 "imageCount" : 4,
