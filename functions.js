@@ -167,12 +167,37 @@ export function newReleases(query, appendTo, functionNumber, i) {
     let result = category[index];   //increments
     console.log(result.name);  // safe
 
-  header.innerHTML = `
-    <td class="itemImg"> 
-      <img src="${formatImage(result, "oneColour", 99)}"   
-      alt="${result.name}">
-    </td>
-  `; // 99 is special number for the carousel format
+    const oldImg = header.querySelector("img");
+
+    if (oldImg) {
+      // Slide the old image out
+      oldImg.style.transform = "translateX(-100%)";
+      oldImg.style.transition = "transform 0.5s ease";
+      setTimeout(() => {
+
+        header.innerHTML = `
+          <td class="itemImg"> 
+            <img src="${formatImage(result, "oneColour", 99)}"   
+              alt="${result.name}"
+              style="transform: translateX(100%); transition: transform 0.5s ease;">
+          </td>
+        `; // 99 is special number for the carousel format
+
+        requestAnimationFrame(() => {
+          const newImg = header.querySelector("img");
+          newImg.style.transform = "translateX(0)";
+        });
+      }, 500);
+
+    } else {
+      // FIRST TIME: no animation needed
+      header.innerHTML = `
+      <td class="itemImg carousel-slide">
+          <img src="${formatImage(result, "oneColour", 99)}"
+            alt="${result.name}">
+        </td>
+      `;
+    }
 
     header.addEventListener("click", e =>{
       console.log("go to product");
