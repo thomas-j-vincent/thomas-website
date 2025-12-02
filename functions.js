@@ -128,6 +128,7 @@ function universalDisplay2(item, i) {
 export function newReleases(query, appendTo, functionNumber, i) {
 
   const header = document.querySelector(`.${appendTo}`);
+  console.log(query);
   let safeItem = (query || "").toLowerCase();
 
   if (functionNumber === 0){
@@ -151,6 +152,7 @@ export function newReleases(query, appendTo, functionNumber, i) {
     });
 
     let category;
+    console.log(category);
 
     if (safeItem === "children") { 
       category = productsByGender["children"] || [];
@@ -161,7 +163,7 @@ export function newReleases(query, appendTo, functionNumber, i) {
     if (i == "undefined"){
       i=0
     }
-
+    console.log(category);
     let index = i % category.length;   // ensures valid index
     console.log(category.length);
     let result = category[index];   //increments

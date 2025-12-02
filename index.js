@@ -13,9 +13,9 @@ query = "women";
 
     exploreByCategory(query);
 
-query = "children";
+query = "children"; // SAME LINE doesn't work because there are no child products yet END
 
-    newReleases(query, "carousel", 1);
+    newReleases(query, "carousel", 1, 1);
     scrollCarousel("carousel");
 
 query = "men";
